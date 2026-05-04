@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Favoris Navigation v9</title>
+<title>Favoris Navigation v13</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL6KxKEgssIBJqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
   :root {
     --menu-primary: #2d5016;
@@ -433,6 +436,157 @@
     line-height: 1; padding: 0 4px;
   }
 
+  .tabs {
+    max-width: 1100px; margin: 0 auto; padding: 14px 12px 0;
+    display: flex; gap: 6px; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+  .tab {
+    padding: 11px 20px;
+    background: linear-gradient(135deg, #ddd0b8 0%, #c4b699 100%);
+    color: var(--menu-primary-2);
+    border: 2px solid var(--menu-border); border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer; user-select: none;
+    font-family: inherit; font-weight: bold;
+    font-size: 1em;
+    transition: all 0.15s;
+    position: relative; top: 2px;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+  }
+  .tab:hover, .tab:active { background: linear-gradient(135deg, #e8dcc4 0%, #d4c19b 100%); }
+  .tab.active {
+    background: linear-gradient(135deg, var(--menu-primary) 0%, var(--menu-primary-2) 100%);
+    color: var(--menu-accent-hover);
+    border-color: var(--menu-primary);
+    top: 0;
+    border-bottom: 4px solid var(--menu-accent);
+    padding-bottom: 13px;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+  }
+  .tab-page { display: none; }
+  .tab-page.active { display: block; }
+
+  .nav-app {
+    max-width: 1100px; margin: 0 auto; padding: 14px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .nav-card {
+    background: var(--menu-bg); border: 1px solid var(--menu-border);
+    border-radius: 10px; padding: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .nav-card h3 {
+    color: var(--menu-primary); margin-bottom: 10px;
+    font-size: 1.05em;
+  }
+
+  .nav-controls {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .nav-btn {
+    flex: 1 1 auto; padding: 14px 16px;
+    border-radius: 8px; cursor: pointer;
+    font-family: inherit; font-weight: bold; font-size: 1em;
+    border: 2px solid;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    transition: all 0.15s;
+  }
+  .nav-btn.start { background: #27ae60; color: #fff; border-color: #27ae60; }
+  .nav-btn.start:hover, .nav-btn.start:active { background: #1f8b4d; border-color: #1f8b4d; }
+  .nav-btn.pause { background: #f39c12; color: #fff; border-color: #f39c12; }
+  .nav-btn.pause:hover, .nav-btn.pause:active { background: #c87f0a; border-color: #c87f0a; }
+  .nav-btn.stop { background: #c0392b; color: #fff; border-color: #c0392b; }
+  .nav-btn.stop:hover, .nav-btn.stop:active { background: #962d22; border-color: #962d22; }
+  .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .nav-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  }
+  .nav-stat {
+    background: var(--menu-bg-alt); border-radius: 8px;
+    padding: 10px; text-align: center;
+    border: 1px solid var(--menu-border);
+  }
+  .nav-stat-label {
+    font-size: 0.78em; color: #666; text-transform: uppercase;
+    letter-spacing: 0.5px; font-weight: bold;
+  }
+  .nav-stat-value {
+    font-size: 1.5em; font-weight: bold; color: var(--menu-primary);
+    font-family: 'Courier New', monospace; margin-top: 4px;
+  }
+  .nav-stat-unit { font-size: 0.65em; color: #888; }
+
+  .nav-status {
+    text-align: center; padding: 8px;
+    border-radius: 6px; font-weight: bold; font-size: 0.92em;
+  }
+  .nav-status.idle { background: #f5f1e8; color: #666; }
+  .nav-status.recording { background: #d4f4dd; color: #1b5e20; animation: navPulse 2s infinite; }
+  .nav-status.paused { background: #fff3cd; color: #856404; }
+  @keyframes navPulse {
+    0%, 100% { background: #d4f4dd; }
+    50% { background: #a8e8b9; }
+  }
+
+  .nav-toggle-row {
+    display: flex; gap: 6px; margin-bottom: 10px;
+  }
+  .nav-toggle-btn {
+    flex: 1; padding: 8px; border-radius: 6px;
+    border: 2px solid var(--menu-border); background: var(--menu-bg);
+    cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.9em;
+    color: var(--menu-text);
+  }
+  .nav-toggle-btn.active {
+    background: var(--menu-primary); color: var(--menu-bg);
+    border-color: var(--menu-primary);
+  }
+
+  #navMap {
+    width: 100%; height: 360px;
+    border-radius: 8px; border: 1px solid var(--menu-border);
+    background: #e8e8e8;
+  }
+  #navMap.hidden { display: none; }
+
+  .nav-walk-list {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .nav-walk-item {
+    background: var(--menu-bg-alt); border: 1px solid var(--menu-border);
+    border-radius: 8px; padding: 10px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .nav-walk-name {
+    font-weight: bold; color: var(--menu-primary);
+  }
+  .nav-walk-meta {
+    font-size: 0.85em; color: #666;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .nav-walk-actions {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .nav-walk-btn {
+    padding: 6px 12px; border-radius: 6px;
+    border: 1.5px solid; background: var(--menu-bg);
+    cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.85em;
+  }
+  .nav-walk-btn.view { border-color: #2980b9; color: #2980b9; }
+  .nav-walk-btn.view:hover { background: #2980b9; color: #fff; }
+  .nav-walk-btn.export { border-color: #16a085; color: #16a085; }
+  .nav-walk-btn.export:hover { background: #16a085; color: #fff; }
+  .nav-walk-btn.del { border-color: var(--danger); color: var(--danger); }
+  .nav-walk-btn.del:hover { background: var(--danger); color: #fff; }
+
+  .nav-attrib {
+    font-size: 0.72em; color: #888;
+    text-align: right; margin-top: 6px;
+  }
+  .nav-attrib a { color: #2980b9; text-decoration: none; }
+
   .verify-row { display: flex; gap: 6px; align-items: stretch; flex-wrap: wrap; }
   .verify-row input { flex: 1 1 100%; min-width: 0; }
   .verify-row .verify-btn { flex: 1 1 auto; }
@@ -495,6 +649,13 @@
 
 <header><h1>📍 Favoris Navigation</h1></header>
 
+<div class="tabs">
+  <div class="tab active" data-tab="favoris" onclick="switchTab('favoris')">📍 Favoris</div>
+  <div class="tab" data-tab="navigation" onclick="switchTab('navigation')">🚶 Navigation</div>
+</div>
+
+<div class="tab-page active" id="page-favoris">
+
 <main>
 
 <div class="ctx-warning hidden" id="ctxWarning">
@@ -549,6 +710,91 @@
 <div id="sectionsContainer" style="flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; align-items: flex-start;"></div>
 
 </main>
+
+</div>
+
+<div class="tab-page" id="page-navigation">
+
+<div class="nav-app">
+
+  <div class="nav-card">
+    <h3>🚶 Tracker de promenade</h3>
+    <div class="nav-toggle-row">
+      <button class="nav-toggle-btn active" id="navToggleMap" onclick="setNavMode('map')" type="button">🗺 Avec carte live</button>
+      <button class="nav-toggle-btn" id="navToggleNoMap" onclick="setNavMode('nomap')" type="button">⚡ Sans carte (économe)</button>
+    </div>
+
+    <div class="nav-status idle" id="navStatus">⏸ Prêt à enregistrer</div>
+
+    <div class="nav-stats" style="margin-top: 10px;">
+      <div class="nav-stat">
+        <div class="nav-stat-label">Distance</div>
+        <div class="nav-stat-value"><span id="navDistance">0.00</span> <span class="nav-stat-unit">km</span></div>
+      </div>
+      <div class="nav-stat">
+        <div class="nav-stat-label">Durée</div>
+        <div class="nav-stat-value" id="navDuration">00:00:00</div>
+      </div>
+      <div class="nav-stat">
+        <div class="nav-stat-label">Vitesse</div>
+        <div class="nav-stat-value"><span id="navSpeed">0.0</span> <span class="nav-stat-unit">km/h</span></div>
+      </div>
+      <div class="nav-stat">
+        <div class="nav-stat-label">Altitude</div>
+        <div class="nav-stat-value"><span id="navAltitude">—</span> <span class="nav-stat-unit">m</span></div>
+      </div>
+      <div class="nav-stat">
+        <div class="nav-stat-label">Points</div>
+        <div class="nav-stat-value" id="navPoints">0</div>
+      </div>
+      <div class="nav-stat">
+        <div class="nav-stat-label">Pts/min</div>
+        <div class="nav-stat-value" id="navPointsPerMin">0</div>
+      </div>
+    </div>
+
+    <div class="nav-controls" style="margin-top: 12px;">
+      <button class="nav-btn start" id="navStartBtn" onclick="navStart()" type="button">▶ Démarrer</button>
+      <button class="nav-btn pause" id="navPauseBtn" onclick="navPauseToggle()" type="button" disabled>⏸ Pause</button>
+      <button class="nav-btn stop" id="navStopBtn" onclick="navStop()" type="button" disabled>⏹ Arrêter</button>
+    </div>
+  </div>
+
+  <div class="nav-card" id="navMapCard">
+    <h3>🗺 Carte live</h3>
+    <div id="navMap"></div>
+    <div class="nav-attrib">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</div>
+  </div>
+
+  <div class="nav-card">
+    <h3>📂 Mes promenades enregistrées (<span id="navWalksCount">0</span>)</h3>
+    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--menu-border);">
+      <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.9em; font-weight: bold; color: var(--menu-primary);">
+        🎨 Couleur enregistrement :
+        <input type="color" id="navTrackColor" value="#c0392b" onchange="setTrackColor(this.value)" style="width: 44px; height: 32px; border: 1px solid var(--menu-border); border-radius: 4px; cursor: pointer; padding: 2px; background: #fff;">
+      </label>
+      <span class="qctrl-spacer" style="flex: 1;"></span>
+      <button class="qctrl-btn info" type="button" onclick="document.getElementById('gpxImportInput').click()">⤒ Importer GPX/ZIP</button>
+      <input type="file" id="gpxImportInput" accept=".gpx,.zip,application/gpx+xml,application/xml,text/xml,application/zip,application/x-zip-compressed" style="display: none;" onchange="importGpxFiles(this.files)" multiple>
+    </div>
+    <div class="nav-walk-list" id="navWalksList"></div>
+  </div>
+
+</div>
+
+</div>
+
+<div class="modal-bg" id="walkViewerModal">
+  <div class="modal" style="max-width: 720px; padding: 12px;">
+    <h2 id="walkViewerTitle" style="font-size: 1.1em;">Visualiser la promenade</h2>
+    <div id="walkViewerStats" style="margin-bottom: 8px; font-size: 0.88em; color: #555;"></div>
+    <div id="walkViewerMap" style="width: 100%; height: 60vh; border-radius: 8px; border: 1px solid var(--menu-border); background: #e8e8e8;"></div>
+    <div class="nav-attrib">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</div>
+    <div class="modal-actions" style="margin-top: 10px;">
+      <button class="modal-btn primary" type="button" onclick="closeWalkViewer()">Fermer</button>
+    </div>
+  </div>
+</div>
 
 <div class="modal-bg" id="qiblaModal">
   <div class="modal" style="max-width: 380px;">
@@ -673,10 +919,7 @@ let categories = loadLocal('categories', [
   { id: 'cat_soins',      name: 'Soins',            dark: false, pinned: false },
   { id: 'cat_poi',        name: 'POI',              dark: false, pinned: false, isPOI: true }
 ]);
-let favorites = loadLocal('favorites', [
-  { id: 'fav_home',    name: 'Chez moi', address: 'Rue des Ramoneurs 1, 1000 Bruxelles',     categoryId: 'cat_chez_moi', lat: null, lon: null },
-  { id: 'fav_travail', name: 'Travail',  address: 'Rue Vanderstraeten 9, 1080 Bruxelles',    categoryId: 'cat_travail',  lat: null, lon: null }
-]);
+let favorites = loadLocal('favorites', []);
 
 (function migrateRenameAdeptsSoins() {
   let changed = false;
@@ -708,10 +951,7 @@ let favorites = loadLocal('favorites', [
     { id: 'cat_soins',      name: 'Soins',            dark: false, pinned: false },
     { id: 'cat_poi',        name: 'POI',              dark: false, pinned: false, isPOI: true }
   ];
-  const DEFAULT_FAVORITES = [
-    { id: 'fav_home',    name: 'Chez moi', address: 'Rue des Ramoneurs 1, 1000 Bruxelles',  categoryId: 'cat_chez_moi', lat: null, lon: null },
-    { id: 'fav_travail', name: 'Travail',  address: 'Rue Vanderstraeten 9, 1080 Bruxelles', categoryId: 'cat_travail',  lat: null, lon: null }
-  ];
+  const DEFAULT_FAVORITES = [];
 
   let changedCats = false;
   const existingCatIds = new Set(categories.map(c => c.id));
@@ -2111,6 +2351,641 @@ document.querySelectorAll('.qctrl-btn.travel-mode').forEach(btn => {
   btn.classList.toggle('active', btn.dataset.mode === currentTravelMode);
 });
 
+// ============================================
+// SYSTÈME D'ONGLETS
+// ============================================
+function switchTab(tabName) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.toggle('active', p.id === 'page-' + tabName));
+  saveLocal('activeTab', tabName);
+  if (tabName === 'navigation') {
+    renderWalksList();
+    if (navMode === 'map') {
+      setTimeout(() => initNavMap(), 100);
+    }
+  }
+}
+
+// ============================================
+// NAVIGATION / TRACKER GPX
+// ============================================
+let navTrackColor = loadLocal('navTrackColor', '#c0392b');
+let navMode = loadLocal('navMode', 'map');
+let navState = 'idle';
+let navWatchId = null;
+let navStartTime = null;
+let navPauseStart = null;
+let navPausedDuration = 0;
+let navPoints = [];
+let navTotalDistance = 0;
+let navMap = null;
+let navTrackPolyline = null;
+let navCurrentMarker = null;
+let navTimerInterval = null;
+let navWalks = loadLocal('walks', []);
+
+(function migrateWalkColors() {
+  let changed = false;
+  navWalks.forEach(w => {
+    if (!w.color) {
+      w.color = generateRandomColor();
+      changed = true;
+    }
+  });
+  if (changed) saveLocal('walks', navWalks);
+})();
+
+function setNavMode(mode) {
+  if (navState !== 'idle') { showToast('Arrête l\'enregistrement avant de changer de mode', true); return; }
+  navMode = mode;
+  saveLocal('navMode', mode);
+  document.getElementById('navToggleMap').classList.toggle('active', mode === 'map');
+  document.getElementById('navToggleNoMap').classList.toggle('active', mode === 'nomap');
+  const mapCard = document.getElementById('navMapCard');
+  if (mapCard) mapCard.style.display = mode === 'map' ? 'block' : 'none';
+  if (mode === 'map' && document.getElementById('page-navigation').classList.contains('active')) {
+    setTimeout(() => initNavMap(), 100);
+  }
+}
+
+function initNavMap() {
+  if (typeof L === 'undefined') {
+    console.error('[FavNav] Leaflet not loaded');
+    const mapEl = document.getElementById('navMap');
+    if (mapEl) mapEl.innerHTML = '<div style="padding:20px; text-align:center; color:#a93226;">⚠ Leaflet n\'a pas pu charger.<br>Vérifie ta connexion internet.</div>';
+    return;
+  }
+  if (navMap) {
+    navMap.invalidateSize();
+    return;
+  }
+  const mapEl = document.getElementById('navMap');
+  if (!mapEl) return;
+  navMap = L.map('navMap').setView([50.85, 4.35], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(navMap);
+  navTrackPolyline = L.polyline([], { color: navTrackColor, weight: 4, opacity: 0.85 }).addTo(navMap);
+}
+
+function navStart() {
+  console.log('[FavNav] navStart');
+  if (!('geolocation' in navigator)) {
+    showGpsErrorModal('GPS non disponible',
+      'Cette app ne donne pas accès au GPS. Ouvre dans Safari.',
+      getContextDebug());
+    return;
+  }
+  const isSecure = (window.isSecureContext === true) ||
+                   (location.protocol === 'file:') ||
+                   (location.hostname === 'localhost') ||
+                   (location.hostname === '127.0.0.1');
+  if (!isSecure) {
+    showGpsErrorModal('Contexte non sécurisé',
+      'Le GPS est bloqué. Ouvre dans Safari (file://) ou via HTTPS.',
+      getContextDebug());
+    return;
+  }
+
+  navState = 'recording';
+  navStartTime = Date.now();
+  navPausedDuration = 0;
+  navPoints = [];
+  navTotalDistance = 0;
+
+  if (navMode === 'map') {
+    initNavMap();
+    if (navTrackPolyline) navTrackPolyline.setLatLngs([]);
+    if (navCurrentMarker && navMap) { navMap.removeLayer(navCurrentMarker); navCurrentMarker = null; }
+  }
+
+  updateNavUI();
+  document.getElementById('navStartBtn').disabled = true;
+  document.getElementById('navPauseBtn').disabled = false;
+  document.getElementById('navStopBtn').disabled = false;
+  document.getElementById('navStatus').className = 'nav-status recording';
+  document.getElementById('navStatus').textContent = '🔴 Enregistrement en cours...';
+
+  navWatchId = navigator.geolocation.watchPosition(
+    onNavPosition,
+    onNavPositionError,
+    { enableHighAccuracy: true, maximumAge: 1000, timeout: 30000 }
+  );
+
+  navTimerInterval = setInterval(updateNavStats, 1000);
+}
+
+function onNavPosition(pos) {
+  if (navState !== 'recording') return;
+  const lat = pos.coords.latitude;
+  const lon = pos.coords.longitude;
+  const ele = pos.coords.altitude;
+  const accuracy = pos.coords.accuracy;
+  const t = Date.now();
+
+  if (accuracy != null && accuracy > 50 && navPoints.length > 3) {
+    console.log('[FavNav] skip low-accuracy point:', accuracy);
+    return;
+  }
+
+  if (navPoints.length > 0) {
+    const last = navPoints[navPoints.length - 1];
+    const segDist = haversineMeters(last.lat, last.lon, lat, lon);
+    if (segDist < 2 && navPoints.length > 1) return;
+    navTotalDistance += segDist;
+  }
+
+  navPoints.push({ lat: lat, lon: lon, ele: ele, t: t, accuracy: accuracy });
+
+  if (navMode === 'map' && navMap && navTrackPolyline) {
+    navTrackPolyline.addLatLng([lat, lon]);
+    if (!navCurrentMarker) {
+      navCurrentMarker = L.circleMarker([lat, lon], {
+        radius: 8, color: '#fff', weight: 3,
+        fillColor: '#27ae60', fillOpacity: 1
+      }).addTo(navMap);
+      navMap.setView([lat, lon], 16);
+    } else {
+      navCurrentMarker.setLatLng([lat, lon]);
+      navMap.panTo([lat, lon]);
+    }
+  }
+
+  updateNavStats();
+}
+
+function onNavPositionError(err) {
+  console.error('[FavNav] watchPosition error', err);
+  let msg;
+  switch(err.code) {
+    case 1: msg = 'Permission GPS refusée'; break;
+    case 2: msg = 'Position indisponible'; break;
+    case 3: msg = 'Timeout GPS'; break;
+    default: msg = 'Erreur GPS : ' + err.message;
+  }
+  showToast(msg, true);
+}
+
+function navPauseToggle() {
+  if (navState === 'recording') {
+    navState = 'paused';
+    navPauseStart = Date.now();
+    document.getElementById('navStatus').className = 'nav-status paused';
+    document.getElementById('navStatus').textContent = '⏸ En pause';
+    document.getElementById('navPauseBtn').textContent = '▶ Reprendre';
+  } else if (navState === 'paused') {
+    navPausedDuration += Date.now() - navPauseStart;
+    navPauseStart = null;
+    navState = 'recording';
+    document.getElementById('navStatus').className = 'nav-status recording';
+    document.getElementById('navStatus').textContent = '🔴 Enregistrement en cours...';
+    document.getElementById('navPauseBtn').textContent = '⏸ Pause';
+  }
+}
+
+function navStop() {
+  if (navState === 'idle') return;
+  if (!confirm('Arrêter et sauvegarder cette promenade ?')) return;
+
+  if (navWatchId !== null) {
+    navigator.geolocation.clearWatch(navWatchId);
+    navWatchId = null;
+  }
+  if (navTimerInterval) {
+    clearInterval(navTimerInterval);
+    navTimerInterval = null;
+  }
+  if (navState === 'paused' && navPauseStart) {
+    navPausedDuration += Date.now() - navPauseStart;
+    navPauseStart = null;
+  }
+
+  if (navPoints.length < 2) {
+    showToast('Pas assez de points pour sauvegarder', true);
+    navResetUI();
+    return;
+  }
+
+  const endTime = Date.now();
+  const duration = endTime - navStartTime - navPausedDuration;
+  const defaultName = 'Promenade ' + new Date(navStartTime).toLocaleString('fr-BE');
+  const name = prompt('Nom de la promenade :', defaultName) || defaultName;
+
+  const walk = {
+    id: 'walk_' + navStartTime + '_' + Math.random().toString(36).slice(2,7),
+    name: name.trim() || defaultName,
+    startTime: navStartTime,
+    endTime: endTime,
+    duration: duration,
+    distance: navTotalDistance,
+    points: navPoints,
+    color: navTrackColor
+  };
+  navWalks.push(walk);
+  saveLocal('walks', navWalks);
+  showToast('Promenade sauvegardée ✓');
+
+  navResetUI();
+  renderWalksList();
+}
+
+function navResetUI() {
+  navState = 'idle';
+  navStartTime = null;
+  navPauseStart = null;
+  navPausedDuration = 0;
+  navPoints = [];
+  navTotalDistance = 0;
+  document.getElementById('navStartBtn').disabled = false;
+  document.getElementById('navPauseBtn').disabled = true;
+  document.getElementById('navStopBtn').disabled = true;
+  document.getElementById('navPauseBtn').textContent = '⏸ Pause';
+  document.getElementById('navStatus').className = 'nav-status idle';
+  document.getElementById('navStatus').textContent = '⏸ Prêt à enregistrer';
+  updateNavUI();
+}
+
+function updateNavUI() {
+  document.getElementById('navDistance').textContent = (navTotalDistance / 1000).toFixed(2);
+  document.getElementById('navDuration').textContent = formatDuration(navStartTime ? (Date.now() - navStartTime - navPausedDuration) : 0);
+  document.getElementById('navSpeed').textContent = '0.0';
+  const lastEle = navPoints.length > 0 ? navPoints[navPoints.length-1].ele : null;
+  document.getElementById('navAltitude').textContent = (lastEle != null && !isNaN(lastEle)) ? Math.round(lastEle) : '—';
+  document.getElementById('navPoints').textContent = navPoints.length;
+  document.getElementById('navPointsPerMin').textContent = '0';
+}
+
+function updateNavStats() {
+  if (navState === 'idle' || !navStartTime) return;
+  const now = Date.now();
+  const elapsed = now - navStartTime - navPausedDuration - (navState === 'paused' && navPauseStart ? (now - navPauseStart) : 0);
+  document.getElementById('navDuration').textContent = formatDuration(elapsed);
+  document.getElementById('navDistance').textContent = (navTotalDistance / 1000).toFixed(2);
+  document.getElementById('navPoints').textContent = navPoints.length;
+
+  // Vitesse instantanée (5 derniers points)
+  if (navPoints.length >= 2) {
+    const recent = navPoints.slice(-5);
+    let recDist = 0;
+    for (let i = 1; i < recent.length; i++) {
+      recDist += haversineMeters(recent[i-1].lat, recent[i-1].lon, recent[i].lat, recent[i].lon);
+    }
+    const recTime = (recent[recent.length-1].t - recent[0].t) / 1000;
+    const speedKmh = recTime > 0 ? (recDist / recTime) * 3.6 : 0;
+    document.getElementById('navSpeed').textContent = speedKmh.toFixed(1);
+  }
+
+  // Altitude
+  const lastEle = navPoints.length > 0 ? navPoints[navPoints.length-1].ele : null;
+  document.getElementById('navAltitude').textContent = (lastEle != null && !isNaN(lastEle)) ? Math.round(lastEle) : '—';
+
+  // Points/min
+  const minutes = elapsed / 60000;
+  const ppm = minutes > 0 ? (navPoints.length / minutes) : 0;
+  document.getElementById('navPointsPerMin').textContent = ppm.toFixed(1);
+}
+
+function formatDuration(ms) {
+  if (ms < 0 || isNaN(ms)) ms = 0;
+  const total = Math.floor(ms / 1000);
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function haversineMeters(lat1, lon1, lat2, lon2) {
+  const R = 6371000;
+  const phi1 = lat1 * Math.PI / 180;
+  const phi2 = lat2 * Math.PI / 180;
+  const dPhi = (lat2 - lat1) * Math.PI / 180;
+  const dLambda = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dPhi/2)**2 + Math.cos(phi1) * Math.cos(phi2) * Math.sin(dLambda/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function renderWalksList() {
+  const list = document.getElementById('navWalksList');
+  const count = document.getElementById('navWalksCount');
+  if (!list) return;
+  count.textContent = navWalks.length;
+  if (navWalks.length === 0) {
+    list.innerHTML = '<div style="text-align:center; color:#888; font-style:italic; padding:14px;">Aucune promenade enregistrée. Clique « ▶ Démarrer » ci-dessus.</div>';
+    return;
+  }
+  const sorted = [...navWalks].sort((a,b) => b.startTime - a.startTime);
+  list.innerHTML = sorted.map(w => {
+    const distKm = (w.distance / 1000).toFixed(2);
+    const dur = formatDuration(w.duration);
+    const date = new Date(w.startTime).toLocaleString('fr-BE');
+    const avgSpeed = w.duration > 0 ? ((w.distance / 1000) / (w.duration / 3600000)).toFixed(1) : '0';
+    const trackColor = w.color || navTrackColor;
+    return '<div class="nav-walk-item">' +
+      '<div class="nav-walk-name" style="display:flex; align-items:center; gap:8px;">' +
+        '<input type="color" value="' + trackColor + '" onchange="setWalkColor(\'' + w.id + '\', this.value)" title="Changer la couleur de cette trace" style="width:28px; height:28px; padding:0; border:1px solid var(--menu-border); border-radius:4px; cursor:pointer; background:#fff; flex-shrink:0;">' +
+        '<span style="flex:1;">' + escapeHtml(w.name) + (w.imported ? ' <span style="font-size:0.7em; background:#2980b9; color:#fff; padding:2px 7px; border-radius:8px; vertical-align:middle; font-weight:normal;">📥 importé</span>' : '') + '</span>' +
+      '</div>' +
+      '<div class="nav-walk-meta">' +
+        '<span>📅 ' + escapeHtml(date) + '</span>' +
+        '<span>📏 ' + distKm + ' km</span>' +
+        '<span>⏱ ' + dur + '</span>' +
+        '<span>⚡ ' + avgSpeed + ' km/h moy</span>' +
+        '<span>📍 ' + w.points.length + ' pts</span>' +
+      '</div>' +
+      '<div class="nav-walk-actions">' +
+        '<button class="nav-walk-btn view" type="button" onclick="viewWalk(\'' + w.id + '\')">🗺 Voir carte</button>' +
+        '<button class="nav-walk-btn export" type="button" onclick="exportWalkGpx(\'' + w.id + '\')">⤓ Export GPX</button>' +
+        '<button class="nav-walk-btn del" type="button" onclick="deleteWalk(\'' + w.id + '\')">🗑 Supprimer</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function deleteWalk(id) {
+  const w = navWalks.find(x => x.id === id);
+  if (!w) return;
+  if (!confirm('Supprimer « ' + w.name + ' » ?\nCette action est irréversible.')) return;
+  navWalks = navWalks.filter(x => x.id !== id);
+  saveLocal('walks', navWalks);
+  renderWalksList();
+  showToast('Promenade supprimée');
+}
+
+function buildGpx(walk) {
+  const isoTime = (t) => new Date(t).toISOString().replace(/\.\d{3}Z$/, 'Z');
+  const startIso = isoTime(walk.startTime);
+  const ptsXml = walk.points.map(p => {
+    let s = '      <trkpt lat="' + p.lat.toFixed(7) + '" lon="' + p.lon.toFixed(7) + '">\n';
+    if (p.ele != null && !isNaN(p.ele)) s += '        <ele>' + p.ele.toFixed(2) + '</ele>\n';
+    s += '        <time>' + isoTime(p.t) + '</time>\n';
+    s += '      </trkpt>';
+    return s;
+  }).join('\n');
+
+  const xmlEscape = (s) => String(s).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]));
+
+  return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<gpx version="1.1" creator="Favoris Navigation v10" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">\n' +
+    '  <metadata>\n' +
+    '    <name>' + xmlEscape(walk.name) + '</name>\n' +
+    '    <time>' + startIso + '</time>\n' +
+    '  </metadata>\n' +
+    '  <trk>\n' +
+    '    <name>' + xmlEscape(walk.name) + '</name>\n' +
+    '    <trkseg>\n' +
+    ptsXml + '\n' +
+    '    </trkseg>\n' +
+    '  </trk>\n' +
+    '</gpx>\n';
+}
+
+function exportWalkGpx(id) {
+  const w = navWalks.find(x => x.id === id);
+  if (!w) return;
+  const gpx = buildGpx(w);
+  const safeName = w.name.replace(/[^\w\s-]/g, '_').replace(/\s+/g, '_').slice(0, 50);
+  const stamp = new Date(w.startTime).toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  const filename = safeName + '_' + stamp + '.gpx';
+
+  const blob = new Blob([gpx], { type: 'application/gpx+xml;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 200);
+  showToast('GPX téléchargé : ' + filename);
+}
+
+let walkViewerMap = null;
+function viewWalk(id) {
+  const w = navWalks.find(x => x.id === id);
+  if (!w) return;
+  if (typeof L === 'undefined') {
+    showToast('Leaflet non chargé. Vérifie ta connexion.', true);
+    return;
+  }
+  document.getElementById('walkViewerTitle').textContent = '🗺 ' + w.name;
+  const distKm = (w.distance / 1000).toFixed(2);
+  const dur = formatDuration(w.duration);
+  const date = new Date(w.startTime).toLocaleString('fr-BE');
+  document.getElementById('walkViewerStats').textContent = date + ' · ' + distKm + ' km · ' + dur + ' · ' + w.points.length + ' points';
+  document.getElementById('walkViewerModal').classList.add('active');
+
+  const trackColor = w.color || navTrackColor;
+
+  setTimeout(() => {
+    if (walkViewerMap) { walkViewerMap.remove(); walkViewerMap = null; }
+    walkViewerMap = L.map('walkViewerMap');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(walkViewerMap);
+    const latlngs = w.points.map(p => [p.lat, p.lon]);
+    const poly = L.polyline(latlngs, { color: trackColor, weight: 4, opacity: 0.85 }).addTo(walkViewerMap);
+    if (latlngs.length > 0) {
+      L.circleMarker(latlngs[0], { radius: 8, color: '#fff', weight: 3, fillColor: '#27ae60', fillOpacity: 1 }).addTo(walkViewerMap).bindPopup('Départ');
+      L.circleMarker(latlngs[latlngs.length-1], { radius: 8, color: '#fff', weight: 3, fillColor: trackColor, fillOpacity: 1 }).addTo(walkViewerMap).bindPopup('Arrivée');
+      walkViewerMap.fitBounds(poly.getBounds(), { padding: [20, 20] });
+    }
+  }, 100);
+}
+
+function closeWalkViewer() {
+  document.getElementById('walkViewerModal').classList.remove('active');
+  if (walkViewerMap) {
+    walkViewerMap.remove();
+    walkViewerMap = null;
+  }
+}
+
+function setTrackColor(color) {
+  navTrackColor = color;
+  saveLocal('navTrackColor', color);
+  if (navTrackPolyline) navTrackPolyline.setStyle({ color: color });
+  showToast('Couleur d\'enregistrement mise à jour');
+}
+
+function generateRandomColor() {
+  // Palette de couleurs vives et distinctes (évite jaune sur OSM)
+  const palette = [
+    '#c0392b', '#2980b9', '#16a085', '#8e44ad', '#d35400',
+    '#27ae60', '#e74c3c', '#3498db', '#1abc9c', '#9b59b6',
+    '#e67e22', '#f39c12', '#34495e', '#7f8c8d', '#c0a060',
+    '#2c3e50', '#a93226', '#1f618d', '#117a65', '#6c3483'
+  ];
+  return palette[Math.floor(Math.random() * palette.length)];
+}
+
+function setWalkColor(id, color) {
+  const w = navWalks.find(x => x.id === id);
+  if (!w) return;
+  w.color = color;
+  saveLocal('walks', navWalks);
+  renderWalksList();
+}
+
+function parseGpx(xmlText, filename) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(xmlText, 'application/xml');
+  const parseErr = doc.querySelector('parsererror');
+  if (parseErr) throw new Error('XML invalide : ' + parseErr.textContent.slice(0, 100));
+
+  const gpx = doc.querySelector('gpx');
+  if (!gpx) throw new Error('Pas de balise <gpx> trouvée');
+
+  const tracks = doc.querySelectorAll('trk');
+  if (tracks.length === 0) {
+    throw new Error('Pas de trace <trk> trouvée dans le GPX. Les waypoints seuls (<wpt>) ne sont pas supportés.');
+  }
+
+  const walks = [];
+  tracks.forEach((trk, trkIdx) => {
+    const nameEl = trk.querySelector(':scope > name');
+    const trackName = (nameEl && nameEl.textContent.trim()) ||
+                      filename.replace(/\.gpx$/i, '') + (tracks.length > 1 ? ' #' + (trkIdx + 1) : '');
+
+    const points = [];
+    const trkpts = trk.querySelectorAll('trkpt');
+    trkpts.forEach(pt => {
+      const lat = parseFloat(pt.getAttribute('lat'));
+      const lon = parseFloat(pt.getAttribute('lon'));
+      if (isNaN(lat) || isNaN(lon)) return;
+      const eleEl = pt.querySelector('ele');
+      const timeEl = pt.querySelector('time');
+      const ele = eleEl ? parseFloat(eleEl.textContent) : null;
+      const t = timeEl ? Date.parse(timeEl.textContent) : null;
+      points.push({
+        lat: lat, lon: lon,
+        ele: (ele != null && !isNaN(ele)) ? ele : null,
+        t: (t != null && !isNaN(t)) ? t : null
+      });
+    });
+
+    if (points.length < 2) return;
+
+    let totalDist = 0;
+    for (let i = 1; i < points.length; i++) {
+      totalDist += haversineMeters(points[i-1].lat, points[i-1].lon, points[i].lat, points[i].lon);
+    }
+
+    const validTimes = points.map(p => p.t).filter(t => t != null);
+    let startTime = validTimes.length > 0 ? Math.min(...validTimes) : Date.now();
+    let endTime = validTimes.length > 0 ? Math.max(...validTimes) : startTime;
+    let duration = endTime - startTime;
+
+    points.forEach((p, i) => {
+      if (p.t == null) p.t = startTime + Math.round((duration * i) / Math.max(points.length - 1, 1));
+    });
+
+    walks.push({
+      id: 'walk_imp_' + Date.now() + '_' + trkIdx + '_' + Math.random().toString(36).slice(2, 7),
+      name: trackName,
+      startTime: startTime,
+      endTime: endTime,
+      duration: duration,
+      distance: totalDist,
+      points: points,
+      color: generateRandomColor(),
+      imported: true
+    });
+  });
+
+  if (walks.length === 0) throw new Error('Aucune trace valide dans le fichier (besoin d\'au moins 2 points par trace).');
+  return walks;
+}
+
+async function importGpxFiles(fileList) {
+  if (!fileList || fileList.length === 0) return;
+  let totalImported = 0;
+  const errors = [];
+
+  for (const file of fileList) {
+    const lower = file.name.toLowerCase();
+    try {
+      if (lower.endsWith('.zip')) {
+        if (typeof JSZip === 'undefined') {
+          errors.push(file.name + ' : JSZip non chargé (vérifie ta connexion internet)');
+          continue;
+        }
+        const buffer = await file.arrayBuffer();
+        const zip = await JSZip.loadAsync(buffer);
+        const gpxEntries = [];
+        zip.forEach((relPath, entry) => {
+          if (entry.dir) return;
+          if (relPath.toLowerCase().endsWith('.gpx')) {
+            gpxEntries.push({ path: relPath, entry: entry });
+          }
+        });
+        if (gpxEntries.length === 0) {
+          errors.push(file.name + ' : aucun .gpx trouvé dans l\'archive');
+          continue;
+        }
+        for (const ge of gpxEntries) {
+          try {
+            const text = await ge.entry.async('string');
+            const walks = parseGpx(text, ge.path.split('/').pop());
+            walks.forEach(w => navWalks.push(w));
+            totalImported += walks.length;
+          } catch(e) {
+            errors.push(file.name + ' / ' + ge.path + ' : ' + e.message);
+          }
+        }
+      } else {
+        const text = await file.text();
+        const walks = parseGpx(text, file.name);
+        walks.forEach(w => navWalks.push(w));
+        totalImported += walks.length;
+      }
+    } catch(e) {
+      errors.push(file.name + ' : ' + e.message);
+    }
+  }
+
+  if (totalImported > 0) {
+    saveLocal('walks', navWalks);
+    renderWalksList();
+  }
+
+  document.getElementById('gpxImportInput').value = '';
+
+  if (errors.length > 0) {
+    showGpsErrorModal(
+      'Import partiel',
+      (totalImported > 0 ? totalImported + ' trace(s) importée(s).<br><br>' : '') +
+      'Erreurs :<br>' + errors.map(e => '• ' + escapeHtml(e)).join('<br>'),
+      ''
+    );
+  } else {
+    showToast(totalImported + ' trace(s) importée(s) ✓');
+  }
+}
+
+// Init nav mode toggle au démarrage
+(function initNavModeUI() {
+  const tMap = document.getElementById('navToggleMap');
+  const tNo = document.getElementById('navToggleNoMap');
+  if (tMap) tMap.classList.toggle('active', navMode === 'map');
+  if (tNo) tNo.classList.toggle('active', navMode === 'nomap');
+  const mapCard = document.getElementById('navMapCard');
+  if (mapCard) mapCard.style.display = navMode === 'map' ? 'block' : 'none';
+  const colorInput = document.getElementById('navTrackColor');
+  if (colorInput) colorInput.value = navTrackColor;
+})();
+
+// Restaurer onglet actif
+const _savedTab = loadLocal('activeTab', 'favoris');
+if (_savedTab !== 'favoris') {
+  setTimeout(() => switchTab(_savedTab), 50);
+}
+
 render();
 contextOK = checkContext();
 </script>
@@ -2194,6 +3069,216 @@ SOURCES & RÉFÉRENCES
 8. Export CSV : Blob API + URL.createObjectURL() — standard Web,
    compatible Safari iOS 13+. BOM UTF-8 (\uFEFF) inclus pour
    compatibilité Excel/Numbers avec accents.
+
+=========================================================
+CHANGEMENTS v12 → v13 (signalés conformément aux consignes)
+=========================================================
+
+🆕 1. COULEUR PAR TRACE (au lieu de globale)
+- Chaque promenade a maintenant sa propre couleur (champ w.color)
+- Couleur attribuée :
+  • À l'enregistrement : utilise la couleur du picker en haut
+    (« 🎨 Couleur enregistrement »), valeur par défaut pour les
+    nouvelles traces — sauvegardée dans navTrackColor
+  • À l'import GPX/ZIP : couleur ALÉATOIRE choisie dans une palette
+    de 20 couleurs vives et distinctes (évite les jaunes peu visibles
+    sur fond OSM)
+- Migration auto migrateWalkColors() : les traces existantes sans
+  champ color reçoivent une couleur aléatoire à la première ouverture
+  de la v13.
+
+🆕 2. MODIFIER LA COULEUR D'UNE TRACE EXISTANTE
+- Sur chaque ligne de la liste « Mes promenades enregistrées » :
+  un petit color picker à gauche du nom permet de changer la couleur
+  de cette trace en particulier (sauvegardé immédiatement)
+- La nouvelle couleur s'applique au prochain « 🗺 Voir carte »
+
+🆕 3. SUPPORT DES FICHIERS .ZIP
+- Le bouton est renommé « ⤒ Importer GPX/ZIP »
+- Bibliothèque ajoutée : JSZip 3.10.1 depuis cdnjs.cloudflare.com
+  (MIT/GPLv3, gratuit)
+- Comportement :
+  • Si le fichier est .zip → JSZip.loadAsync() pour décompresser,
+    puis tous les .gpx trouvés dans l'archive sont parsés
+  • Sous-dossiers supportés (récursif via JSZip.forEach)
+  • Erreurs par fichier listées dans le modal récapitulatif
+  • Mix .gpx + .zip dans une même sélection : OK
+- Use case typique : tu télécharges un export Strava/Garmin (qui est
+  souvent un ZIP de plusieurs GPX), tu l'importes en 1 clic, chaque
+  trace reçoit sa propre couleur aléatoire.
+
+🛠 BIBLIOTHÈQUE AJOUTÉE
+- JSZip 3.10.1 — création/lecture de ZIP en JavaScript pur côté
+  navigateur, sans dépendance serveur
+- Source : https://stuk.github.io/jszip/
+- CDN : https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js
+- Licence : dual MIT / GPLv3
+
+=========================================================
+CHANGEMENTS v11 → v12 (signalés conformément aux consignes)
+=========================================================
+
+🆕 1. COULEUR GLOBALE DES TRACES (color picker)
+- Sélecteur HTML5 <input type="color"> dans l'onglet Navigation,
+  au-dessus de la liste des promenades
+- Couleur sauvegardée en localStorage (clé navTrackColor)
+- Couleur par défaut : #c0392b (rouge brique)
+- S'applique à :
+  • La trace live pendant l'enregistrement
+  • Les traces visualisées via 🗺 Voir carte
+  • Le marker d'arrivée
+- Si tu changes la couleur pendant l'enregistrement, la trace en cours
+  est mise à jour en temps réel (setStyle sur la polyline)
+
+🆕 2. IMPORT GPX
+- Bouton « ⤒ Importer GPX » dans la barre d'outils des promenades
+- Accepte plusieurs fichiers en une fois (multiple)
+- Format accepté : GPX 1.0 et 1.1 (parser DOMParser natif)
+- Chaque <trk> du fichier devient une promenade séparée
+  (un fichier peut contenir plusieurs traces)
+- Données extraites :
+  • <name> du <trk> (sinon utilise le nom de fichier)
+  • <trkpt> avec lat, lon (obligatoires)
+  • <ele> (altitude) si présent, sinon null
+  • <time> (timestamp ISO 8601 UTC) si présent, sinon
+    times reconstitués linéairement entre début et fin
+- Distance totale recalculée via Haversine
+- Durée calculée comme (max time - min time) des trkpts
+- Badge « 📥 importé » affiché dans la liste pour distinguer
+  les traces importées des traces enregistrées par l'app
+
+GESTION DES ERREURS :
+- XML invalide → message d'erreur avec extrait
+- Pas de balise <gpx> → erreur explicite
+- Pas de <trk> → erreur (les <wpt> seuls non supportés)
+- < 2 points dans une trace → trace ignorée
+- Erreurs par fichier listées dans un modal si import multiple
+
+INTEROPÉRABILITÉ :
+- L'import accepte les GPX exportés par cette app, mais aussi par
+  Strava, Garmin Connect, OsmAnd, GPX Studio, Wikiloc, etc.
+- Les traces importées peuvent être ré-exportées (bouton ⤓ Export GPX)
+  → format normalisé GPX 1.1 conforme topografix
+
+=========================================================
+CHANGEMENTS v10 → v11 (signalés conformément aux consignes)
+=========================================================
+
+🔒 CONFIDENTIALITÉ — Suppression des adresses personnelles en dur
+
+CONTEXTE :
+Les versions v4 à v10 contenaient en dur dans le code source 2 adresses
+personnelles comme valeurs par défaut des favoris « Chez moi » et
+« Travail ». Ces données étaient visibles par toute personne ayant
+accès au fichier HTML (notamment si hébergé sur un GitHub public).
+
+CORRECTIONS v11 :
+- SUPPRIMÉ : favori par défaut « Chez moi » avec adresse en dur
+- SUPPRIMÉ : favori par défaut « Travail » avec adresse en dur
+- SUPPRIMÉ : adresses en dur dans la migration migrateEnsureAllDefaults
+- SUPPRIMÉ : toutes les références aux adresses dans les commentaires
+- CONSERVÉ : les catégories « Chez moi » (épinglée) et « Travail »
+  (épinglée) — elles restent disponibles, simplement vides.
+- CONSERVÉ : toutes les autres catégories (Famille, G.Enseigne,
+  C.Local, Randonnée, F.Soigne, Adepts, Soins, POI)
+- CONSERVÉ : toute la logique d'épinglage, le bouton ＋ Ajouter dans
+  chaque catégorie permet désormais à chaque utilisateur de saisir
+  sa propre adresse confidentielle, stockée uniquement en localStorage.
+
+SUR L'EXISTANT :
+- Si tu avais déjà ces 2 favoris dans ton localStorage actuel
+  (depuis une version précédente), ils sont CONSERVÉS tels quels
+  côté ton navigateur — la migration ne les touche pas.
+- Pour les supprimer, utilise le bouton 🗑 sur chaque favori,
+  ou le bouton 🔄 Reset (efface tout localStorage et recharge).
+
+POUR DISTRIBUER LE FICHIER À DES AMIS :
+- Le code source ne contient plus aucune adresse personnelle.
+- Chaque utilisateur saisit ses propres favoris dans son navigateur,
+  qui restent chez lui (localStorage local).
+- L'export JSON/CSV permet aux utilisateurs de sauvegarder/transférer
+  leurs propres données.
+
+=========================================================
+CHANGEMENTS v9 → v10 (signalés conformément aux consignes)
+=========================================================
+
+🆕 SYSTÈME D'ONGLETS (tabs)
+- 2 onglets en haut de page, sous le header :
+  • 📍 Favoris  (le contenu existant — favoris, Qibla, POI, etc.)
+  • 🚶 Navigation (nouvelle app de tracking GPX)
+- L'onglet actif est sauvegardé en localStorage (clé activeTab)
+  → quand tu rouvres l'app, tu reviens sur l'onglet où tu étais
+- Pattern CSS inspiré du sokoban_v4.html fourni en exemple
+
+🆕 ONGLET NAVIGATION — Tracker GPX complet
+
+A. Toggle de mode (carte vs sans carte)
+   • 🗺 Avec carte live : carte Leaflet + tuiles OpenStreetMap
+     trace ta promenade en temps réel sur la carte, marker vert qui suit
+   • ⚡ Sans carte (économe) : enregistre les points GPS sans afficher
+     la carte → consomme beaucoup moins de batterie pour de longues
+     randonnées
+   • Le mode est sauvegardé en localStorage (clé navMode)
+
+B. Contrôles d'enregistrement
+   • ▶ Démarrer : lance navigator.geolocation.watchPosition
+     avec enableHighAccuracy: true
+   • ⏸ Pause / ▶ Reprendre : suspend l'enregistrement
+     (la durée pendant la pause n'est pas comptée)
+   • ⏹ Arrêter : confirme + demande un nom + sauvegarde
+
+C. Stats live (mises à jour chaque seconde)
+   • Distance totale (km, calcul Haversine)
+   • Durée (HH:MM:SS, hors temps de pause)
+   • Vitesse instantanée (moyenne sur les 5 derniers points, km/h)
+   • Altitude actuelle (mètres, depuis pos.coords.altitude)
+   • Nombre de points enregistrés
+   • Points par minute
+
+D. Filtrage qualité
+   • Points avec accuracy > 50m sont ignorés (après les 3 premiers)
+   • Points trop proches (< 2m du précédent) sont ignorés pour éviter
+     le bruit GPS quand on est immobile
+
+E. Stockage et liste des promenades
+   • Sauvegardées en localStorage (clé walks)
+   • Liste triée par date (plus récente d'abord)
+   • Chaque promenade affiche : nom, date, distance, durée, vitesse moy, points
+
+F. Visualisation sur carte
+   • Bouton 🗺 Voir carte : ouvre un modal plein écran avec la trace
+     complète sur OpenStreetMap, marker vert au départ, rouge à l'arrivée
+
+G. Export GPX
+   • Bouton ⤓ Export GPX : télécharge un fichier .gpx valide GPX 1.1
+   • Format conforme au schéma topografix.com (importable dans Strava,
+     Garmin Connect, OsmAnd, GPX Studio, etc.)
+   • Inclut : metadata avec nom + heure de départ, trk → trkseg → trkpt
+     avec lat, lon, ele (si disponible), time (UTC ISO 8601)
+
+H. Suppression
+   • Bouton 🗑 Supprimer : confirmation puis suppression définitive
+
+🛠 BIBLIOTHÈQUES AJOUTÉES
+- Leaflet.js 1.9.4 (gratuit, open-source) depuis cdnjs.cloudflare.com
+- Tuiles OpenStreetMap (gratuit, attribution affichée)
+- Aucune clé API requise, aucun service payant
+
+⚠ PRÉREQUIS POUR FONCTIONNER
+- Le tracker GPX nécessite GPS → contexte sécurisé requis
+  (HTTPS, file://, localhost) — comme pour la capture POI et Qibla
+- Si le contexte ne le permet pas, modal d'erreur clair affiché
+- Pour utiliser sur iPhone : héberger sur GitHub Pages ou ouvrir
+  le fichier directement dans Safari via app Fichiers
+
+📚 SOURCES
+- Format GPX 1.1 : https://www.topografix.com/gpx_manual.asp
+- Schema GPX : https://www.topografix.com/GPX/1/1/gpx.xsd
+- Leaflet : https://leafletjs.com/ (BSD-2-Clause)
+- OSM Tile Usage Policy : https://operations.osmfoundation.org/policies/tiles/
+- Geolocation watchPosition : https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
+- AUCUNE option des versions précédentes n'a été retirée
 
 =========================================================
 CHANGEMENTS v8 → v9 (signalés conformément aux consignes)
@@ -2368,8 +3453,8 @@ CHANGEMENTS v5 → v6 (signalés conformément aux consignes)
   qu'aux nouveaux utilisateurs.
 - CORRECTION : Ajout d'une migration auto migrateAddDefaultFavs() qui :
   • vérifie si la catégorie « Chez moi » existe ET ne contient aucun favori
-    → si oui, ajoute « Rue des Ramoneurs 1, 1000 Bruxelles »
-  • idem pour « Travail » → ajoute « Rue Vanderstraeten 9, 1080 Bruxelles »
+    → si oui, ajoutait l'adresse perso (RETIRÉ en v11)
+  • idem pour « Travail » (RETIRÉ en v11)
   • Ne touche PAS aux favoris déjà présents (rien n'est écrasé)
 
 ✓ POINT 3 — Adresses encodées en dur mais modifiables
@@ -2471,8 +3556,8 @@ CHANGEMENTS v3 → v4 (signalés conformément aux consignes)
   7.    F.Soigne
   8.    Adepts et Soins
 - AJOUT : 2 favoris pré-remplis (1 par catégorie épinglée) :
-  - Chez moi : « Rue des Ramoneurs 1, 1000 Bruxelles »
-  - Travail  : « Rue Vanderstraeten 9, 1080 Bruxelles »
+  - Chez moi : adresse perso (RETIRÉ en v11)
+  - Travail  : adresse perso (RETIRÉ en v11)
   → ces adresses n'ont PAS encore de coords GPS — utilise le bouton
     « Modifier » puis « 🔍 Vérifier » pour les obtenir via Nominatim.
 - AJOUT : propriété `pinned` sur les catégories
