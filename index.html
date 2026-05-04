@@ -1,0 +1,2510 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Favoris Navigation v9</title>
+<style>
+  :root {
+    --menu-primary: #2d5016;
+    --menu-primary-2: #3a6b1c;
+    --menu-accent: #d4af37;
+    --menu-accent-hover: #ffd670;
+    --menu-bg: #fffdf7;
+    --menu-bg-alt: #f5f1e8;
+    --menu-bg-grad-end: #e8dcc4;
+    --menu-border: #e0d4b8;
+    --menu-text: #2c3e2d;
+    --menu-text-light: #f5f1e8;
+    --danger: #c0392b;
+    --danger-hover: #e74c3c;
+    --info: #2980b9;
+    --info-hover: #3498db;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Arial', sans-serif;
+    background: linear-gradient(135deg, var(--menu-bg-alt) 0%, var(--menu-bg-grad-end) 100%);
+    color: var(--menu-text);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  header {
+    background: linear-gradient(135deg, var(--menu-primary) 0%, var(--menu-primary-2) 100%);
+    color: var(--menu-text-light);
+    padding: 18px 20px; text-align: center;
+    border-bottom: 3px solid var(--menu-accent);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    position: sticky; top: 0; z-index: 50;
+  }
+  header h1 { font-size: 1.4em; }
+
+  main {
+    max-width: 1100px; margin: 14px auto; padding: 12px;
+    display: flex; flex-wrap: wrap; gap: 10px;
+    align-content: flex-start; align-items: flex-start;
+  }
+
+  .qctrls {
+    display: flex; flex-direction: column; gap: 8px;
+    background: var(--menu-bg); padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--menu-border);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    flex: 1 1 100%; order: -1;
+  }
+  .qctrls-row {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  }
+  .qctrls-row.fold-row { flex-wrap: nowrap; }
+  .qctrls-row.fold-row .qctrl-btn { flex: 1 1 0; min-width: 0; justify-content: center; }
+  .qctrl-btn.travel-mode.active {
+    background: var(--menu-primary); color: var(--menu-bg);
+    box-shadow: 0 2px 6px rgba(45,80,22,0.3);
+  }
+  .qctrl-btn {
+    padding: 9px 14px; background: var(--menu-bg); color: var(--menu-primary);
+    border: 2px solid var(--menu-primary); border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-weight: bold; font-size: 0.92em;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.15s;
+  }
+  .qctrl-btn:hover, .qctrl-btn:active { background: var(--menu-primary); color: var(--menu-bg); }
+  .qctrl-btn.accent { border-color: var(--menu-accent); color: #6b5410; background: #fffaeb; }
+  .qctrl-btn.accent:hover, .qctrl-btn.accent:active { background: var(--menu-accent); color: var(--menu-primary); }
+  .qctrl-btn.danger { border-color: var(--danger); color: var(--danger); }
+  .qctrl-btn.danger:hover, .qctrl-btn.danger:active { background: var(--danger); color: #fff; }
+  .qctrl-btn.info { border-color: var(--info); color: var(--info); }
+  .qctrl-btn.info:hover, .qctrl-btn.info:active { background: var(--info); color: #fff; }
+  .qctrl-spacer { flex: 1; }
+
+  .qsearch {
+    flex: 1 1 100%; order: -1;
+    background: var(--menu-bg); padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--menu-border);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    display: flex; gap: 8px; align-items: center;
+  }
+  .qsearch input {
+    flex: 1; padding: 10px 12px; font-size: 16px;
+    border: 2px solid var(--menu-border); border-radius: 6px;
+    font-family: inherit; background: #fff; color: var(--menu-text);
+  }
+  .qsearch input:focus { outline: none; border-color: var(--menu-primary); }
+  .qsearch-clear {
+    padding: 8px 12px; background: var(--menu-bg-alt); color: var(--menu-text);
+    border: 2px solid var(--menu-border); border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-weight: bold;
+  }
+
+  .qsec {
+    background: var(--menu-bg); border-radius: 10px;
+    border: 1px solid var(--menu-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    flex: 1 1 100%; order: 1;
+  }
+  .qsec.dark {
+    background: linear-gradient(135deg, var(--menu-primary) 0%, var(--menu-primary-2) 100%);
+    color: var(--menu-text-light); border-color: var(--menu-primary);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .qsec-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; cursor: pointer; user-select: none;
+    border-bottom: 2px solid transparent;
+    transition: background 0.15s;
+  }
+  .qsec:not(.collapsed) > .qsec-header { border-bottom-color: var(--menu-accent); }
+  .qsec.dark:not(.collapsed) > .qsec-header { border-bottom-color: rgba(212,175,55,0.4); }
+  .qsec-header:hover, .qsec-header:active { background: rgba(0,0,0,0.04); }
+  .qsec.dark .qsec-header:hover, .qsec.dark .qsec-header:active { background: rgba(255,255,255,0.07); }
+  .qsec-triangle {
+    display: inline-block; width: 18px; text-align: center;
+    color: var(--menu-primary); font-size: 0.95em; line-height: 1;
+  }
+  .qsec.dark .qsec-triangle { color: var(--menu-accent-hover); }
+  .qsec-triangle::before { content: '▾'; }
+  .qsec.collapsed .qsec-triangle::before { content: '▸'; }
+  .qsec-num {
+    background: var(--menu-accent); color: var(--menu-primary);
+    padding: 3px 9px; border-radius: 4px;
+    font-family: 'Courier New', monospace; font-weight: bold;
+    font-size: 0.92em; letter-spacing: 1px;
+    min-width: 32px; text-align: center;
+  }
+  .qsec-title {
+    flex: 1; font-weight: bold; font-size: 1.1em;
+    color: var(--menu-primary);
+  }
+  .qsec.dark .qsec-title { color: var(--menu-accent-hover); }
+  .qsec-count {
+    background: rgba(45,80,22,0.12); color: var(--menu-primary);
+    padding: 2px 8px; border-radius: 10px; font-size: 0.8em; font-weight: bold;
+  }
+  .qsec.dark .qsec-count { background: rgba(212,175,55,0.25); color: var(--menu-accent-hover); }
+  .qsec-body { padding: 16px 18px; }
+
+  .qsec.collapsed { order: 0; flex: 0 0 auto; background: transparent; border: none; box-shadow: none; border-radius: 0; overflow: visible; }
+  .qsec.collapsed > .qsec-body { display: none; }
+  .qsec.collapsed > .qsec-header { padding: 0; gap: 0; border-bottom: none; }
+  .qsec.collapsed > .qsec-header:hover { background: transparent; }
+  .qsec.collapsed .qsec-triangle, .qsec.collapsed .qsec-title, .qsec.collapsed .qsec-count { display: none; }
+  .qsec.collapsed .qsec-num {
+    padding: 8px 14px; font-size: 1.05em; min-width: 44px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: all 0.15s;
+  }
+  .qsec.collapsed .qsec-header:hover .qsec-num {
+    background: var(--menu-accent-hover);
+    box-shadow: 0 3px 9px rgba(0,0,0,0.22);
+    transform: translateY(-1px);
+  }
+  .qsec.collapsed > .qsec-header { position: relative; }
+  .qsec.collapsed > .qsec-header::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--menu-primary);
+    color: var(--menu-text-light);
+    padding: 6px 11px; border-radius: 6px;
+    font-size: 0.85em; font-weight: normal; line-height: 1.35;
+    max-width: 280px; white-space: normal; text-align: center;
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.15s, transform 0.15s;
+    z-index: 100;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  }
+  .qsec.collapsed > .qsec-header::before {
+    content: ''; position: absolute;
+    bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    border: 6px solid transparent;
+    border-top-color: var(--menu-primary);
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.15s, transform 0.15s;
+    z-index: 100;
+  }
+  .qsec.collapsed > .qsec-header:hover::after,
+  .qsec.collapsed > .qsec-header:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .fav-list { display: flex; flex-direction: column; gap: 10px; }
+  .fav-item {
+    background: var(--menu-bg-alt);
+    border: 1px solid var(--menu-border);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .fav-item.dragging { opacity: 0.4; }
+  .fav-item.drag-over { border-color: var(--menu-primary); border-width: 2px; background: #fffaeb; }
+  .fav-info { display: flex; flex-direction: column; gap: 4px; }
+  .fav-name { font-weight: bold; font-size: 1.05em; color: var(--menu-primary); }
+  .fav-address { font-size: 0.92em; color: var(--menu-text); opacity: 0.85; word-break: break-word; }
+  .fav-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+  .fav-btn {
+    flex: 1 1 calc(33% - 4px); min-width: 90px;
+    padding: 10px 8px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-weight: bold; font-size: 0.88em;
+    border: 2px solid; text-align: center;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .fav-btn.maps-apple { border-color: #007aff; color: #007aff; background: #fff; }
+  .fav-btn.maps-apple:hover, .fav-btn.maps-apple:active { background: #007aff; color: #fff; }
+  .fav-btn.maps-google { border-color: #1a73e8; color: #1a73e8; background: #fff; }
+  .fav-btn.maps-google:hover, .fav-btn.maps-google:active { background: #1a73e8; color: #fff; }
+  .fav-btn.search-google { border-color: #ea4335; color: #ea4335; background: #fff; }
+  .fav-btn.search-google:hover, .fav-btn.search-google:active { background: #ea4335; color: #fff; }
+
+  .fav-manage { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 8px; border-top: 1px dashed var(--menu-border); }
+  .fav-manage-btn {
+    padding: 7px 12px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-weight: bold; font-size: 0.85em;
+    border: 1.5px solid; background: var(--menu-bg);
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .fav-manage-btn.edit { border-color: var(--menu-primary); color: var(--menu-primary); }
+  .fav-manage-btn.edit:hover, .fav-manage-btn.edit:active { background: var(--menu-primary); color: #fff; }
+  .fav-manage-btn.del { border-color: var(--danger); color: var(--danger); }
+  .fav-manage-btn.del:hover, .fav-manage-btn.del:active { background: var(--danger); color: #fff; }
+  .fav-manage-btn.move { border-color: #888; color: #555; cursor: grab; touch-action: none; }
+  .fav-manage-btn.move:active { cursor: grabbing; }
+
+  .fav-empty {
+    text-align: center; padding: 20px; color: var(--menu-text);
+    opacity: 0.6; font-style: italic;
+  }
+  .fav-add {
+    width: 100%; padding: 11px;
+    background: var(--menu-bg); color: var(--menu-primary);
+    border: 2px dashed var(--menu-primary); border-radius: 8px;
+    font-family: inherit; font-weight: bold; font-size: 0.95em;
+    cursor: pointer; margin-top: 10px;
+  }
+  .fav-add:hover, .fav-add:active { background: var(--menu-primary); color: #fff; border-style: solid; }
+
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none; align-items: center; justify-content: center;
+    z-index: 200; padding: 16px;
+  }
+  .modal-bg.active { display: flex; }
+  .modal {
+    background: var(--menu-bg); border-radius: 12px;
+    padding: 18px; max-width: 480px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    border: 2px solid var(--menu-accent);
+  }
+  .modal h2 { color: var(--menu-primary); margin-bottom: 14px; font-size: 1.2em; }
+  .modal-field { margin-bottom: 12px; }
+  .modal-field label { display: block; margin-bottom: 4px; font-weight: bold; color: var(--menu-primary); font-size: 0.92em; }
+  .modal-field input, .modal-field select, .modal-field textarea {
+    width: 100%; padding: 10px; font-size: 16px;
+    border: 2px solid var(--menu-border); border-radius: 6px;
+    font-family: inherit; background: #fff; color: var(--menu-text);
+  }
+  .modal-field input:focus, .modal-field select:focus, .modal-field textarea:focus {
+    outline: none; border-color: var(--menu-primary);
+  }
+  .modal-field textarea { resize: vertical; min-height: 100px; font-family: monospace; font-size: 13px; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .modal-btn {
+    padding: 10px 16px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-weight: bold; font-size: 0.95em;
+    border: 2px solid;
+  }
+  .modal-btn.primary { background: var(--menu-primary); color: #fff; border-color: var(--menu-primary); }
+  .modal-btn.secondary { background: var(--menu-bg); color: var(--menu-text); border-color: var(--menu-border); }
+  .modal-btn.danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+  .toast {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--menu-primary); color: #fff;
+    padding: 10px 18px; border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    z-index: 300; opacity: 0;
+    transition: opacity 0.25s, transform 0.25s;
+    font-weight: bold; font-size: 0.92em;
+    max-width: 90%;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.error { background: var(--danger); }
+
+  .qsec.pinned > .qsec-header { background: linear-gradient(90deg, rgba(212,175,55,0.18) 0%, transparent 60%); }
+  .qsec.pinned .qsec-num { background: var(--menu-primary); color: var(--menu-accent); }
+  .qsec.pinned .qsec-num::before { content: '📌 '; font-size: 0.85em; }
+  .qsec.pinned.collapsed .qsec-num::before { content: '📌'; display: block; font-size: 0.7em; line-height: 1; margin-bottom: 2px; }
+
+  .qsec.poi > .qsec-header { background: linear-gradient(90deg, rgba(41,128,185,0.18) 0%, transparent 60%); }
+  .qsec.poi .qsec-num { background: #2980b9; color: #fff; }
+  .qsec.poi .qsec-num::before { content: '📍 '; font-size: 0.85em; }
+  .qsec.poi.collapsed .qsec-num::before { content: '📍'; display: block; font-size: 0.7em; line-height: 1; margin-bottom: 2px; }
+  .qsec.poi .qsec-title { color: #1c5d8a; }
+
+  .poi-capture {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+    color: #fff; border: none; border-radius: 8px;
+    font-family: inherit; font-weight: bold; font-size: 1.05em;
+    cursor: pointer; margin-bottom: 12px;
+    box-shadow: 0 3px 10px rgba(41,128,185,0.3);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .poi-capture:hover, .poi-capture:active {
+    background: linear-gradient(135deg, #1f6391 0%, #2980b9 100%);
+    box-shadow: 0 4px 14px rgba(41,128,185,0.45);
+  }
+  .poi-capture:disabled { background: #95a5a6; box-shadow: none; cursor: not-allowed; }
+
+  .poi-help {
+    font-size: 0.82em; color: #555;
+    background: #eaf4fb; padding: 8px 10px; border-radius: 6px;
+    margin-bottom: 10px; line-height: 1.4;
+  }
+  .poi-help strong { color: #1c5d8a; }
+
+  .qibla-info {
+    background: #e8f6f3; border: 1px solid #16a085;
+    border-radius: 8px; padding: 12px; margin-bottom: 14px;
+    color: #0e6655; font-size: 0.92em; line-height: 1.5;
+  }
+  .qibla-bearing {
+    font-size: 2.4em; font-weight: bold; color: #0e6655;
+    text-align: center; padding: 10px 0;
+    font-family: 'Courier New', monospace;
+  }
+  .qibla-distance { text-align: center; font-size: 0.95em; color: #555; margin-bottom: 12px; }
+
+  .compass-wrapper {
+    width: 240px; height: 240px;
+    margin: 14px auto;
+    position: relative;
+  }
+  .compass-rose {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fffdf7 0%, #f5f1e8 100%);
+    border: 4px solid #2d5016;
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.12), 0 4px 14px rgba(0,0,0,0.18);
+    position: relative;
+    transition: transform 0.18s ease-out;
+  }
+  .compass-rose .cardinal {
+    position: absolute; font-weight: bold; font-size: 1.05em;
+    color: #2d5016;
+  }
+  .compass-rose .cardinal.n { top: 6px; left: 50%; transform: translateX(-50%); color: #c0392b; }
+  .compass-rose .cardinal.e { right: 8px; top: 50%; transform: translateY(-50%); }
+  .compass-rose .cardinal.s { bottom: 6px; left: 50%; transform: translateX(-50%); }
+  .compass-rose .cardinal.w { left: 8px; top: 50%; transform: translateY(-50%); }
+  .compass-needle {
+    position: absolute; top: 50%; left: 50%;
+    width: 4px; height: 90px;
+    background: linear-gradient(to bottom, #c0392b 0%, #c0392b 50%, #999 50%, #999 100%);
+    transform-origin: 50% 100%;
+    transform: translate(-50%, -100%) rotate(0deg);
+    border-radius: 2px;
+  }
+  .qibla-arrow {
+    position: absolute; top: 50%; left: 50%;
+    width: 0; height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 60px solid #16a085;
+    transform-origin: 50% 100%;
+    transform: translate(-50%, -100%) rotate(0deg);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    transition: transform 0.18s ease-out;
+  }
+  .qibla-arrow::after {
+    content: '🕋'; position: absolute;
+    top: -78px; left: -10px;
+    font-size: 1.4em;
+  }
+  .compass-center {
+    position: absolute; top: 50%; left: 50%;
+    width: 14px; height: 14px;
+    background: #2d5016; border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #fffdf7;
+    z-index: 5;
+  }
+  .compass-status {
+    text-align: center; font-size: 0.9em; color: #555;
+    padding: 8px; background: #f5f1e8; border-radius: 6px;
+    margin-top: 10px;
+  }
+  .compass-status.aligned { background: #d4f4dd; color: #0e6655; font-weight: bold; }
+  .compass-heading-display {
+    text-align: center; font-family: monospace; font-size: 1.1em;
+    color: #2d5016; padding: 6px;
+  }
+
+  .hidden { display: none !important; }
+
+  .ctx-warning {
+    flex: 1 1 100%; order: -2;
+    background: #fff3cd; border: 2px solid #f0ad4e;
+    border-radius: 10px; padding: 12px 14px;
+    color: #6b4f00; font-size: 0.92em; line-height: 1.5;
+  }
+  .ctx-warning strong { color: #856404; }
+  .ctx-warning summary { cursor: pointer; font-weight: bold; }
+  .ctx-warning .ctx-detail { margin-top: 8px; font-size: 0.88em; }
+  .ctx-warning .ctx-detail code {
+    background: rgba(0,0,0,0.06); padding: 1px 6px; border-radius: 3px;
+    font-family: monospace;
+  }
+  .ctx-warning .ctx-close {
+    float: right; background: none; border: none;
+    font-size: 1.4em; cursor: pointer; color: #856404;
+    line-height: 1; padding: 0 4px;
+  }
+
+  .verify-row { display: flex; gap: 6px; align-items: stretch; flex-wrap: wrap; }
+  .verify-row input { flex: 1 1 100%; min-width: 0; }
+  .verify-row .verify-btn { flex: 1 1 auto; }
+  .verify-btn {
+    padding: 10px 14px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-weight: bold; font-size: 0.92em;
+    background: #2980b9; color: #fff; border: 2px solid #2980b9;
+    white-space: nowrap;
+  }
+  .verify-btn:hover, .verify-btn:active { background: #3498db; border-color: #3498db; }
+  .verify-btn:disabled { background: #95a5a6; border-color: #95a5a6; cursor: not-allowed; }
+
+  .verify-status {
+    margin-top: 8px; font-size: 0.88em; padding: 8px 10px;
+    border-radius: 6px; display: none;
+  }
+  .verify-status.loading { display: block; background: #eaf4fb; color: #1c5d8a; }
+  .verify-status.error { display: block; background: #fdecea; color: #a93226; }
+  .verify-status.success { display: block; background: #e8f5e9; color: #1b5e20; }
+
+  .verify-results {
+    margin-top: 8px; max-height: 260px; overflow-y: auto;
+    border: 1px solid var(--menu-border); border-radius: 6px;
+    background: #fff; display: none;
+  }
+  .verify-results.active { display: block; }
+  .verify-result {
+    padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--menu-border);
+    transition: background 0.1s;
+  }
+  .verify-result:last-child { border-bottom: none; }
+  .verify-result:hover, .verify-result:active { background: var(--menu-bg-alt); }
+  .verify-result-name { font-weight: bold; color: var(--menu-primary); font-size: 0.95em; margin-bottom: 2px; }
+  .verify-result-coords { font-size: 0.78em; color: #666; font-family: monospace; }
+
+  .coords-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #e8f5e9; color: #1b5e20;
+    padding: 2px 8px; border-radius: 10px;
+    font-size: 0.78em; font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .attribution {
+    font-size: 0.75em; color: #666;
+    margin-top: 6px; text-align: right;
+  }
+  .attribution a { color: #2980b9; text-decoration: none; }
+  .attribution a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    main { padding: 10px; gap: 8px; }
+    header h1 { font-size: 1.2em; }
+    .qsec-body { padding: 12px; }
+    .fav-btn { flex: 1 1 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header><h1>📍 Favoris Navigation</h1></header>
+
+<main>
+
+<div class="ctx-warning hidden" id="ctxWarning">
+  <button class="ctx-close" type="button" onclick="document.getElementById('ctxWarning').classList.add('hidden')" title="Fermer">×</button>
+  <strong>⚠ GPS et boussole indisponibles ici</strong>
+  <div id="ctxWarningMsg" style="margin-top: 4px;"></div>
+  <details class="ctx-detail">
+    <summary>Comment résoudre ?</summary>
+    <div style="margin-top: 8px;">
+      <strong>Option 1 : Ouvrir dans Safari</strong><br>
+      1. Va dans l'app <strong>Fichiers</strong> sur ton iPhone<br>
+      2. Long-press sur le fichier <code>favoris-navigation-v9.html</code><br>
+      3. Tape « Partager » → choisis <strong>Safari</strong><br>
+      4. Une fois ouvert dans Safari : « Partager » → « Sur l'écran d'accueil » pour l'avoir comme une app
+      <br><br>
+      <strong>Option 2 : Hébergement HTTPS gratuit (GitHub Pages)</strong><br>
+      Crée un repo GitHub public, active GitHub Pages, dépose le fichier, et ouvre l'URL <code>https://...</code> dans Safari.
+      <br><br>
+      <strong>Diagnostic actuel :</strong><br>
+      <code id="ctxDebug"></code>
+    </div>
+  </details>
+</div>
+
+<div class="qctrls">
+  <div class="qctrls-row fold-row">
+    <button class="qctrl-btn" onclick="expandAllSections()" type="button">▾ Tout déplier</button>
+    <button class="qctrl-btn" onclick="collapseAllSections()" type="button">▸ Tout replier</button>
+  </div>
+  <div class="qctrls-row" id="travelModeRow">
+    <span style="font-weight: bold; font-size: 0.9em; color: var(--menu-primary);">Mode :</span>
+    <button class="qctrl-btn travel-mode" data-mode="driving" onclick="setTravelMode('driving')" type="button">🚗 Voiture</button>
+    <button class="qctrl-btn travel-mode" data-mode="bicycling" onclick="setTravelMode('bicycling')" type="button">🚴 Vélo</button>
+    <button class="qctrl-btn travel-mode" data-mode="walking" onclick="setTravelMode('walking')" type="button">🚶 À pied</button>
+  </div>
+  <div class="qctrls-row">
+    <button class="qctrl-btn accent" onclick="openCategoryModal()" type="button">＋ Catégorie</button>
+    <button class="qctrl-btn" onclick="openQiblaModal()" type="button" style="border-color:#16a085; color:#0e6655;">🕋 Qibla</button>
+    <span class="qctrl-spacer"></span>
+    <button class="qctrl-btn info" onclick="openExportModal()" type="button">⤓ JSON</button>
+    <button class="qctrl-btn info" onclick="exportCSV()" type="button">⤓ CSV</button>
+    <button class="qctrl-btn info" onclick="openImportModal()" type="button">⤒ Import</button>
+    <button class="qctrl-btn danger" onclick="resetToDefaults()" type="button" title="Efface tout et recharge les valeurs par défaut">🔄 Reset</button>
+  </div>
+</div>
+
+<div class="qsearch">
+  <input type="search" id="searchInput" placeholder="🔍 Rechercher (nom, adresse, catégorie)..." oninput="applySearch()" autocomplete="off">
+  <button class="qsearch-clear" onclick="clearSearch()" type="button">✕</button>
+</div>
+
+<div id="sectionsContainer" style="flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; align-items: flex-start;"></div>
+
+</main>
+
+<div class="modal-bg" id="qiblaModal">
+  <div class="modal" style="max-width: 380px;">
+    <h2>🕋 Direction de la Mecque</h2>
+    <div id="qiblaContent"></div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeQiblaModal()" type="button">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="poiModal">
+  <div class="modal">
+    <h2>📍 Position capturée</h2>
+    <div id="poiModalContent" style="margin-bottom: 14px;"></div>
+    <div class="modal-field">
+      <label for="poiName">Nom (optionnel)</label>
+      <input type="text" id="poiName" placeholder="Ex: Bivouac jour 2, Vue panoramique..." autocomplete="off">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="cancelPOI()" type="button">Annuler</button>
+      <button class="modal-btn primary" onclick="savePOI()" type="button">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="favModal">
+  <div class="modal">
+    <h2 id="favModalTitle">Ajouter un favori</h2>
+    <div class="modal-field">
+      <label for="favName">Nom *</label>
+      <input type="text" id="favName" placeholder="Ex: Tradition Khalid" autocomplete="off">
+    </div>
+    <div class="modal-field">
+      <label for="favAddress">Adresse <span style="font-weight:normal; color:#888; font-size:0.85em;">(optionnelle)</span></label>
+      <div class="verify-row">
+        <input type="text" id="favAddress" placeholder="Ex: Avenue Rogier 129, 1030 Bruxelles" autocomplete="off">
+        <button type="button" class="verify-btn" onclick="pasteAddress()" style="background:#7d3c98; border-color:#7d3c98;">📋 Coller</button>
+        <button type="button" class="verify-btn" id="verifyBtn" onclick="verifyAddress()">🔍 Vérifier</button>
+      </div>
+      <div class="verify-status" id="verifyStatus"></div>
+      <div class="verify-results" id="verifyResults"></div>
+      <div class="attribution">Données : <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></div>
+      <div id="coordsDisplay" style="margin-top: 6px;"></div>
+    </div>
+    <div class="modal-field">
+      <label for="favCategory">Catégorie</label>
+      <div style="display: flex; gap: 6px;">
+        <select id="favCategory" style="flex: 1;"></select>
+        <button class="modal-btn secondary" type="button" onclick="quickAddCategory()" style="padding: 8px 12px; white-space: nowrap;">＋ Nouvelle</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeFavModal()" type="button">Annuler</button>
+      <button class="modal-btn primary" onclick="saveFav()" type="button">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="categoryModal">
+  <div class="modal">
+    <h2>Gérer les catégories</h2>
+    <div class="modal-field">
+      <label for="catName">Nouvelle catégorie</label>
+      <input type="text" id="catName" placeholder="Ex: Restaurants" autocomplete="off">
+    </div>
+    <div class="modal-actions" style="margin-bottom: 14px;">
+      <button class="modal-btn secondary" onclick="closeCategoryModal()" type="button">Fermer</button>
+      <button class="modal-btn primary" onclick="addCategory()" type="button">＋ Ajouter</button>
+    </div>
+    <div id="catList" style="border-top: 1px solid var(--menu-border); padding-top: 12px;"></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="exportModal">
+  <div class="modal">
+    <h2>Exporter mes favoris</h2>
+    <p style="margin-bottom: 10px; font-size: 0.92em;">Copie ce texte pour le sauvegarder (Notes, Mail, iCloud Drive...).</p>
+    <div class="modal-field">
+      <textarea id="exportText" readonly></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeExportModal()" type="button">Fermer</button>
+      <button class="modal-btn primary" onclick="copyExport()" type="button">📋 Copier</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="importModal">
+  <div class="modal">
+    <h2>Importer des favoris</h2>
+    <p style="margin-bottom: 10px; font-size: 0.92em;">Colle ici le texte d'export précédent.</p>
+    <div class="modal-field">
+      <textarea id="importText" placeholder='{"categories":[...],"favorites":[...]}'></textarea>
+    </div>
+    <div class="modal-field">
+      <label><input type="checkbox" id="importReplace"> Remplacer tout (sinon : fusion)</label>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeImportModal()" type="button">Annuler</button>
+      <button class="modal-btn primary" onclick="doImport()" type="button">Importer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_PREFIX = 'favNav_';
+function saveLocal(k, v) { try { localStorage.setItem(STORAGE_PREFIX + k, JSON.stringify(v)); } catch(e) {} }
+function loadLocal(k, d) { try { const v = localStorage.getItem(STORAGE_PREFIX + k); return v === null ? d : JSON.parse(v); } catch(e) { return d; } }
+
+let categories = loadLocal('categories', [
+  { id: 'cat_chez_moi',   name: 'Chez moi',         dark: false, pinned: true },
+  { id: 'cat_travail',    name: 'Travail',          dark: false, pinned: true },
+  { id: 'cat_famille',    name: 'Famille',          dark: false, pinned: false },
+  { id: 'cat_genseigne',  name: 'G.Enseigne',       dark: false, pinned: false },
+  { id: 'cat_clocal',     name: 'C.Local',          dark: false, pinned: false },
+  { id: 'cat_randonnee',  name: 'Randonnée',        dark: false, pinned: false },
+  { id: 'cat_fsoigne',    name: 'F.Soigne',         dark: false, pinned: false },
+  { id: 'cat_adepts',     name: 'Adepts',           dark: false, pinned: false },
+  { id: 'cat_soins',      name: 'Soins',            dark: false, pinned: false },
+  { id: 'cat_poi',        name: 'POI',              dark: false, pinned: false, isPOI: true }
+]);
+let favorites = loadLocal('favorites', [
+  { id: 'fav_home',    name: 'Chez moi', address: 'Rue des Ramoneurs 1, 1000 Bruxelles',     categoryId: 'cat_chez_moi', lat: null, lon: null },
+  { id: 'fav_travail', name: 'Travail',  address: 'Rue Vanderstraeten 9, 1080 Bruxelles',    categoryId: 'cat_travail',  lat: null, lon: null }
+]);
+
+(function migrateRenameAdeptsSoins() {
+  let changed = false;
+  const oldCat = categories.find(c => c.id === 'cat_adepts' && c.name === 'Adepts et Soins');
+  if (oldCat) {
+    oldCat.name = 'Adepts';
+    changed = true;
+  }
+  const adeptsExists = categories.some(c => c.id === 'cat_adepts');
+  const soinsExists = categories.some(c => c.id === 'cat_soins' || c.name.toLowerCase() === 'soins');
+  if (adeptsExists && !soinsExists) {
+    const adeptsIdx = categories.findIndex(c => c.id === 'cat_adepts');
+    categories.splice(adeptsIdx + 1, 0, { id: 'cat_soins', name: 'Soins', dark: false, pinned: false });
+    changed = true;
+  }
+  if (changed) saveLocal('categories', categories);
+})();
+
+(function migrateEnsureAllDefaults() {
+  const DEFAULT_CATEGORIES = [
+    { id: 'cat_chez_moi',   name: 'Chez moi',         dark: false, pinned: true },
+    { id: 'cat_travail',    name: 'Travail',          dark: false, pinned: true },
+    { id: 'cat_famille',    name: 'Famille',          dark: false, pinned: false },
+    { id: 'cat_genseigne',  name: 'G.Enseigne',       dark: false, pinned: false },
+    { id: 'cat_clocal',     name: 'C.Local',          dark: false, pinned: false },
+    { id: 'cat_randonnee',  name: 'Randonnée',        dark: false, pinned: false },
+    { id: 'cat_fsoigne',    name: 'F.Soigne',         dark: false, pinned: false },
+    { id: 'cat_adepts',     name: 'Adepts',           dark: false, pinned: false },
+    { id: 'cat_soins',      name: 'Soins',            dark: false, pinned: false },
+    { id: 'cat_poi',        name: 'POI',              dark: false, pinned: false, isPOI: true }
+  ];
+  const DEFAULT_FAVORITES = [
+    { id: 'fav_home',    name: 'Chez moi', address: 'Rue des Ramoneurs 1, 1000 Bruxelles',  categoryId: 'cat_chez_moi', lat: null, lon: null },
+    { id: 'fav_travail', name: 'Travail',  address: 'Rue Vanderstraeten 9, 1080 Bruxelles', categoryId: 'cat_travail',  lat: null, lon: null }
+  ];
+
+  let changedCats = false;
+  const existingCatIds = new Set(categories.map(c => c.id));
+  const existingCatNames = new Set(categories.map(c => c.name.toLowerCase()));
+
+  DEFAULT_CATEGORIES.forEach((defCat, idx) => {
+    if (!existingCatIds.has(defCat.id) && !existingCatNames.has(defCat.name.toLowerCase())) {
+      const insertPos = idx < categories.length ? idx : categories.length;
+      categories.splice(insertPos, 0, Object.assign({}, defCat));
+      existingCatIds.add(defCat.id);
+      existingCatNames.add(defCat.name.toLowerCase());
+      changedCats = true;
+    }
+  });
+
+  let changedFavs = false;
+  DEFAULT_FAVORITES.forEach(defFav => {
+    const targetCatExists = categories.some(c => c.id === defFav.categoryId);
+    if (!targetCatExists) return;
+    const alreadyHasOne = favorites.some(f => f.id === defFav.id || f.categoryId === defFav.categoryId);
+    if (!alreadyHasOne) {
+      favorites.push(Object.assign({}, defFav));
+      changedFavs = true;
+    }
+  });
+
+  if (changedCats) saveLocal('categories', categories);
+  if (changedFavs) saveLocal('favorites', favorites);
+})();
+let editingFavId = null;
+let currentSearch = '';
+
+function uid(prefix) { return prefix + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); }
+
+function persist() {
+  saveLocal('categories', categories);
+  saveLocal('favorites', favorites);
+}
+
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+async function pasteAddress() {
+  const addrEl = document.getElementById('favAddress');
+  if (!addrEl) return;
+  if (navigator.clipboard && navigator.clipboard.readText) {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text && text.trim()) {
+        addrEl.value = text.trim();
+        showToast('Adresse collée');
+        addrEl.focus();
+      } else {
+        showToast('Presse-papier vide', true);
+      }
+    } catch(e) {
+      addrEl.focus();
+      showToast('Permission refusée. Tape long-press sur le champ pour coller.', true);
+    }
+  } else {
+    addrEl.focus();
+    showToast('Tape long-press sur le champ pour coller manuellement.', true);
+  }
+}
+
+function checkContext() {
+  const proto = location.protocol;
+  const host = location.hostname;
+  const isSecure = (window.isSecureContext === true);
+  const hasGeo = ('geolocation' in navigator);
+  const hasOrient = (typeof DeviceOrientationEvent !== 'undefined');
+  const ua = navigator.userAgent;
+
+  const contextOK = isSecure || proto === 'file:' || host === 'localhost' || host === '127.0.0.1';
+
+  const debug = `protocol=${proto} | host=${host || '(none)'} | isSecureContext=${isSecure} | geolocation=${hasGeo} | DeviceOrientationEvent=${hasOrient} | UA=${ua.substring(0,80)}...`;
+  console.log('[FavNav]', debug);
+  const dbg = document.getElementById('ctxDebug');
+  if (dbg) dbg.textContent = debug;
+
+  if (!contextOK || !hasGeo) {
+    const banner = document.getElementById('ctxWarning');
+    const msg = document.getElementById('ctxWarningMsg');
+    if (banner && msg) {
+      let reason;
+      if (!hasGeo) {
+        reason = 'Cette app/visualiseur n\'expose pas l\'API GPS du navigateur. Sur iPhone, les "HTML viewers" tiers ne donnent souvent pas accès au GPS — seul Safari le fait.';
+      } else if (proto === 'http:') {
+        reason = 'Le fichier est ouvert en HTTP non sécurisé. iOS bloque le GPS dans ce cas.';
+      } else {
+        reason = 'Contexte non sécurisé détecté. Le GPS ne sera pas accessible.';
+      }
+      msg.textContent = reason;
+      banner.classList.remove('hidden');
+    }
+    return false;
+  }
+  return true;
+}
+
+let contextOK = false;
+
+let currentTravelMode = loadLocal('travelMode', 'driving');
+
+function setTravelMode(mode) {
+  currentTravelMode = mode;
+  saveLocal('travelMode', mode);
+  document.querySelectorAll('.qctrl-btn.travel-mode').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  render();
+  const labels = { driving: '🚗 Voiture', bicycling: '🚴 Vélo', walking: '🚶 À pied' };
+  showToast('Mode : ' + (labels[mode] || mode));
+}
+
+function buildAppleMapsUrl(addr, lat, lon) {
+  const target = (lat != null && lon != null)
+    ? lat + ',' + lon
+    : encodeURIComponent(addr);
+  const dirflg = currentTravelMode === 'walking' ? 'w'
+               : currentTravelMode === 'bicycling' ? 'w'
+               : 'd';
+  return 'https://maps.apple.com/?daddr=' + target + '&dirflg=' + dirflg;
+}
+function buildGoogleMapsUrl(addr, lat, lon) {
+  const dest = (lat != null && lon != null)
+    ? lat + ',' + lon
+    : encodeURIComponent(addr);
+  return 'https://www.google.com/maps/dir/?api=1&destination=' + dest + '&travelmode=' + currentTravelMode;
+}
+function buildGoogleSearchUrl(addr) {
+  return 'https://www.google.com/search?q=' + encodeURIComponent(addr);
+}
+
+function render() {
+  const container = document.getElementById('sectionsContainer');
+  container.innerHTML = '';
+
+  const search = currentSearch.trim().toLowerCase();
+
+  categories.forEach((cat, idx) => {
+    const sec = document.createElement('section');
+    sec.className = 'qsec' + (cat.dark ? ' dark' : '') + (cat.pinned ? ' pinned' : '') + (cat.isPOI ? ' poi' : '');
+    sec.dataset.section = pad2(idx + 1);
+    sec.id = cat.id;
+
+    const catFavs = favorites.filter(f => f.categoryId === cat.id);
+    const visibleFavs = search
+      ? catFavs.filter(f =>
+          f.name.toLowerCase().includes(search) ||
+          f.address.toLowerCase().includes(search) ||
+          cat.name.toLowerCase().includes(search))
+      : catFavs;
+
+    if (search && visibleFavs.length === 0) {
+      return;
+    }
+
+    const header = document.createElement('div');
+    header.className = 'qsec-header';
+    header.onclick = () => toggleSection(cat.id);
+    header.innerHTML = `
+      <span class="qsec-triangle"></span>
+      <span class="qsec-num">${pad2(idx + 1)}</span>
+      <span class="qsec-title">${escapeHtml(cat.name)}</span>
+      <span class="qsec-count">${catFavs.length}</span>
+    `;
+    sec.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'qsec-body';
+
+    if (cat.isPOI) {
+      const help = document.createElement('div');
+      help.className = 'poi-help';
+      help.innerHTML = '<strong>📍 Catégorie spéciale POI</strong><br>Capture ta position GPS actuelle (utile en forêt, sentier, lieu sans adresse). L\'app tente de retrouver une adresse proche ; sinon elle garde juste les coordonnées GPS.<br><em>⚠ Le GPS de l\'iPhone fonctionne uniquement si ce fichier est ouvert en HTTPS ou directement depuis l\'app Fichiers.</em>';
+      body.appendChild(help);
+
+      const captureBtn = document.createElement('button');
+      captureBtn.className = 'poi-capture';
+      captureBtn.type = 'button';
+      captureBtn.id = 'poiCaptureBtn';
+      captureBtn.innerHTML = '📍 Capturer ma position actuelle';
+      captureBtn.onclick = () => capturePOI();
+      body.appendChild(captureBtn);
+    }
+
+    const list = document.createElement('div');
+    list.className = 'fav-list';
+    list.dataset.categoryId = cat.id;
+
+    if (visibleFavs.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'fav-empty';
+      empty.textContent = catFavs.length === 0 ? 'Aucun favori dans cette catégorie' : 'Aucun résultat pour la recherche';
+      list.appendChild(empty);
+    } else {
+      visibleFavs.forEach(fav => {
+        list.appendChild(buildFavItem(fav));
+      });
+    }
+    body.appendChild(list);
+
+    const addBtn = document.createElement('button');
+    addBtn.className = 'fav-add';
+    addBtn.type = 'button';
+    addBtn.textContent = '＋ Ajouter un favori dans « ' + cat.name + ' »';
+    addBtn.onclick = () => openFavModal(null, cat.id);
+    body.appendChild(addBtn);
+
+    const catActions = document.createElement('div');
+    catActions.style.cssText = 'margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--menu-border); display: flex; gap: 6px; flex-wrap: wrap;';
+    if (cat.pinned) {
+      catActions.innerHTML = `
+        <button class="fav-manage-btn edit" type="button" onclick="renameCategory('${cat.id}')">✎ Renommer</button>
+        <button class="fav-manage-btn edit" type="button" onclick="toggleDarkCategory('${cat.id}')">🎨 ${cat.dark ? 'Clair' : 'Sombre'}</button>
+        <span style="font-size:0.82em; color:#888; padding:6px 8px; font-style:italic;">📌 Section épinglée (non déplaçable, non supprimable)</span>
+      `;
+    } else {
+      catActions.innerHTML = `
+        <button class="fav-manage-btn edit" type="button" onclick="renameCategory('${cat.id}')">✎ Renommer</button>
+        <button class="fav-manage-btn edit" type="button" onclick="toggleDarkCategory('${cat.id}')">🎨 ${cat.dark ? 'Clair' : 'Sombre'}</button>
+        <button class="fav-manage-btn edit" type="button" onclick="moveCategoryUp('${cat.id}')">↑</button>
+        <button class="fav-manage-btn edit" type="button" onclick="moveCategoryDown('${cat.id}')">↓</button>
+        <button class="fav-manage-btn del" type="button" onclick="deleteCategory('${cat.id}')">🗑 Supprimer</button>
+      `;
+    }
+    body.appendChild(catActions);
+
+    sec.appendChild(body);
+    container.appendChild(sec);
+  });
+
+  if (categories.length === 0) {
+    container.innerHTML = '<div class="fav-empty" style="flex:1 1 100%; background: var(--menu-bg); border-radius: 10px; padding: 30px;">Aucune catégorie. Crée-en une avec le bouton « ＋ Catégorie » en haut.</div>';
+  }
+
+  restoreSectionStates();
+  syncSectionTooltips();
+  attachDragHandlers();
+}
+
+function buildFavItem(fav) {
+  const div = document.createElement('div');
+  div.className = 'fav-item';
+  div.dataset.favId = fav.id;
+  div.draggable = false;
+
+  const lat = (fav.lat != null && fav.lat !== '') ? fav.lat : null;
+  const lon = (fav.lon != null && fav.lon !== '') ? fav.lon : null;
+  const hasAddress = fav.address && fav.address.trim() !== '';
+  const hasLocation = hasAddress || (lat != null && lon != null);
+
+  const coordsBadge = (lat != null && lon != null)
+    ? `<span class="coords-badge">📍 GPS ${Number(lat).toFixed(5)}, ${Number(lon).toFixed(5)}</span>`
+    : '';
+
+  let actionsHtml;
+  if (hasLocation) {
+    const appleUrl = buildAppleMapsUrl(fav.address, lat, lon);
+    const googleMapsUrl = buildGoogleMapsUrl(fav.address, lat, lon);
+    const googleSearchUrl = buildGoogleSearchUrl(fav.address || (lat + ',' + lon));
+    actionsHtml = `
+      <a class="fav-btn maps-apple" href="${appleUrl}" target="_blank" rel="noopener">🍎 Plans</a>
+      <a class="fav-btn maps-google" href="${googleMapsUrl}" target="_blank" rel="noopener">🗺 Maps</a>
+      <a class="fav-btn search-google" href="${googleSearchUrl}" target="_blank" rel="noopener">🔍 Google</a>
+    `;
+  } else {
+    actionsHtml = `<div style="flex:1 1 100%; padding: 8px; text-align: center; font-size: 0.85em; color: #888; font-style: italic; background: #fffaeb; border: 1px dashed #d4af37; border-radius: 6px;">⚠ Sans adresse — clique « ✎ Modifier » pour en ajouter une</div>`;
+  }
+
+  const addressLine = hasAddress
+    ? `<div class="fav-address">${escapeHtml(fav.address)}</div>`
+    : `<div class="fav-address" style="color:#aaa; font-style:italic;">— sans adresse —</div>`;
+
+  div.innerHTML = `
+    <div class="fav-info">
+      <div class="fav-name">${escapeHtml(fav.name)}</div>
+      ${addressLine}
+      ${coordsBadge}
+    </div>
+    <div class="fav-actions">
+      ${actionsHtml}
+    </div>
+    <div class="fav-manage">
+      <button class="fav-manage-btn move" type="button" data-fav-id="${fav.id}" title="Glisser pour déplacer">⇅ Déplacer</button>
+      <button class="fav-manage-btn edit" type="button" onclick="openFavModal('${fav.id}')">✎ Modifier</button>
+      <button class="fav-manage-btn del" type="button" onclick="deleteFav('${fav.id}')">🗑 Supprimer</button>
+    </div>
+  `;
+  return div;
+}
+
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('collapsed');
+  saveSectionStates();
+}
+function expandAllSections() { document.querySelectorAll('.qsec').forEach(s => s.classList.remove('collapsed')); saveSectionStates(); }
+function collapseAllSections() { document.querySelectorAll('.qsec').forEach(s => s.classList.add('collapsed')); saveSectionStates(); }
+function saveSectionStates() {
+  const states = {};
+  document.querySelectorAll('.qsec').forEach(s => { states[s.id] = !s.classList.contains('collapsed'); });
+  saveLocal('sectionStates', states);
+}
+function restoreSectionStates() {
+  const states = loadLocal('sectionStates', null);
+  if (!states) return;
+  document.querySelectorAll('.qsec').forEach(s => {
+    if (states[s.id] === false) s.classList.add('collapsed');
+    else s.classList.remove('collapsed');
+  });
+}
+function syncSectionTooltips() {
+  document.querySelectorAll('.qsec').forEach(s => {
+    const titleEl = s.querySelector('.qsec-title');
+    const headerEl = s.querySelector('.qsec-header');
+    if (titleEl && headerEl) headerEl.setAttribute('data-tooltip', titleEl.textContent.trim().replace(/\s+/g, ' '));
+  });
+}
+
+function applySearch() {
+  currentSearch = document.getElementById('searchInput').value;
+  render();
+  if (currentSearch.trim()) {
+    document.querySelectorAll('.qsec').forEach(s => s.classList.remove('collapsed'));
+  }
+}
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  currentSearch = '';
+  render();
+}
+
+let pendingCoords = { lat: null, lon: null };
+
+function resetVerifyUI() {
+  document.getElementById('verifyStatus').className = 'verify-status';
+  document.getElementById('verifyStatus').textContent = '';
+  document.getElementById('verifyResults').className = 'verify-results';
+  document.getElementById('verifyResults').innerHTML = '';
+  document.getElementById('coordsDisplay').innerHTML = '';
+}
+function showCoordsBadge(lat, lon) {
+  const el = document.getElementById('coordsDisplay');
+  if (lat != null && lon != null) {
+    el.innerHTML = `<span class="coords-badge">📍 GPS ${Number(lat).toFixed(6)}, ${Number(lon).toFixed(6)}</span>
+      <button type="button" class="fav-manage-btn del" style="margin-left:6px;" onclick="clearCoords()">✕ Effacer GPS</button>`;
+  } else {
+    el.innerHTML = '<span style="font-size:0.82em; color:#888;">Aucune coordonnée GPS — utilise « Vérifier » pour en obtenir.</span>';
+  }
+}
+function clearCoords() {
+  pendingCoords = { lat: null, lon: null };
+  showCoordsBadge(null, null);
+  showToast('Coordonnées GPS effacées');
+}
+
+function openFavModal(favId, presetCatId) {
+  editingFavId = favId || null;
+  pendingCoords = { lat: null, lon: null };
+  resetVerifyUI();
+
+  const titleEl = document.getElementById('favModalTitle');
+  const nameEl = document.getElementById('favName');
+  const addrEl = document.getElementById('favAddress');
+  const catEl = document.getElementById('favCategory');
+
+  catEl.innerHTML = categories.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+
+  if (favId) {
+    const fav = favorites.find(f => f.id === favId);
+    if (!fav) return;
+    titleEl.textContent = 'Modifier le favori';
+    nameEl.value = fav.name;
+    addrEl.value = fav.address;
+    catEl.value = fav.categoryId;
+    if (fav.lat != null && fav.lon != null) {
+      pendingCoords = { lat: fav.lat, lon: fav.lon };
+    }
+  } else {
+    titleEl.textContent = 'Ajouter un favori';
+    nameEl.value = '';
+    addrEl.value = '';
+    catEl.value = presetCatId || (categories[0] && categories[0].id) || '';
+  }
+  showCoordsBadge(pendingCoords.lat, pendingCoords.lon);
+  document.getElementById('favModal').classList.add('active');
+  setTimeout(() => nameEl.focus(), 50);
+}
+function closeFavModal() {
+  document.getElementById('favModal').classList.remove('active');
+  editingFavId = null;
+}
+function saveFav() {
+  const name = document.getElementById('favName').value.trim();
+  const address = document.getElementById('favAddress').value.trim();
+  const categoryId = document.getElementById('favCategory').value;
+  if (!name) { showToast('Nom requis', true); return; }
+  if (!categoryId) { showToast('Aucune catégorie disponible', true); return; }
+
+  if (editingFavId) {
+    const fav = favorites.find(f => f.id === editingFavId);
+    if (fav) {
+      fav.name = name;
+      fav.address = address;
+      fav.categoryId = categoryId;
+      fav.lat = pendingCoords.lat;
+      fav.lon = pendingCoords.lon;
+    }
+    showToast('Favori modifié');
+  } else {
+    favorites.push({
+      id: uid('fav'),
+      name, address, categoryId,
+      lat: pendingCoords.lat,
+      lon: pendingCoords.lon
+    });
+    showToast('Favori ajouté');
+  }
+  persist();
+  closeFavModal();
+  render();
+}
+function deleteFav(id) {
+  const fav = favorites.find(f => f.id === id);
+  if (!fav) return;
+  if (!confirm('Supprimer « ' + fav.name + ' » ?')) return;
+  favorites = favorites.filter(f => f.id !== id);
+  persist();
+  render();
+  showToast('Favori supprimé');
+}
+
+function openCategoryModal() {
+  document.getElementById('catName').value = '';
+  renderCatList();
+  document.getElementById('categoryModal').classList.add('active');
+}
+function closeCategoryModal() {
+  document.getElementById('categoryModal').classList.remove('active');
+}
+function renderCatList() {
+  const list = document.getElementById('catList');
+  if (categories.length === 0) {
+    list.innerHTML = '<div class="fav-empty">Aucune catégorie</div>';
+    return;
+  }
+  list.innerHTML = categories.map((c, i) => `
+    <div style="display:flex; align-items:center; gap:6px; padding:6px 0; border-bottom:1px solid var(--menu-border);">
+      <span style="flex:1; font-weight:bold;">${c.pinned ? '📌 ' : ''}${pad2(i+1)}. ${escapeHtml(c.name)}</span>
+      <button class="fav-manage-btn edit" type="button" onclick="renameCategory('${c.id}'); renderCatList();">✎</button>
+      ${c.pinned ? '<span style="font-size:0.78em; color:#888; padding:0 6px;">épinglée</span>' : `<button class="fav-manage-btn del" type="button" onclick="deleteCategory('${c.id}'); renderCatList();">🗑</button>`}
+    </div>
+  `).join('');
+}
+function addCategory() {
+  const name = document.getElementById('catName').value.trim();
+  if (!name) { showToast('Nom requis', true); return; }
+  categories.push({ id: uid('cat'), name, dark: false, pinned: false });
+  persist();
+  document.getElementById('catName').value = '';
+  renderCatList();
+  render();
+  showToast('Catégorie ajoutée');
+}
+function renameCategory(id) {
+  const cat = categories.find(c => c.id === id);
+  if (!cat) return;
+  const n = prompt('Nouveau nom :', cat.name);
+  if (n === null) return;
+  const trimmed = n.trim();
+  if (!trimmed) return;
+  cat.name = trimmed;
+  persist();
+  render();
+}
+function toggleDarkCategory(id) {
+  const cat = categories.find(c => c.id === id);
+  if (!cat) return;
+  cat.dark = !cat.dark;
+  persist();
+  render();
+}
+function deleteCategory(id) {
+  const cat = categories.find(c => c.id === id);
+  if (!cat) return;
+  if (cat.pinned) { showToast('Cette catégorie est épinglée et ne peut pas être supprimée', true); return; }
+  const count = favorites.filter(f => f.categoryId === id).length;
+  const msg = count > 0
+    ? 'Supprimer la catégorie « ' + cat.name + ' » et ses ' + count + ' favori(s) ?'
+    : 'Supprimer la catégorie « ' + cat.name + ' » ?';
+  if (!confirm(msg)) return;
+  categories = categories.filter(c => c.id !== id);
+  favorites = favorites.filter(f => f.categoryId !== id);
+  persist();
+  render();
+  showToast('Catégorie supprimée');
+}
+function moveCategoryUp(id) {
+  const i = categories.findIndex(c => c.id === id);
+  if (i <= 0) return;
+  if (categories[i].pinned) return;
+  if (categories[i-1].pinned) { showToast('Impossible de passer au-dessus d\'une catégorie épinglée', true); return; }
+  [categories[i-1], categories[i]] = [categories[i], categories[i-1]];
+  persist();
+  render();
+}
+function moveCategoryDown(id) {
+  const i = categories.findIndex(c => c.id === id);
+  if (i < 0 || i >= categories.length - 1) return;
+  if (categories[i].pinned) return;
+  [categories[i+1], categories[i]] = [categories[i], categories[i+1]];
+  persist();
+  render();
+}
+
+let dragFavId = null;
+let touchDragEl = null;
+let touchPlaceholder = null;
+
+function attachDragHandlers() {
+  document.querySelectorAll('.fav-manage-btn.move').forEach(btn => {
+    const favId = btn.dataset.favId;
+    btn.addEventListener('mousedown', () => { setItemDraggable(favId, true); });
+    btn.addEventListener('mouseup', () => { setItemDraggable(favId, false); });
+
+    btn.addEventListener('touchstart', e => onTouchStart(e, favId), { passive: false });
+    btn.addEventListener('touchmove', onTouchMove, { passive: false });
+    btn.addEventListener('touchend', onTouchEnd);
+    btn.addEventListener('touchcancel', onTouchEnd);
+  });
+
+  document.querySelectorAll('.fav-item').forEach(item => {
+    item.addEventListener('dragstart', e => {
+      dragFavId = item.dataset.favId;
+      item.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', dragFavId); } catch(_) {}
+    });
+    item.addEventListener('dragend', () => {
+      item.classList.remove('dragging');
+      document.querySelectorAll('.fav-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+      dragFavId = null;
+      item.draggable = false;
+    });
+    item.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.fav-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+      item.classList.add('drag-over');
+    });
+    item.addEventListener('dragleave', () => item.classList.remove('drag-over'));
+    item.addEventListener('drop', e => {
+      e.preventDefault();
+      const targetId = item.dataset.favId;
+      if (!dragFavId || dragFavId === targetId) return;
+      reorderFav(dragFavId, targetId);
+    });
+  });
+
+  document.querySelectorAll('.fav-list').forEach(list => {
+    list.addEventListener('dragover', e => { e.preventDefault(); });
+    list.addEventListener('drop', e => {
+      e.preventDefault();
+      if (!dragFavId) return;
+      const targetCatId = list.dataset.categoryId;
+      const fav = favorites.find(f => f.id === dragFavId);
+      if (fav && fav.categoryId !== targetCatId) {
+        fav.categoryId = targetCatId;
+        persist();
+        render();
+      }
+    });
+  });
+}
+
+function setItemDraggable(favId, value) {
+  const item = document.querySelector('.fav-item[data-fav-id="' + favId + '"]');
+  if (item) item.draggable = value;
+}
+
+function onTouchStart(e, favId) {
+  e.preventDefault();
+  dragFavId = favId;
+  const item = document.querySelector('.fav-item[data-fav-id="' + favId + '"]');
+  if (!item) return;
+  touchDragEl = item;
+  item.classList.add('dragging');
+  const rect = item.getBoundingClientRect();
+  touchPlaceholder = document.createElement('div');
+  touchPlaceholder.style.height = rect.height + 'px';
+  touchPlaceholder.style.background = 'rgba(45,80,22,0.08)';
+  touchPlaceholder.style.border = '2px dashed var(--menu-primary)';
+  touchPlaceholder.style.borderRadius = '8px';
+  touchPlaceholder.style.marginBottom = '10px';
+  item.parentNode.insertBefore(touchPlaceholder, item.nextSibling);
+}
+function onTouchMove(e) {
+  if (!touchDragEl) return;
+  e.preventDefault();
+  const t = e.touches[0];
+  const target = document.elementFromPoint(t.clientX, t.clientY);
+  if (!target) return;
+  const overItem = target.closest('.fav-item');
+  document.querySelectorAll('.fav-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+  if (overItem && overItem !== touchDragEl) {
+    overItem.classList.add('drag-over');
+  }
+}
+function onTouchEnd(e) {
+  if (!touchDragEl) return;
+  const t = (e.changedTouches && e.changedTouches[0]) || null;
+  let dropped = false;
+  if (t) {
+    const target = document.elementFromPoint(t.clientX, t.clientY);
+    if (target) {
+      const overItem = target.closest('.fav-item');
+      const overList = target.closest('.fav-list');
+      if (overItem && overItem !== touchDragEl) {
+        const targetId = overItem.dataset.favId;
+        if (dragFavId && targetId && dragFavId !== targetId) {
+          reorderFav(dragFavId, targetId);
+          dropped = true;
+        }
+      } else if (overList) {
+        const targetCatId = overList.dataset.categoryId;
+        const fav = favorites.find(f => f.id === dragFavId);
+        if (fav && fav.categoryId !== targetCatId) {
+          fav.categoryId = targetCatId;
+          persist();
+          render();
+          dropped = true;
+        }
+      }
+    }
+  }
+  if (!dropped) {
+    touchDragEl.classList.remove('dragging');
+    if (touchPlaceholder && touchPlaceholder.parentNode) touchPlaceholder.parentNode.removeChild(touchPlaceholder);
+    document.querySelectorAll('.fav-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+  }
+  touchDragEl = null;
+  touchPlaceholder = null;
+  dragFavId = null;
+}
+
+function reorderFav(sourceId, targetId) {
+  const srcIdx = favorites.findIndex(f => f.id === sourceId);
+  const tgtIdx = favorites.findIndex(f => f.id === targetId);
+  if (srcIdx < 0 || tgtIdx < 0) return;
+  const src = favorites[srcIdx];
+  const tgt = favorites[tgtIdx];
+  src.categoryId = tgt.categoryId;
+  favorites.splice(srcIdx, 1);
+  const newTgtIdx = favorites.findIndex(f => f.id === targetId);
+  favorites.splice(newTgtIdx, 0, src);
+  persist();
+  render();
+}
+
+function resetToDefaults() {
+  const msg = '⚠ ATTENTION\n\nCela va EFFACER tous tes favoris et catégories actuels et recharger les valeurs par défaut.\n\nFais Export JSON ou CSV avant si tu veux sauvegarder !\n\nContinuer ?';
+  if (!confirm(msg)) return;
+  if (!confirm('Vraiment tout effacer ? Action IRRÉVERSIBLE.')) return;
+  try {
+    Object.keys(localStorage).forEach(k => {
+      if (k.startsWith(STORAGE_PREFIX)) localStorage.removeItem(k);
+    });
+  } catch(e) {}
+  location.reload();
+}
+
+const KAABA_LAT = 21.4225;
+const KAABA_LON = 39.8262;
+const EARTH_RADIUS_KM = 6371;
+
+function toRad(deg) { return deg * Math.PI / 180; }
+function toDeg(rad) { return rad * 180 / Math.PI; }
+
+function calcQiblaBearing(lat, lon) {
+  const phi1 = toRad(lat);
+  const phi2 = toRad(KAABA_LAT);
+  const deltaLambda = toRad(KAABA_LON - lon);
+  const y = Math.sin(deltaLambda) * Math.cos(phi2);
+  const x = Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
+  const bearing = (toDeg(Math.atan2(y, x)) + 360) % 360;
+  return bearing;
+}
+
+function calcGreatCircleDistance(lat1, lon1, lat2, lon2) {
+  const phi1 = toRad(lat1);
+  const phi2 = toRad(lat2);
+  const dPhi = toRad(lat2 - lat1);
+  const dLambda = toRad(lon2 - lon1);
+  const a = Math.sin(dPhi/2)**2 + Math.cos(phi1) * Math.cos(phi2) * Math.sin(dLambda/2)**2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return EARTH_RADIUS_KM * c;
+}
+
+function bearingToCompassDir(bearing) {
+  const dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
+  return dirs[Math.round(bearing / 22.5) % 16];
+}
+
+let qiblaCompassActive = false;
+let qiblaBearing = null;
+let qiblaOrientationHandler = null;
+
+function openQiblaModal() {
+  console.log('[FavNav] openQiblaModal called');
+  qiblaCompassActive = false;
+  qiblaBearing = null;
+  if (qiblaOrientationHandler) {
+    window.removeEventListener('deviceorientation', qiblaOrientationHandler);
+    window.removeEventListener('deviceorientationabsolute', qiblaOrientationHandler);
+    qiblaOrientationHandler = null;
+  }
+
+  const content = document.getElementById('qiblaContent');
+  content.innerHTML = '<div class="qibla-info">⏳ Calcul de la direction depuis ta position actuelle...</div>';
+  document.getElementById('qiblaModal').classList.add('active');
+
+  const showQiblaError = (title, msg) => {
+    content.innerHTML =
+      '<div class="qibla-info" style="background:#fdecea; border-color:#c0392b; color:#a93226;">' +
+      '<strong>⚠ ' + escapeHtml(title) + '</strong><br>' + msg +
+      '</div>' +
+      '<div style="margin-top: 14px; padding: 12px; background: #f5f1e8; border-radius: 8px;">' +
+      '<strong>Saisie manuelle des coordonnées :</strong><br>' +
+      '<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">' +
+      '<input type="number" step="any" id="qiblaManualLat" placeholder="Latitude (ex: 50.85)" style="flex:1 1 130px; padding:8px; font-size:16px; border:2px solid #ccc; border-radius:6px;">' +
+      '<input type="number" step="any" id="qiblaManualLon" placeholder="Longitude (ex: 4.35)" style="flex:1 1 130px; padding:8px; font-size:16px; border:2px solid #ccc; border-radius:6px;">' +
+      '</div>' +
+      '<button class="modal-btn primary" type="button" onclick="qiblaManualCalc()" style="width:100%; margin-top:8px;">Calculer la direction</button>' +
+      '<div style="font-size:0.82em; color:#666; margin-top:8px;">Ex Bruxelles : 50.85, 4.35 · Paris : 48.85, 2.35</div>' +
+      '<details style="margin-top: 10px;"><summary style="cursor:pointer; font-size:0.85em; color:#666;">Pourquoi le GPS ne marche pas ?</summary>' +
+      '<pre style="font-size:0.72em; background:#fff; padding:6px; border-radius:4px; overflow-x:auto; margin-top:4px;">' + escapeHtml(getContextDebug()) + '</pre>' +
+      '</details>' +
+      '</div>';
+  };
+
+  if (!('geolocation' in navigator)) {
+    showQiblaError(
+      'GPS non disponible',
+      'Cette app/visualiseur n\'expose pas l\'API GPS. Sur iPhone, utilise Safari pour le GPS automatique, ou saisis tes coordonnées ci-dessous.'
+    );
+    return;
+  }
+
+  const isSecure = (window.isSecureContext === true) ||
+                   (location.protocol === 'file:') ||
+                   (location.hostname === 'localhost') ||
+                   (location.hostname === '127.0.0.1');
+  if (!isSecure) {
+    showQiblaError(
+      'Contexte non sécurisé',
+      'iOS bloque le GPS quand le fichier est servi en HTTP. Ouvre dans Safari (file://) ou saisis tes coordonnées.'
+    );
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      console.log('[FavNav] qibla position', pos.coords);
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      qiblaBearing = calcQiblaBearing(lat, lon);
+      const distance = calcGreatCircleDistance(lat, lon, KAABA_LAT, KAABA_LON);
+      const compassDir = bearingToCompassDir(qiblaBearing);
+      renderQiblaContent(lat, lon, qiblaBearing, distance, compassDir);
+    },
+    (err) => {
+      console.error('[FavNav] qibla geolocation error', err);
+      let title, msg;
+      switch(err.code) {
+        case 1: title = 'Permission refusée'; msg = 'Autorise la localisation dans Réglages → Confidentialité → Service de localisation → Safari.'; break;
+        case 2: title = 'Position indisponible'; msg = 'Le GPS n\'a pas trouvé de signal. Essaye à l\'extérieur.'; break;
+        case 3: title = 'Délai dépassé'; msg = 'Le GPS n\'a pas répondu à temps.'; break;
+        default: title = 'Erreur GPS'; msg = err.message || '(inconnu)';
+      }
+      showQiblaError(title, msg);
+    },
+    { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 }
+  );
+}
+
+function qiblaManualCalc() {
+  const latInput = document.getElementById('qiblaManualLat');
+  const lonInput = document.getElementById('qiblaManualLon');
+  if (!latInput || !lonInput) return;
+  const lat = parseFloat(latInput.value);
+  const lon = parseFloat(lonInput.value);
+  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+    showToast('Coordonnées invalides (lat: -90 à 90, lon: -180 à 180)', true);
+    return;
+  }
+  qiblaBearing = calcQiblaBearing(lat, lon);
+  const distance = calcGreatCircleDistance(lat, lon, KAABA_LAT, KAABA_LON);
+  const compassDir = bearingToCompassDir(qiblaBearing);
+  renderQiblaContent(lat, lon, qiblaBearing, distance, compassDir);
+}
+
+function renderQiblaContent(lat, lon, bearing, distance, compassDir) {
+  const content = document.getElementById('qiblaContent');
+  const distanceTxt = distance >= 100 ? Math.round(distance).toLocaleString('fr-BE') : distance.toFixed(1);
+
+  content.innerHTML = `
+    <div class="qibla-info">
+      <strong>📍 Ta position :</strong> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+      <strong>🕋 Coordonnées Kaaba :</strong> ${KAABA_LAT}, ${KAABA_LON}
+    </div>
+    <div class="qibla-bearing">${bearing.toFixed(2)}°</div>
+    <div class="qibla-distance">${compassDir} — ${distanceTxt} km à vol d'oiseau</div>
+    <button class="modal-btn primary" id="compassStartBtn" type="button" style="width: 100%; padding: 12px;" onclick="startCompass()">🧭 Activer la boussole</button>
+    <div id="compassArea" style="display: none;">
+      <div class="compass-wrapper">
+        <div class="compass-rose" id="compassRose">
+          <span class="cardinal n">N</span>
+          <span class="cardinal e">E</span>
+          <span class="cardinal s">S</span>
+          <span class="cardinal w">O</span>
+          <div class="compass-needle" id="compassNeedle"></div>
+          <div class="qibla-arrow" id="qiblaArrow"></div>
+          <div class="compass-center"></div>
+        </div>
+      </div>
+      <div class="compass-heading-display" id="compassHeading">Cap : --°</div>
+      <div class="compass-status" id="compassStatus">Tiens l'iPhone à plat, écran vers le haut.</div>
+    </div>
+  `;
+}
+
+function startCompass() {
+  console.log('[FavNav] startCompass called');
+  const btn = document.getElementById('compassStartBtn');
+  const area = document.getElementById('compassArea');
+  if (!btn || !area) return;
+
+  const onActivated = () => {
+    enableCompassListener();
+    btn.style.display = 'none';
+    area.style.display = 'block';
+    setTimeout(() => {
+      const headingEl = document.getElementById('compassHeading');
+      if (headingEl && headingEl.textContent === 'Cap : --°') {
+        const statusEl = document.getElementById('compassStatus');
+        if (statusEl) {
+          statusEl.className = 'compass-status';
+          statusEl.style.background = '#fdecea';
+          statusEl.style.color = '#a93226';
+          statusEl.innerHTML = '⚠ Aucune donnée de boussole reçue après 3s.<br>Cette app ne donne probablement pas accès au magnétomètre.<br>Ouvre le fichier dans <strong>Safari</strong> à la place.';
+        }
+      }
+    }, 3000);
+  };
+
+  if (typeof DeviceOrientationEvent === 'undefined') {
+    showGpsErrorModal(
+      'Boussole non disponible',
+      'Cette application/visualiseur ne supporte pas DeviceOrientationEvent. Ouvre le fichier dans <strong>Safari</strong>.',
+      getContextDebug()
+    );
+    return;
+  }
+
+  if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+    DeviceOrientationEvent.requestPermission()
+      .then(state => {
+        console.log('[FavNav] orientation permission state:', state);
+        if (state === 'granted') {
+          onActivated();
+        } else {
+          showGpsErrorModal(
+            'Permission boussole refusée',
+            'Tu as refusé l\'accès aux capteurs. Recharge la page et accepte le prompt.',
+            getContextDebug()
+          );
+        }
+      })
+      .catch(err => {
+        console.error('[FavNav] orientation permission error', err);
+        showGpsErrorModal(
+          'Erreur boussole',
+          'Impossible de demander la permission : ' + (err.message || err) + '<br><br>Cette app ne supporte probablement pas la boussole. Ouvre dans <strong>Safari</strong>.',
+          getContextDebug() + '\nerror=' + (err.message || err)
+        );
+      });
+  } else {
+    onActivated();
+  }
+}
+
+function enableCompassListener() {
+  qiblaCompassActive = true;
+  qiblaOrientationHandler = (event) => {
+    let heading = null;
+    if (typeof event.webkitCompassHeading === 'number') {
+      heading = event.webkitCompassHeading;
+    } else if (event.absolute === true && typeof event.alpha === 'number') {
+      heading = (360 - event.alpha) % 360;
+    } else if (typeof event.alpha === 'number') {
+      heading = (360 - event.alpha) % 360;
+    }
+    if (heading == null) return;
+    updateCompassUI(heading);
+  };
+  window.addEventListener('deviceorientation', qiblaOrientationHandler, true);
+  if ('ondeviceorientationabsolute' in window) {
+    window.addEventListener('deviceorientationabsolute', qiblaOrientationHandler, true);
+  }
+}
+
+function updateCompassUI(heading) {
+  const needle = document.getElementById('compassNeedle');
+  const arrow = document.getElementById('qiblaArrow');
+  const headingEl = document.getElementById('compassHeading');
+  const statusEl = document.getElementById('compassStatus');
+  const rose = document.getElementById('compassRose');
+  if (!needle || !arrow || qiblaBearing == null) return;
+
+  if (rose) rose.style.transform = `rotate(${-heading}deg)`;
+  if (arrow) arrow.style.transform = `translate(-50%, -100%) rotate(${qiblaBearing - heading}deg)`;
+  if (headingEl) headingEl.textContent = `Cap : ${heading.toFixed(1)}°`;
+
+  let diff = ((qiblaBearing - heading + 540) % 360) - 180;
+  const absDiff = Math.abs(diff);
+  if (statusEl) {
+    if (absDiff < 3) {
+      statusEl.className = 'compass-status aligned';
+      statusEl.textContent = '✓ Tu fais face à la Mecque';
+    } else {
+      statusEl.className = 'compass-status';
+      const dir = diff > 0 ? '➡ Tourne à droite' : '⬅ Tourne à gauche';
+      statusEl.textContent = `${dir} (${absDiff.toFixed(0)}°)`;
+    }
+  }
+}
+
+function closeQiblaModal() {
+  if (qiblaOrientationHandler) {
+    window.removeEventListener('deviceorientation', qiblaOrientationHandler, true);
+    window.removeEventListener('deviceorientationabsolute', qiblaOrientationHandler, true);
+    qiblaOrientationHandler = null;
+  }
+  qiblaCompassActive = false;
+  document.getElementById('qiblaModal').classList.remove('active');
+}
+
+let pendingPOI = null;
+let lastReverseAt = 0;
+
+async function reverseGeocode(lat, lon) {
+  const now = Date.now();
+  const elapsed = now - lastReverseAt;
+  if (elapsed < 1100) {
+    await new Promise(r => setTimeout(r, 1100 - elapsed));
+  }
+  lastReverseAt = Date.now();
+  const url = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + encodeURIComponent(lat) + '&lon=' + encodeURIComponent(lon) + '&accept-language=fr';
+  try {
+    const resp = await fetch(url, { method: 'GET', headers: { 'Accept': 'application/json' } });
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    if (data && data.display_name) return data.display_name;
+    return null;
+  } catch(e) {
+    return null;
+  }
+}
+
+function showGpsErrorModal(title, message, debugInfo) {
+  console.error('[FavNav GPS]', title, message, debugInfo);
+  const html = '<div class="modal-bg active" id="gpsErrorModal" style="z-index:300;">' +
+    '<div class="modal" style="max-width: 420px;">' +
+    '<h2 style="color:#c0392b;">⚠ ' + escapeHtml(title) + '</h2>' +
+    '<div style="margin: 12px 0; line-height: 1.5;">' + message + '</div>' +
+    '<details style="margin-top: 10px;"><summary style="cursor:pointer; font-size:0.88em; color:#666;">Détails techniques</summary>' +
+    '<pre style="font-size:0.75em; background:#f5f5f5; padding:8px; border-radius:4px; overflow-x:auto; margin-top:6px;">' + escapeHtml(debugInfo || '(aucun)') + '</pre>' +
+    '</details>' +
+    '<div class="modal-actions" style="margin-top: 14px;">' +
+    '<button class="modal-btn primary" type="button" onclick="document.getElementById(\'gpsErrorModal\').remove()">OK</button>' +
+    '</div></div></div>';
+  const old = document.getElementById('gpsErrorModal');
+  if (old) old.remove();
+  document.body.insertAdjacentHTML('beforeend', html);
+}
+
+function getContextDebug() {
+  const ua = navigator.userAgent;
+  return [
+    'protocol=' + location.protocol,
+    'host=' + (location.hostname || '(none)'),
+    'isSecureContext=' + (window.isSecureContext === true),
+    'geolocation=' + ('geolocation' in navigator),
+    'DeviceOrientationEvent=' + (typeof DeviceOrientationEvent !== 'undefined'),
+    'requestPermission=' + (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function'),
+    'UA=' + ua
+  ].join('\n');
+}
+
+function capturePOI() {
+  const btn = document.getElementById('poiCaptureBtn');
+  console.log('[FavNav] capturePOI called');
+
+  if (!('geolocation' in navigator)) {
+    showGpsErrorModal(
+      'GPS non disponible',
+      'Cette application/visualiseur n\'expose pas l\'API GPS du navigateur.<br><br>' +
+      '<strong>Sur iPhone :</strong> les apps "HTML viewer" tierces ne donnent pas accès au GPS. Seul <strong>Safari</strong> le fait.<br><br>' +
+      '<strong>Solution :</strong> ouvre ce fichier dans Safari (app Fichiers → long-press → Partager → Safari).',
+      getContextDebug()
+    );
+    return;
+  }
+
+  const isSecure = (window.isSecureContext === true) ||
+                   (location.protocol === 'file:') ||
+                   (location.hostname === 'localhost') ||
+                   (location.hostname === '127.0.0.1');
+  if (!isSecure) {
+    showGpsErrorModal(
+      'Contexte non sécurisé',
+      'iOS bloque le GPS quand le fichier est servi en HTTP simple.<br><br>' +
+      '<strong>Solutions :</strong><br>' +
+      '• Ouvre le fichier dans Safari via l\'app <strong>Fichiers</strong> (file://)<br>' +
+      '• OU héberge-le sur GitHub Pages (HTTPS gratuit)',
+      getContextDebug()
+    );
+    return;
+  }
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Capture en cours...';
+  }
+
+  console.log('[FavNav] calling getCurrentPosition');
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      console.log('[FavNav] position received', position.coords);
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const accuracy = position.coords.accuracy;
+
+      if (btn) btn.innerHTML = '🔍 Recherche d\'adresse proche...';
+      const reverseAddr = await reverseGeocode(lat, lon);
+
+      pendingPOI = {
+        lat: lat, lon: lon, accuracy: accuracy,
+        reverseAddr: reverseAddr,
+        capturedAt: new Date()
+      };
+
+      const stamp = pendingPOI.capturedAt.toLocaleString('fr-BE');
+      const accuracyTxt = accuracy != null ? Math.round(accuracy) + ' m' : 'inconnue';
+      const addrLine = reverseAddr
+        ? '<div style="margin-top:8px; padding:8px; background:#e8f5e9; border-radius:6px;"><strong>Adresse trouvée :</strong><br>' + escapeHtml(reverseAddr) + '</div>'
+        : '<div style="margin-top:8px; padding:8px; background:#fdecea; border-radius:6px; color:#a93226;">Aucune adresse trouvée à proximité — seules les coordonnées GPS seront enregistrées.</div>';
+
+      document.getElementById('poiModalContent').innerHTML =
+        '<div style="font-family:monospace; font-size:0.95em; background:#f5f5f5; padding:8px; border-radius:6px;">' +
+        '📍 ' + lat.toFixed(6) + ', ' + lon.toFixed(6) +
+        '</div>' +
+        '<div style="font-size:0.85em; color:#666; margin-top:4px;">Précision : ±' + accuracyTxt + ' &nbsp;·&nbsp; ' + escapeHtml(stamp) + '</div>' +
+        addrLine;
+
+      const defaultName = reverseAddr
+        ? reverseAddr.split(',').slice(0, 2).join(',').trim()
+        : 'POI ' + pendingPOI.capturedAt.toLocaleDateString('fr-BE') + ' ' + pendingPOI.capturedAt.toLocaleTimeString('fr-BE', {hour: '2-digit', minute: '2-digit'});
+      document.getElementById('poiName').value = defaultName;
+
+      document.getElementById('poiModal').classList.add('active');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '📍 Capturer ma position actuelle';
+      }
+      setTimeout(() => document.getElementById('poiName').focus(), 50);
+    },
+    (error) => {
+      console.error('[FavNav] geolocation error', error);
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '📍 Capturer ma position actuelle';
+      }
+      let title, msg;
+      switch(error.code) {
+        case 1:
+          title = 'Permission refusée';
+          msg = 'Tu as refusé l\'accès à la localisation, ou Safari n\'a pas la permission.<br><br>' +
+                '<strong>Pour autoriser :</strong><br>' +
+                'Réglages iPhone → Confidentialité et sécurité → Service de localisation → Safari → Lorsque l\'app est active.';
+          break;
+        case 2:
+          title = 'Position indisponible';
+          msg = 'Le GPS n\'arrive pas à obtenir de position. Essaye à l\'extérieur, ou attends quelques secondes.';
+          break;
+        case 3:
+          title = 'Délai dépassé';
+          msg = 'Le GPS n\'a pas répondu dans le temps imparti. Essaye à l\'extérieur.';
+          break;
+        default:
+          title = 'Erreur GPS';
+          msg = error.message || '(aucun message)';
+      }
+      showGpsErrorModal(title, msg, getContextDebug() + '\nerror.code=' + error.code + '\nerror.message=' + error.message);
+    },
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+  );
+}
+
+function savePOI() {
+  if (!pendingPOI) return;
+  const name = document.getElementById('poiName').value.trim() ||
+               ('POI ' + pendingPOI.capturedAt.toLocaleDateString('fr-BE'));
+  const address = pendingPOI.reverseAddr ||
+                  ('GPS ' + pendingPOI.lat.toFixed(6) + ', ' + pendingPOI.lon.toFixed(6));
+
+  favorites.push({
+    id: uid('fav'),
+    name: name,
+    address: address,
+    categoryId: 'cat_poi',
+    lat: pendingPOI.lat,
+    lon: pendingPOI.lon
+  });
+  persist();
+  document.getElementById('poiModal').classList.remove('active');
+  pendingPOI = null;
+  render();
+  showToast('POI enregistré ✓');
+}
+
+function cancelPOI() {
+  pendingPOI = null;
+  document.getElementById('poiModal').classList.remove('active');
+}
+
+let lastVerifyAt = 0;
+let verifyInProgress = false;
+
+async function verifyAddress() {
+  if (verifyInProgress) return;
+  const addrEl = document.getElementById('favAddress');
+  const statusEl = document.getElementById('verifyStatus');
+  const resultsEl = document.getElementById('verifyResults');
+  const btn = document.getElementById('verifyBtn');
+
+  const query = addrEl.value.trim();
+  if (!query) {
+    statusEl.className = 'verify-status error';
+    statusEl.textContent = 'Tape d\'abord une adresse à vérifier.';
+    return;
+  }
+
+  const now = Date.now();
+  const elapsed = now - lastVerifyAt;
+  if (elapsed < 1100) {
+    const wait = Math.ceil((1100 - elapsed) / 1000);
+    statusEl.className = 'verify-status error';
+    statusEl.textContent = 'Patiente ' + wait + 's (limite Nominatim : 1 requête/seconde).';
+    return;
+  }
+
+  verifyInProgress = true;
+  btn.disabled = true;
+  resultsEl.className = 'verify-results';
+  resultsEl.innerHTML = '';
+  statusEl.className = 'verify-status loading';
+  statusEl.textContent = '⏳ Recherche en cours...';
+
+  const url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=5&accept-language=fr&q=' + encodeURIComponent(query);
+
+  try {
+    lastVerifyAt = Date.now();
+    const resp = await fetch(url, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!resp.ok) {
+      throw new Error('HTTP ' + resp.status);
+    }
+    const data = await resp.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      statusEl.className = 'verify-status error';
+      statusEl.textContent = 'Aucun résultat trouvé. Essaie une formulation différente.';
+      verifyInProgress = false;
+      btn.disabled = false;
+      return;
+    }
+    statusEl.className = 'verify-status success';
+    statusEl.textContent = '✓ ' + data.length + ' résultat(s) — clique sur celui qui correspond :';
+    resultsEl.className = 'verify-results active';
+    resultsEl.innerHTML = data.map((r, i) => {
+      const dn = String(r.display_name || '').replace(/'/g, '&#39;');
+      return `<div class="verify-result" onclick="pickVerifyResult(${i})" data-idx="${i}">
+        <div class="verify-result-name">${escapeHtml(r.display_name || '')}</div>
+        <div class="verify-result-coords">${Number(r.lat).toFixed(6)}, ${Number(r.lon).toFixed(6)} — ${escapeHtml(r.type || '')}</div>
+      </div>`;
+    }).join('');
+    window._verifyResults = data;
+  } catch (e) {
+    statusEl.className = 'verify-status error';
+    statusEl.textContent = 'Erreur réseau : ' + e.message + '. Vérifie ta connexion.';
+  } finally {
+    verifyInProgress = false;
+    btn.disabled = false;
+  }
+}
+
+function pickVerifyResult(idx) {
+  const data = window._verifyResults;
+  if (!data || !data[idx]) return;
+  const r = data[idx];
+  document.getElementById('favAddress').value = r.display_name;
+  pendingCoords = { lat: parseFloat(r.lat), lon: parseFloat(r.lon) };
+  showCoordsBadge(pendingCoords.lat, pendingCoords.lon);
+  document.getElementById('verifyResults').className = 'verify-results';
+  document.getElementById('verifyResults').innerHTML = '';
+  document.getElementById('verifyStatus').className = 'verify-status success';
+  document.getElementById('verifyStatus').textContent = '✓ Adresse normalisée + GPS enregistrés';
+  showToast('Adresse vérifiée ✓');
+}
+
+function quickAddCategory() {
+  const name = prompt('Nom de la nouvelle catégorie :');
+  if (name === null) return;
+  const trimmed = name.trim();
+  if (!trimmed) { showToast('Nom requis', true); return; }
+  const newCat = { id: uid('cat'), name: trimmed, dark: false, pinned: false };
+  categories.push(newCat);
+  persist();
+  const catEl = document.getElementById('favCategory');
+  catEl.innerHTML = categories.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+  catEl.value = newCat.id;
+  showToast('Catégorie « ' + trimmed + ' » créée');
+}
+
+function csvEscape(v) {
+  const s = String(v == null ? '' : v);
+  if (/[",\n\r;]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+function exportCSV() {
+  if (favorites.length === 0) { showToast('Aucun favori à exporter', true); return; }
+  const catMap = {};
+  categories.forEach(c => { catMap[c.id] = c.name; });
+  const header = ['Categorie', 'Nom', 'Adresse', 'Latitude', 'Longitude', 'Apple_Plans', 'Google_Maps', 'Google_Search'];
+  const rows = [header.map(csvEscape).join(',')];
+  favorites.forEach(f => {
+    const lat = (f.lat != null && f.lat !== '') ? f.lat : null;
+    const lon = (f.lon != null && f.lon !== '') ? f.lon : null;
+    rows.push([
+      catMap[f.categoryId] || '',
+      f.name,
+      f.address,
+      lat != null ? lat : '',
+      lon != null ? lon : '',
+      buildAppleMapsUrl(f.address, lat, lon),
+      buildGoogleMapsUrl(f.address, lat, lon),
+      buildGoogleSearchUrl(f.address)
+    ].map(csvEscape).join(','));
+  });
+  const csv = '\uFEFF' + rows.join('\r\n');
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  const filename = 'favoris-navigation-' + stamp + '.csv';
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 200);
+  showToast('CSV téléchargé (' + favorites.length + ' favoris)');
+}
+
+function openExportModal() {
+  const data = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    categories,
+    favorites
+  };
+  document.getElementById('exportText').value = JSON.stringify(data, null, 2);
+  document.getElementById('exportModal').classList.add('active');
+}
+function closeExportModal() { document.getElementById('exportModal').classList.remove('active'); }
+function copyExport() {
+  const ta = document.getElementById('exportText');
+  ta.select();
+  ta.setSelectionRange(0, 999999);
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch(e) {}
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(ta.value).then(() => showToast('Copié dans le presse-papier'), () => {
+      if (ok) showToast('Copié'); else showToast('Sélectionne et copie manuellement', true);
+    });
+  } else {
+    showToast(ok ? 'Copié' : 'Sélectionne et copie manuellement', !ok);
+  }
+}
+
+function openImportModal() {
+  document.getElementById('importText').value = '';
+  document.getElementById('importReplace').checked = false;
+  document.getElementById('importModal').classList.add('active');
+}
+function closeImportModal() { document.getElementById('importModal').classList.remove('active'); }
+function doImport() {
+  const txt = document.getElementById('importText').value.trim();
+  if (!txt) { showToast('Aucun texte à importer', true); return; }
+  let data;
+  try { data = JSON.parse(txt); } catch(e) { showToast('JSON invalide', true); return; }
+  if (!data || !Array.isArray(data.categories) || !Array.isArray(data.favorites)) {
+    showToast('Format invalide', true); return;
+  }
+  const replace = document.getElementById('importReplace').checked;
+  if (replace) {
+    if (!confirm('Remplacer toutes les données actuelles ?')) return;
+    categories = data.categories.map(c => ({ id: c.id || uid('cat'), name: String(c.name || 'Sans nom'), dark: !!c.dark, pinned: !!c.pinned }));
+    favorites = data.favorites.map(f => ({
+      id: f.id || uid('fav'),
+      name: String(f.name || ''),
+      address: String(f.address || ''),
+      categoryId: f.categoryId,
+      lat: (f.lat != null && f.lat !== '') ? Number(f.lat) : null,
+      lon: (f.lon != null && f.lon !== '') ? Number(f.lon) : null
+    })).filter(f => f.name && f.address && categories.some(c => c.id === f.categoryId));
+  } else {
+    const existingCatIds = new Set(categories.map(c => c.id));
+    const existingCatNames = new Map(categories.map(c => [c.name.toLowerCase(), c.id]));
+    const idMap = {};
+    data.categories.forEach(c => {
+      const name = String(c.name || 'Sans nom');
+      const lower = name.toLowerCase();
+      if (existingCatNames.has(lower)) {
+        idMap[c.id] = existingCatNames.get(lower);
+      } else {
+        const newId = existingCatIds.has(c.id) ? uid('cat') : (c.id || uid('cat'));
+        categories.push({ id: newId, name, dark: !!c.dark, pinned: !!c.pinned });
+        existingCatIds.add(newId);
+        existingCatNames.set(lower, newId);
+        idMap[c.id] = newId;
+      }
+    });
+    const existingFavIds = new Set(favorites.map(f => f.id));
+    data.favorites.forEach(f => {
+      const catId = idMap[f.categoryId] || f.categoryId;
+      if (!categories.some(c => c.id === catId)) return;
+      if (!f.name || !f.address) return;
+      const newId = existingFavIds.has(f.id) ? uid('fav') : (f.id || uid('fav'));
+      favorites.push({
+        id: newId,
+        name: String(f.name),
+        address: String(f.address),
+        categoryId: catId,
+        lat: (f.lat != null && f.lat !== '') ? Number(f.lat) : null,
+        lon: (f.lon != null && f.lon !== '') ? Number(f.lon) : null
+      });
+      existingFavIds.add(newId);
+    });
+  }
+  persist();
+  closeImportModal();
+  render();
+  showToast('Import terminé');
+}
+
+document.querySelectorAll('.modal-bg').forEach(bg => {
+  bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('active'); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-bg.active').forEach(m => m.classList.remove('active'));
+});
+
+document.querySelectorAll('.qctrl-btn.travel-mode').forEach(btn => {
+  btn.classList.toggle('active', btn.dataset.mode === currentTravelMode);
+});
+
+render();
+contextOK = checkContext();
+</script>
+
+</body>
+</html>
+
+<!--
+=========================================================
+SOURCES & RÉFÉRENCES
+=========================================================
+
+1. Template de base : menu-collapsible-simple.html (fourni par l'utilisateur)
+   - Toutes les classes/styles .qsec, .qsec-header, .qctrls, .qctrl-btn conservés
+   - Logique toggleSection / expandAllSections / collapseAllSections / saveSectionStates / restoreSectionStates / syncSectionTooltips conservée
+   - Variables CSS racine conservées
+
+2. URLs de navigation (formats officiels documentés) :
+   - Apple Plans (Maps URL Scheme — universal, fonctionne sur iPhone/iPad/Mac/web) :
+     https://maps.apple.com/?q=ADRESSE_ENCODÉE
+     ou avec coordonnées : https://maps.apple.com/?q=ADRESSE&ll=LAT,LON
+     Doc Apple : https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
+   - Google Maps (URLs - format universel) :
+     https://www.google.com/maps/search/?api=1&query=ADRESSE_ENCODÉE
+     ou avec coordonnées : https://www.google.com/maps/search/?api=1&query=LAT,LON
+     Doc Google : https://developers.google.com/maps/documentation/urls/get-started
+   - Recherche Google :
+     https://www.google.com/search?q=ADRESSE_ENCODÉE
+
+3. Encodage des adresses : encodeURIComponent() — RFC 3986
+   Exemple : "Avenue Rogier 129, 1030 Bruxelles"
+   →  https://maps.apple.com/?q=Avenue%20Rogier%20129%2C%201030%20Bruxelles
+
+4. Géocodage / vérification d'adresse : Nominatim (OpenStreetMap)
+   - Endpoint search : https://nominatim.openstreetmap.org/search
+     Paramètres : format=jsonv2, addressdetails=1, limit=5,
+     accept-language=fr, q=<adresse>
+   - Endpoint reverse (v5) : https://nominatim.openstreetmap.org/reverse
+     Paramètres : format=jsonv2, lat=X, lon=Y, accept-language=fr
+     Retourne 1 résultat avec display_name (ou erreur si zone sans données OSM)
+   - Doc API : https://nominatim.org/release-docs/latest/api/Search/
+               https://nominatim.org/release-docs/latest/api/Reverse/
+   - Format de réponse : https://nominatim.org/release-docs/latest/api/Output/
+   - Politique d'usage : https://operations.osmfoundation.org/policies/nominatim/
+     ⚠ Limite STRICTE : maximum 1 requête par seconde
+        → respectée dans le code via lastVerifyAt + lastReverseAt + délai 1100 ms
+     ⚠ Auto-complétion non autorisée → on utilise un bouton « Vérifier » manuel
+     ⚠ Attribution obligatoire → affichée sous le champ adresse
+   - Données licence : ODbL — © OpenStreetMap contributors
+
+5. Geolocation (v5) : navigator.geolocation.getCurrentPosition()
+   - W3C Geolocation API standard
+   - Doc : https://developer.mozilla.org/fr/docs/Web/API/Geolocation_API
+   - Exige un contexte sécurisé (HTTPS, file://, localhost) sur iOS Safari
+     depuis iOS 10 — détection via window.isSecureContext
+
+5b. Direction Qibla (v6) : formule great-circle bearing
+   - Coordonnées Kaaba : 21.4225°N, 39.8262°E (Masjid al-Haram, Makkah)
+   - Source formule : https://www.movable-type.co.uk/scripts/latlong.html
+                     (formule standard utilisée en aviation)
+   - Validation croisée :
+     https://calculatorsir.com/islamic/qibla-calculator/
+     https://online-compass.com/en/qibla-finder
+     https://github.com/russbiggs/asturlab
+   - Formule distance : Haversine (R = 6371 km)
+
+5c. Boussole (v6) : DeviceOrientationEvent
+   - Doc Apple : https://developer.apple.com/documentation/webkitjs/deviceorientationevent
+   - Doc MDN : https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent
+   - iOS 13+ : DeviceOrientationEvent.requestPermission() requis sur action utilisateur
+   - iOS Safari : event.webkitCompassHeading donne le cap par rapport au NORD VRAI
+     (déjà corrigé pour la déclinaison magnétique côté système)
+   - Fallback Android/autres : (360 - event.alpha) % 360
+
+6. Stockage : window.localStorage (API Web standard, persistance locale)
+
+7. Drag & drop :
+   - Desktop : HTML5 Drag and Drop API (dragstart, dragover, drop)
+   - Mobile (iPhone/iOS) : événements touchstart/touchmove/touchend personnalisés
+
+8. Export CSV : Blob API + URL.createObjectURL() — standard Web,
+   compatible Safari iOS 13+. BOM UTF-8 (\uFEFF) inclus pour
+   compatibilité Excel/Numbers avec accents.
+
+=========================================================
+CHANGEMENTS v8 → v9 (signalés conformément aux consignes)
+=========================================================
+
+🔧 CORRECTION CRITIQUE — GPS et Qibla qui semblaient bloqués
+
+DIAGNOSTIC DU PROBLÈME :
+Tu utilisais une app "HTML viewer" tierce sur iPhone (pas Safari).
+Ces apps utilisent une WKWebView qui :
+- N'expose PAS l'API navigator.geolocation (ou la bloque silencieusement)
+- N'expose PAS DeviceOrientationEvent.requestPermission
+- iOS considère leur contexte comme non-sécurisé pour ces API
+
+Résultat dans la v8 :
+- Le bouton « 📍 Capturer » → showToast silencieux (rare, peu visible)
+- Le bouton « 🕋 Qibla » → modal qui restait sur "Calcul..." à l'infini
+  parce que getCurrentPosition n'était jamais appelé
+
+CORRECTIONS APPLIQUÉES :
+
+1. BANNIÈRE D'AVERTISSEMENT au chargement
+   - Si geolocation est absent OU contexte non-sécurisé → bannière
+     orange affichée en haut avec :
+     • Explication du problème
+     • Instructions pas-à-pas pour ouvrir dans Safari
+     • Diagnostic technique repliable
+
+2. MODAL D'ERREUR au lieu de toasts silencieux
+   - Quand tu cliques « 📍 Capturer » sans GPS dispo, un modal d'erreur
+     bien visible s'ouvre au lieu d'un toast qui disparaît
+   - Détails techniques (protocol, isSecureContext, UA) repliables
+
+3. FALLBACK SAISIE MANUELLE pour Qibla
+   - Si le GPS n'est pas dispo, le modal Qibla affiche maintenant un
+     champ pour saisir tes coordonnées à la main (lat, lon)
+   - Tu peux quand même calculer la direction Mecque sans GPS
+   - Exemples préfournis : Bruxelles 50.85,4.35 — Paris 48.85,2.35
+
+4. TIMEOUT BOUSSOLE
+   - Si la permission est accordée mais qu'aucun event n'arrive après 3s
+     (cas typique des HTML viewers), un message clair s'affiche :
+     "Aucune donnée de boussole reçue — ouvre dans Safari"
+
+5. LOGS CONSOLE pour diagnostic
+   - Tous les appels GPS/boussole loggent dans console.log avec préfixe
+     [FavNav] pour faciliter le debug si besoin
+
+CONTEXTE TECHNIQUE (sources) :
+- iOS exige HTTPS, file:// ou localhost pour navigator.geolocation depuis iOS 10
+  https://developer.mozilla.org/fr/docs/Web/API/Geolocation_API
+- iOS 13+ : DeviceOrientationEvent.requestPermission requis sur action utilisateur
+  https://developer.apple.com/documentation/webkitjs/deviceorientationevent
+- Les WKWebView de 3rd-party apps ont des restrictions plus strictes que Safari
+  https://developer.apple.com/forums/thread/751189
+
+POUR FAIRE FONCTIONNER GPS + BOUSSOLE :
+Option A — Safari direct (le plus simple)
+  1. Sauve le fichier dans iCloud Drive ou app Fichiers
+  2. Long-press sur le fichier dans Fichiers → Partager → Safari
+  3. Une fois ouvert dans Safari : Partager → "Sur l'écran d'accueil"
+  4. iCône d'app créée — utilise-la, plus de souci
+
+Option B — GitHub Pages (HTTPS gratuit)
+  1. Crée un repo public sur github.com
+  2. Settings → Pages → branche main, dossier /
+  3. Push le fichier
+  4. URL https://USER.github.io/REPO/ → ouvre dans Safari
+
+=========================================================
+CHANGEMENTS v7 → v8 (signalés conformément aux consignes)
+=========================================================
+
+🆕 1. Mode de transport global (Voiture / Vélo / À pied)
+- Sélecteur dans la barre de contrôles : 🚗 Voiture / 🚴 Vélo / 🚶 À pied
+- Le choix est sauvegardé dans localStorage (clé travelMode)
+- Apple Plans : passe daddr= + dirflg=d (voiture) ou dirflg=w (à pied)
+  ⚠ Apple ne propose pas officiellement le vélo → fallback sur dirflg=w
+  Pour un itinéraire vélo précis sur iPhone, utiliser le bouton Google Maps.
+- Google Maps : passe destination= + travelmode=driving|bicycling|walking
+- Le bouton actif est mis en évidence (fond vert foncé)
+- Comportement d'URL : on bascule de 'recherche' vers 'directions'
+  pour avoir directement l'itinéraire calculé selon le mode choisi.
+
+🆕 2. Bouton « 📋 Coller » à côté du champ Adresse
+- Utilise navigator.clipboard.readText() (Safari iOS 13.4+)
+- Tu peux donc :
+  1. Copier une adresse depuis Plans, Safari, Mail, Notes, etc.
+  2. Ouvrir la fenêtre « Ajouter un favori »
+  3. Taper le nom (ex: "Resto Khalid")
+  4. Cliquer 📋 Coller → l'adresse copiée s'insère
+- Si Safari refuse l'accès au presse-papier (rare), un message guide
+  l'utilisateur à faire un long-press dans le champ pour coller.
+
+🔧 3. Sections repliées affichées HORIZONTALEMENT (correction bug)
+- AVANT : le sectionsContainer était un <div> simple, donc les sections
+  s'empilaient verticalement même quand repliées (les règles flex étaient
+  écrites pour main, mais main contenait sectionsContainer en bloc plein).
+- APRÈS : sectionsContainer est lui-même un flex container avec
+  flex-wrap: wrap → les sections repliées (flex: 0 0 auto) se placent
+  côte à côte horizontalement comme prévu, et les sections dépliées
+  prennent toute la largeur (flex: 1 1 100%).
+
+🔧 4. Sauvegarde sans adresse autorisée
+- AVANT : saveFav refusait si nom OU adresse vide → "Nom et adresse requis"
+- APRÈS : seul le nom est obligatoire ; adresse vide acceptée.
+- Affichage adapté :
+  • Adresse vide → "— sans adresse —" en italique gris
+  • Boutons Plans/Maps/Google remplacés par un message
+    "⚠ Sans adresse — clique ✎ Modifier pour en ajouter une"
+  • Une fois une adresse ajoutée plus tard, les boutons réapparaissent.
+- Champ Adresse marqué (optionnelle) dans le modal.
+
+🔧 5. Catégorie « Adepts et Soins » → 2 catégories séparées
+- "Adepts" et "Soins" sont maintenant 2 catégories distinctes
+- Migration auto migrateRenameAdeptsSoins() :
+  • Si tu as l'ancienne catégorie "Adepts et Soins" → renommée en "Adepts"
+  • Une nouvelle catégorie "Soins" est ajoutée juste après "Adepts"
+  • Les favoris déjà dans "Adepts et Soins" restent dans "Adepts" (à
+    déplacer manuellement vers "Soins" si besoin via ⇅ Déplacer)
+
+=========================================================
+CHANGEMENTS v6 → v7 (signalés conformément aux consignes)
+=========================================================
+
+🔧 CORRECTION CRITIQUE — Catégories/favoris manquants
+- CAUSE RACINE : Safari iOS conserve dans localStorage les données des
+  versions précédentes (v1, v2, v3 avec sa catégorie unique « Mes adresses »).
+  Quand le fichier se charge, loadLocal() retourne ces vieilles données
+  AU LIEU des valeurs par défaut listées dans le code source.
+  → C'est pour ça que tu ne voyais pas les 9 catégories ni les 2 favoris,
+    même si elles sont bien dans le code.
+
+- CORRECTION 1 : Migration globale unifiée migrateEnsureAllDefaults()
+  qui remplace les 2 anciennes migrations partielles. À chaque chargement :
+  • Pour chaque catégorie par défaut (les 9), si NI son ID NI son nom
+    n'existe déjà → l'ajoute à la position attendue
+  • Pour chaque favori par défaut (Chez moi, Travail), si la catégorie
+    cible est vide → ajoute le favori
+  • Ne supprime ni n'écrase JAMAIS rien d'existant
+  → Garantit que toute personne ouvrant la v7 voit les 9 catégories
+    et les 2 favoris pré-remplis, peu importe l'historique localStorage.
+
+- CORRECTION 2 : Bouton « 🔄 Reset » ajouté dans la barre de contrôles
+  → Double confirmation, efface tout le localStorage favNav_*,
+    recharge la page → repart sur les vraies valeurs par défaut.
+  → Solution radicale si la migration ne suffit pas (ex: catégorie
+    renommée par accident, données corrompues, etc.).
+
+USAGE RECOMMANDÉ POUR TOI :
+1. Ouvre la v7 dans Safari iPhone
+2. Si tu vois bien les 9 catégories + Chez moi + Travail → parfait
+3. Sinon, clique sur « 🔄 Reset » pour tout repartir de zéro
+
+=========================================================
+CHANGEMENTS v5 → v6 (signalés conformément aux consignes)
+=========================================================
+
+🔧 CORRECTION 1 — Boutons « Tout déplier » / « Tout replier » verticaux
+- AVANT : tous les boutons sur la même rangée avec flex-wrap → quand
+  l'écran iPhone manque de place, les boutons collapse/expand passaient
+  à la ligne séparément, donnant un effet vertical.
+- APRÈS : la barre est divisée en 2 rangées :
+  • Rangée 1 (fold-row) : « Tout déplier » + « Tout replier » côte à côte,
+    flex-wrap: nowrap → ils restent TOUJOURS sur la même ligne
+  • Rangée 2 : ＋ Catégorie / 🕋 Qibla / Export JSON / Export CSV / Import
+    (peuvent passer à la ligne sans impact sur la rangée 1)
+
+🔧 CORRECTION 2 — Domicile et Travail invisibles
+- CAUSE : Si tu avais ouvert une version précédente, ton localStorage
+  contenait déjà des données → les valeurs par défaut n'étaient appliquées
+  qu'aux nouveaux utilisateurs.
+- CORRECTION : Ajout d'une migration auto migrateAddDefaultFavs() qui :
+  • vérifie si la catégorie « Chez moi » existe ET ne contient aucun favori
+    → si oui, ajoute « Rue des Ramoneurs 1, 1000 Bruxelles »
+  • idem pour « Travail » → ajoute « Rue Vanderstraeten 9, 1080 Bruxelles »
+  • Ne touche PAS aux favoris déjà présents (rien n'est écrasé)
+
+✓ POINT 3 — Adresses encodées en dur mais modifiables
+- Les 2 favoris « Chez moi » et « Travail » sont des favoris standards :
+  modifiables (✎), supprimables (🗑), déplaçables (⇅) comme les autres.
+  Les CATÉGORIES sont épinglées, pas leurs FAVORIS.
+
+🆕 AJOUT 4 — Direction de la Mecque (Qibla) + boussole
+- Bouton « 🕋 Qibla » dans la barre de contrôles
+- Modal dédié qui :
+  1. Récupère la position GPS actuelle via geolocation
+  2. Calcule la direction Qibla en utilisant la formule du grand cercle
+     (great-circle bearing) :
+       φ₁,λ₁ = ta position (radians)
+       φ₂,λ₂ = Kaaba (21.4225°N, 39.8262°E)
+       Δλ = λ₂ − λ₁
+       B = atan2(sin(Δλ)·cos(φ₂), cos(φ₁)·sin(φ₂) − sin(φ₁)·cos(φ₂)·cos(Δλ))
+       Qibla = (B + 360) mod 360
+  3. Calcule la distance à la Kaaba (formule Haversine)
+  4. Affiche : bearing en °, direction cardinale (NE, ENE, etc.), distance
+  5. Bouton « 🧭 Activer la boussole » qui demande la permission iOS 13+
+     et active deviceorientation
+  6. Compas visuel : rose des vents qui tourne avec l'iPhone, flèche verte
+     pointant vers la Kaaba (avec icône 🕋)
+  7. Indicateur d'alignement : ✓ vert si tu fais face à la Mecque (±3°),
+     sinon « ➡ Tourne à droite (X°) » ou « ⬅ Tourne à gauche (X°) »
+
+CALCULS VÉRIFIÉS PAR EXEMPLES connus :
+- Bruxelles (50.85, 4.35)  → Qibla ~119° (ESE)
+- Paris (48.85, 2.35)      → Qibla ~119° (ESE)
+- New York (40.71, -74.01) → Qibla ~58° (ENE)
+- Sydney (-33.87, 151.21)  → Qibla ~277° (O)
+
+⚠ EXIGENCES iPhone POUR LA BOUSSOLE :
+1. HTTPS ou file:// obligatoire (pareil que GPS)
+2. iOS 13+ : permission demandée via DeviceOrientationEvent.requestPermission()
+   → cliqué sur « Activer la boussole » (action utilisateur requise)
+3. iOS Safari fournit event.webkitCompassHeading qui est déjà corrigé pour
+   la déclinaison magnétique → précision excellente, pas besoin de WMM
+
+=========================================================
+CHANGEMENTS v4 → v5 (signalés conformément aux consignes)
+=========================================================
+- AJOUT : 9ème catégorie « POI » (en bas, non épinglée)
+  → propriété spéciale isPOI: true sur la catégorie
+  → style visuel bleu distinct (badge 📍 dans le numéro)
+- AJOUT : bouton « 📍 Capturer ma position actuelle » visible
+  uniquement dans la section POI
+- AJOUT : utilisation de navigator.geolocation.getCurrentPosition
+  avec enableHighAccuracy: true, timeout: 20s
+- AJOUT : reverse geocoding Nominatim
+  (https://nominatim.openstreetmap.org/reverse?format=jsonv2)
+  pour obtenir l'adresse la plus proche d'une position GPS.
+  Si aucune adresse trouvée (forêt, sentier isolé), seules
+  les coordonnées sont enregistrées.
+- AJOUT : modal dédié après capture, avec :
+  • affichage des coords GPS + précision (m)
+  • timestamp de la capture
+  • adresse trouvée (ou message si aucune)
+  • champ « Nom » pré-rempli intelligemment
+  • boutons Annuler / Enregistrer
+- AJOUT : migration auto pour ajouter POI aux utilisateurs
+  qui ont déjà la v4 dans leur localStorage
+- AUCUNE option des versions précédentes n'a été retirée.
+  Le bouton « 🔍 Vérifier » du modal favori (v3) permet déjà
+  de vérifier si une adresse existe.
+
+=========================================================
+⚠ EXIGENCE TECHNIQUE iOS POUR LE GPS
+=========================================================
+L'API Geolocation de Safari iOS exige un contexte sécurisé :
+  ✓ HTTPS (ex: hébergé sur GitHub Pages, iCloud, Netlify)
+  ✓ file:// (ouvert directement depuis l'app Fichiers)
+  ✓ localhost
+  ✗ HTTP simple → bloqué (depuis iOS 10)
+
+Sur iPhone, la solution la plus simple :
+1. Mets le fichier dans iCloud Drive ou télécharge-le sur l'app Fichiers
+2. Ouvre-le depuis l'app Fichiers (pas depuis un lien web HTTP)
+3. La 1ère capture demandera l'autorisation de localisation
+4. Tu peux ensuite « Ajouter à l'écran d'accueil »
+
+Le code détecte automatiquement le contexte non sécurisé
+et affiche un message explicite si le GPS est bloqué.
+
+Source : https://developer.apple.com/forums/thread/751189
+         https://developer.chrome.com/blog/geolocation-on-secure-contexts-only
+
+=========================================================
+CHANGEMENTS v3 → v4 (signalés conformément aux consignes)
+=========================================================
+- AJOUT : 8 catégories pré-remplies dans l'état initial :
+  1. 📌 Chez moi          (épinglée, fixe en haut)
+  2. 📌 Travail           (épinglée, fixe en haut)
+  3.    Famille
+  4.    G.Enseigne
+  5.    C.Local
+  6.    Randonnée
+  7.    F.Soigne
+  8.    Adepts et Soins
+- AJOUT : 2 favoris pré-remplis (1 par catégorie épinglée) :
+  - Chez moi : « Rue des Ramoneurs 1, 1000 Bruxelles »
+  - Travail  : « Rue Vanderstraeten 9, 1080 Bruxelles »
+  → ces adresses n'ont PAS encore de coords GPS — utilise le bouton
+    « Modifier » puis « 🔍 Vérifier » pour les obtenir via Nominatim.
+- AJOUT : propriété `pinned` sur les catégories
+  → les catégories épinglées :
+    • affichent un badge 📌
+    • ne peuvent pas être supprimées (bouton masqué + protection code)
+    • ne peuvent pas être déplacées (boutons ↑↓ masqués)
+    • aucune autre catégorie ne peut passer au-dessus d'elles
+    • restent en haut même quand toutes les sections sont repliées
+- AJOUT : style CSS .qsec.pinned (fond doré léger sur l'en-tête,
+  badge 📌 dans le numéro)
+- MODIF : import/export JSON gèrent maintenant le champ pinned
+- AUCUNE option des versions précédentes n'a été retirée
+
+⚠ IMPORTANT — Si tu as déjà une v3 ouverte dans Safari, le localStorage
+existant prendra le pas sur les valeurs par défaut de la v4. Pour voir
+les 8 catégories pré-remplies, soit :
+  - Ouvre la v4 dans une nouvelle session / un nouveau navigateur,
+  - OU vide le localStorage (DevTools), 
+  - OU ajoute manuellement les catégories manquantes.
+
+=========================================================
+NOTES IMPORTANTES
+=========================================================
+- 100% local pour le stockage : aucune donnée envoyée sur Internet
+  SAUF lors d'un clic sur « Vérifier » qui interroge Nominatim avec
+  l'adresse tapée (l'adresse seule est envoyée, anonyme).
+- Si la vérification échoue (réseau, blocage), tu peux toujours
+  enregistrer le favori avec juste l'adresse texte.
+- Sur iPhone : ouvre dans Safari → Partager → « Sur l'écran d'accueil ».
+- Quand un favori a des coords GPS, les apps Plans / Google Maps
+  ouvrent directement le bon point au lieu de relancer une recherche.
+- La qualité Nominatim est très bonne en Europe (Belgique/France).
+=========================================================
+-->
