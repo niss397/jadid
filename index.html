@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Favoris Navigation Quotidien v4</title>
+<title>Favoris Navigation Quotidien v6</title>
 <!-- Leaflet 1.9.4 (BSD-2-Clause) inliné depuis cdnjs pour fonctionnement 100% offline -->
 <style>
 .leaflet-image-layer,.leaflet-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane,.leaflet-pane>canvas,.leaflet-pane>svg,.leaflet-tile,.leaflet-tile-container,.leaflet-zoom-box{position:absolute;left:0;top:0}.leaflet-container{overflow:hidden}.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none}.leaflet-tile::selection{background:0 0}.leaflet-safari .leaflet-tile{image-rendering:-webkit-optimize-contrast}.leaflet-safari .leaflet-tile-container{width:1600px;height:1600px;-webkit-transform-origin:0 0}.leaflet-marker-icon,.leaflet-marker-shadow{display:block}.leaflet-container .leaflet-overlay-pane svg{max-width:none!important;max-height:none!important}.leaflet-container .leaflet-marker-pane img,.leaflet-container .leaflet-shadow-pane img,.leaflet-container .leaflet-tile,.leaflet-container .leaflet-tile-pane img,.leaflet-container img.leaflet-image-layer{max-width:none!important;max-height:none!important;width:auto;padding:0}.leaflet-container img.leaflet-tile{mix-blend-mode:plus-lighter}.leaflet-container.leaflet-touch-zoom{-ms-touch-action:pan-x pan-y;touch-action:pan-x pan-y}.leaflet-container.leaflet-touch-drag{-ms-touch-action:pinch-zoom;touch-action:none;touch-action:pinch-zoom}.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action:none;touch-action:none}.leaflet-container{-webkit-tap-highlight-color:transparent}.leaflet-container a{-webkit-tap-highlight-color:rgba(51,181,229,.4)}.leaflet-tile{filter:inherit;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}.leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800}.leaflet-overlay-pane svg{-moz-user-select:none}.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}.leaflet-popup-pane{z-index:700}.leaflet-map-pane canvas{z-index:100}.leaflet-map-pane svg{z-index:200}.leaflet-vml-shape{width:1px;height:1px}.lvml{behavior:url(#default#VML);display:inline-block;position:absolute}.leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto}.leaflet-bottom,.leaflet-top{position:absolute;z-index:1000;pointer-events:none}.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}.leaflet-control{float:left;clear:both}.leaflet-right .leaflet-control{float:right}.leaflet-top .leaflet-control{margin-top:10px}.leaflet-bottom .leaflet-control{margin-bottom:10px}.leaflet-left .leaflet-control{margin-left:10px}.leaflet-right .leaflet-control{margin-right:10px}.leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity .2s linear;-moz-transition:opacity .2s linear;transition:opacity .2s linear}.leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1}.leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}svg.leaflet-zoom-animated{will-change:transform}.leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform .25s cubic-bezier(0,0,.25,1);-moz-transition:-moz-transform .25s cubic-bezier(0,0,.25,1);transition:transform .25s cubic-bezier(0,0,.25,1)}.leaflet-pan-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-tile{-webkit-transition:none;-moz-transition:none;transition:none}.leaflet-zoom-anim .leaflet-zoom-hide{visibility:hidden}.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}.leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair}.leaflet-control,.leaflet-popup-pane{cursor:auto}.leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}.leaflet-image-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane>svg path,.leaflet-tile-container{pointer-events:none}.leaflet-image-layer.leaflet-interactive,.leaflet-marker-icon.leaflet-interactive,.leaflet-pane>svg path.leaflet-interactive,svg.leaflet-image-layer.leaflet-interactive path{pointer-events:visiblePainted;pointer-events:auto}.leaflet-container{background:#ddd;outline-offset:1px}.leaflet-container a{color:#0078a8}.leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,.5)}.leaflet-container{font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:12px;font-size:.75rem;line-height:1.5}.leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:4px}.leaflet-bar a{background-color:#fff;border-bottom:1px solid #ccc;width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:#000}.leaflet-bar a,.leaflet-control-layers-toggle{background-position:50% 50%;background-repeat:no-repeat;display:block}.leaflet-bar a:focus,.leaflet-bar a:hover{background-color:#f4f4f4}.leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none}.leaflet-bar a.leaflet-disabled{cursor:default;background-color:#f4f4f4;color:#bbb}.leaflet-touch .leaflet-bar a{width:30px;height:30px;line-height:30px}.leaflet-touch .leaflet-bar a:first-child{border-top-left-radius:2px;border-top-right-radius:2px}.leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px}.leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px 'Lucida Console',Monaco,monospace;text-indent:1px}.leaflet-touch .leaflet-control-zoom-in,.leaflet-touch .leaflet-control-zoom-out{font-size:22px}.leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,.4);background:#fff;border-radius:5px}.leaflet-control-layers-toggle{background-image:url(images/layers.png);width:36px;height:36px}.leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px}.leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px}.leaflet-control-layers .leaflet-control-layers-list,.leaflet-control-layers-expanded .leaflet-control-layers-toggle{display:none}.leaflet-control-layers-expanded .leaflet-control-layers-list{display:block;position:relative}.leaflet-control-layers-expanded{padding:6px 10px 6px 6px;color:#333;background:#fff}.leaflet-control-layers-scrollbar{overflow-y:scroll;overflow-x:hidden;padding-right:5px}.leaflet-control-layers-selector{margin-top:2px;position:relative;top:1px}.leaflet-control-layers label{display:block;font-size:13px;font-size:1.08333em}.leaflet-control-layers-separator{height:0;border-top:1px solid #ddd;margin:5px -10px 5px -6px}.leaflet-default-icon-path{background-image:url(images/marker-icon.png)}.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255,255,255,.8);margin:0}.leaflet-control-attribution,.leaflet-control-scale-line{padding:0 5px;color:#333;line-height:1.4}.leaflet-control-attribution a{text-decoration:none}.leaflet-control-attribution a:focus,.leaflet-control-attribution a:hover{text-decoration:underline}.leaflet-attribution-flag{display:inline!important;vertical-align:baseline!important;width:1em;height:.6669em}.leaflet-left .leaflet-control-scale{margin-left:5px}.leaflet-bottom .leaflet-control-scale{margin-bottom:5px}.leaflet-control-scale-line{border:2px solid #777;border-top:none;line-height:1.1;padding:2px 5px 1px;white-space:nowrap;-moz-box-sizing:border-box;box-sizing:border-box;background:rgba(255,255,255,.8);text-shadow:1px 1px #fff}.leaflet-control-scale-line:not(:first-child){border-top:2px solid #777;border-bottom:none;margin-top:-2px}.leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom:2px solid #777}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-attribution,.leaflet-touch .leaflet-control-layers{box-shadow:none}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-layers{border:2px solid rgba(0,0,0,.2);background-clip:padding-box}.leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}.leaflet-popup-content-wrapper{padding:1px;text-align:left;border-radius:12px}.leaflet-popup-content{margin:13px 24px 13px 20px;line-height:1.3;font-size:13px;font-size:1.08333em;min-height:1px}.leaflet-popup-content p{margin:17px 0;margin:1.3em 0}.leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-top:-1px;margin-left:-20px;overflow:hidden;pointer-events:none}.leaflet-popup-tip{width:17px;height:17px;padding:1px;margin:-10px auto 0;pointer-events:auto;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#fff;color:#333;box-shadow:0 3px 14px rgba(0,0,0,.4)}.leaflet-container a.leaflet-popup-close-button{position:absolute;top:0;right:0;border:none;text-align:center;width:24px;height:24px;font:16px/24px Tahoma,Verdana,sans-serif;color:#757575;text-decoration:none;background:0 0}.leaflet-container a.leaflet-popup-close-button:focus,.leaflet-container a.leaflet-popup-close-button:hover{color:#585858}.leaflet-popup-scrolled{overflow:auto}.leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom:1}.leaflet-oldie .leaflet-popup-tip{width:24px;margin:0 auto}.leaflet-oldie .leaflet-control-layers,.leaflet-oldie .leaflet-control-zoom,.leaflet-oldie .leaflet-popup-content-wrapper,.leaflet-oldie .leaflet-popup-tip{border:1px solid #999}.leaflet-div-icon{background:#fff;border:1px solid #666}.leaflet-tooltip{position:absolute;padding:6px;background-color:#fff;border:1px solid #fff;border-radius:3px;color:#222;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}.leaflet-tooltip.leaflet-interactive{cursor:pointer;pointer-events:auto}.leaflet-tooltip-bottom:before,.leaflet-tooltip-left:before,.leaflet-tooltip-right:before,.leaflet-tooltip-top:before{position:absolute;pointer-events:none;border:6px solid transparent;background:0 0;content:""}.leaflet-tooltip-bottom{margin-top:6px}.leaflet-tooltip-top{margin-top:-6px}.leaflet-tooltip-bottom:before,.leaflet-tooltip-top:before{left:50%;margin-left:-6px}.leaflet-tooltip-top:before{bottom:0;margin-bottom:-12px;border-top-color:#fff}.leaflet-tooltip-bottom:before{top:0;margin-top:-12px;margin-left:-6px;border-bottom-color:#fff}.leaflet-tooltip-left{margin-left:-6px}.leaflet-tooltip-right{margin-left:6px}.leaflet-tooltip-left:before,.leaflet-tooltip-right:before{top:50%;margin-top:-6px}.leaflet-tooltip-left:before{right:0;margin-right:-12px;border-left-color:#fff}.leaflet-tooltip-right:before{left:0;margin-left:-12px;border-right-color:#fff}@media print{.leaflet-control{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
@@ -232,7 +232,30 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
   .fav-item.dragging { opacity: 0.4; }
   .fav-item.drag-over { border-color: var(--menu-primary); border-width: 2px; background: #fffaeb; }
-  .fav-info { display: flex; flex-direction: column; gap: 4px; }
+  .fav-item.collapsed { padding: 8px 12px; gap: 0; }
+  .fav-item.collapsed > .fav-actions,
+  .fav-item.collapsed > .fav-manage { display: none; }
+  .fav-info {
+    display: flex; flex-direction: column; gap: 4px;
+    cursor: pointer;
+    position: relative;
+    padding-right: 24px;
+    user-select: none;
+  }
+  .fav-info::after {
+    content: '▾';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--menu-accent);
+    font-size: 1.1em;
+    line-height: 1;
+    transition: transform 0.15s;
+  }
+  .fav-item.collapsed .fav-info::after {
+    content: '▸';
+  }
   .fav-name { font-weight: bold; font-size: 1.05em; color: var(--menu-primary); }
   .fav-address { font-size: 0.92em; color: var(--menu-text); opacity: 0.85; word-break: break-word; }
   .fav-actions { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -898,8 +921,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
 <div class="qctrls">
   <div class="qctrls-row fold-row">
-    <button class="qctrl-btn" onclick="expandAllSections()" type="button">▾ Tout déplier</button>
-    <button class="qctrl-btn" onclick="collapseAllSections()" type="button">▸ Tout replier</button>
+    <button class="qctrl-btn" onclick="expandAllSections()" type="button">▾ Sections</button>
+    <button class="qctrl-btn" onclick="collapseAllSections()" type="button">▸ Sections</button>
+    <button class="qctrl-btn" onclick="expandAllFavItems()" type="button">▾ Adresses</button>
+    <button class="qctrl-btn" onclick="collapseAllFavItems()" type="button">▸ Adresses</button>
   </div>
   <div class="qctrls-row" id="travelModeRow">
     <span style="font-weight: bold; font-size: 0.9em; color: var(--menu-primary);">Mode :</span>
@@ -984,6 +1009,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       <button class="nav-btn pause" id="navPauseBtn" onclick="navPauseToggle()" type="button" disabled>⏸ Pause</button>
       <button class="nav-btn stop" id="navStopBtn" onclick="navStop()" type="button" disabled>⏹ Arrêter</button>
     </div>
+    <div class="nav-controls" style="margin-top: 8px;">
+      <button class="nav-btn" id="navStageBtn" onclick="addStageMarker()" type="button" disabled style="background:#e67e22; border-color:#e67e22; color:#fff;">🚩 Marquer une étape ici</button>
+    </div>
   </div>
 </section>
 
@@ -1067,18 +1095,21 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     <button class="nav-btn start" type="button" id="tileDownloadBtn" onclick="downloadTilesZip()" style="background:#27ae60; border-color:#27ae60;">⤓ Télécharger les tuiles (ZIP)</button>
     <button class="nav-btn" type="button" id="tileCancelBtn" onclick="cancelTileDownload()" style="display:none; background:#c0392b; border-color:#c0392b; color:#fff;">⏹ Arrêter</button>
+    <button class="nav-btn" type="button" onclick="document.getElementById('tileVerifyInput').click()" style="margin-top:6px; border-color:#2980b9; color:#2980b9;">🔍 Vérifier un ZIP existant</button>
+    <input type="file" id="tileVerifyInput" accept=".zip,application/zip,application/x-zip-compressed" style="display:none;" onchange="verifyTilesZip(this.files[0])">
     <p id="tileDownloadStatus" style="margin-top: 10px; font-size: 0.85em; color: #555;">État : prêt</p>
 
-    <p style="margin-top: 8px; font-size: 0.78em; color: #888; line-height: 1.4;">⚠ Téléchargement limité à ~1 tuile/seconde par respect des serveurs OpenStreetMap. Pour 1000 tuiles, prévois ~17 minutes. <a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">Politique OSM</a></p>
+    <p style="margin-top: 8px; font-size: 0.78em; color: #888; line-height: 1.4;">⚠ Délai de 2s par tuile (3s en réessai) pour respecter OpenStreetMap. Pour 1000 tuiles, prévois ~34 min. <a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">Politique OSM</a></p>
 
     <hr style="margin: 16px 0; border: none; border-top: 1px solid var(--menu-border);">
 
     <h4 style="margin: 8px 0; color: var(--menu-primary); font-size: 1em;">📦 Charger un ZIP de tuiles</h4>
-    <p style="font-size: 0.88em; color: #666; margin-bottom: 8px;">Charge un ZIP précédemment téléchargé. Les tuiles sont utilisées en priorité par la carte (et en navigation offline).</p>
-    <button class="nav-btn" type="button" onclick="document.getElementById('tileLoadInput').click()">📦 Choisir un ZIP de tuiles</button>
+    <p style="font-size: 0.88em; color: #666; margin-bottom: 8px;">Charge plusieurs ZIP : chacun apparaît avec son thumbnail. Coche/décoche pour activer/désactiver chaque groupe.</p>
+    <button class="nav-btn" type="button" onclick="document.getElementById('tileLoadInput').click()">📦 Ajouter un ZIP</button>
     <input type="file" id="tileLoadInput" accept=".zip,application/zip,application/x-zip-compressed" style="display:none;" onchange="loadTilesZip(this.files[0])">
     <p id="tileLoadStatus" style="margin-top: 10px; font-size: 0.85em;">État : <em>aucune tuile chargée</em></p>
-    <button class="nav-btn" type="button" id="tileClearBtn" onclick="clearOfflineTiles()" style="display:none;">🗑 Vider le cache des tuiles</button>
+    <div id="tileGroupsList" style="margin-top: 10px;"></div>
+    <button class="nav-btn" type="button" id="tileClearBtn" onclick="clearOfflineTiles()" style="display:none; margin-top: 6px;">🗑 Tout supprimer</button>
 
     <div id="coverageWrap" style="display:none; margin-top: 14px;">
       <h4 style="margin: 0 0 6px; color: var(--menu-primary); font-size: 0.95em;">🗺 Couverture des tuiles chargées</h4>
@@ -1173,14 +1204,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
 <div class="modal-bg" id="exportModal">
   <div class="modal">
-    <h2>Exporter mes favoris</h2>
-    <p style="margin-bottom: 10px; font-size: 0.92em;">Copie ce texte pour le sauvegarder (Notes, Mail, iCloud Drive...).</p>
+    <h2>Exporter mes favoris (JSON)</h2>
+    <p style="margin-bottom: 10px; font-size: 0.92em;">Télécharge le fichier <strong>.json</strong> ou copie le texte ci-dessous (Notes, Mail, iCloud Drive…).</p>
     <div class="modal-field">
       <textarea id="exportText" readonly></textarea>
     </div>
     <div class="modal-actions">
       <button class="modal-btn secondary" onclick="closeExportModal()" type="button">Fermer</button>
-      <button class="modal-btn primary" onclick="copyExport()" type="button">📋 Copier</button>
+      <button class="modal-btn secondary" onclick="copyExport()" type="button">📋 Copier</button>
+      <button class="modal-btn primary" onclick="downloadExportJson()" type="button">⤓ Télécharger .json</button>
     </div>
   </div>
 </div>
@@ -1603,7 +1635,7 @@ function render() {
 
 function buildFavItem(fav) {
   const div = document.createElement('div');
-  div.className = 'fav-item';
+  div.className = 'fav-item collapsed';
   div.dataset.favId = fav.id;
   div.draggable = false;
 
@@ -1651,6 +1683,8 @@ function buildFavItem(fav) {
       <button class="fav-manage-btn del" type="button" onclick="deleteFav('${fav.id}')">🗑 Supprimer</button>
     </div>
   `;
+  const infoEl = div.querySelector('.fav-info');
+  if (infoEl) infoEl.addEventListener('click', () => div.classList.toggle('collapsed'));
   return div;
 }
 
@@ -1662,6 +1696,8 @@ function toggleSection(id) {
 }
 function expandAllSections() { document.querySelectorAll('.qsec').forEach(s => s.classList.remove('collapsed')); saveSectionStates(); }
 function collapseAllSections() { document.querySelectorAll('.qsec').forEach(s => s.classList.add('collapsed')); saveSectionStates(); }
+function expandAllFavItems() { document.querySelectorAll('.fav-item').forEach(it => it.classList.remove('collapsed')); }
+function collapseAllFavItems() { document.querySelectorAll('.fav-item').forEach(it => it.classList.add('collapsed')); }
 function expandAllSectionsTab(tabName) {
   const page = document.getElementById('page-' + tabName);
   if (!page) return;
@@ -2686,6 +2722,32 @@ function openExportModal() {
   document.getElementById('exportModal').classList.add('active');
 }
 function closeExportModal() { document.getElementById('exportModal').classList.remove('active'); }
+
+function downloadExportJson() {
+  if (favorites.length === 0 && categories.length === 0) { showToast('Rien à exporter', true); return; }
+  const data = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    categories,
+    favorites
+  };
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  a.href = url;
+  a.download = 'favoris-navigation-' + stamp + '.json';
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 200);
+  showToast('JSON téléchargé (' + favorites.length + ' favoris, ' + categories.length + ' catégories)');
+}
 function copyExport() {
   const ta = document.getElementById('exportText');
   ta.select();
@@ -2944,6 +3006,8 @@ let navMap = null;
 let navTrackPolyline = null;
 let navCurrentMarker = null;
 let navTimerInterval = null;
+let navMarkers = [];
+let navMarkerLayers = [];
 let navWalks = loadLocal('walks', []);
 
 (function migrateWalkColors() {
@@ -2956,6 +3020,46 @@ let navWalks = loadLocal('walks', []);
   });
   if (changed) saveLocal('walks', navWalks);
 })();
+
+(function migrateAddWalkMarkers() {
+  let changed = false;
+  navWalks.forEach(w => {
+    if (Array.isArray(w.markers)) return;
+    w.markers = [];
+    if (w.points && w.points.length > 0) {
+      const first = w.points[0];
+      w.markers.push({ type: 'start', lat: first.lat, lon: first.lon, t: first.t || w.startTime || null, label: 'Départ' });
+      if (w.points.length > 1) {
+        const last = w.points[w.points.length - 1];
+        w.markers.push({ type: 'end', lat: last.lat, lon: last.lon, t: last.t || w.endTime || null, label: 'Arrivée' });
+      }
+    }
+    changed = true;
+  });
+  if (changed) saveLocal('walks', navWalks);
+})();
+
+function createWalkMarkerIcon(type) {
+  let emoji = '🚩', bg = '#e67e22';
+  if (type === 'start') { emoji = '▶'; bg = '#27ae60'; }
+  else if (type === 'end') { emoji = '🏁'; bg = '#c0392b'; }
+  const html = '<div style="background:' + bg + ';color:#fff;border:3px solid #fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.4);">' + emoji + '</div>';
+  return L.divIcon({ html: html, iconSize: [34, 34], iconAnchor: [17, 17], className: 'walk-marker' });
+}
+
+function addStageMarker() {
+  if (navState === 'idle') { showToast('Démarre d\'abord l\'enregistrement', true); return; }
+  if (navPoints.length === 0) { showToast('Attends une 1ère position GPS', true); return; }
+  const last = navPoints[navPoints.length - 1];
+  const stageNum = navMarkers.filter(m => m.type === 'stage').length + 1;
+  const m = { type: 'stage', lat: last.lat, lon: last.lon, t: Date.now(), label: 'Étape ' + stageNum };
+  navMarkers.push(m);
+  if (navMode === 'map' && navMap) {
+    const layer = L.marker([m.lat, m.lon], { icon: createWalkMarkerIcon('stage') }).addTo(navMap).bindPopup(m.label);
+    navMarkerLayers.push(layer);
+  }
+  showToast('🚩 ' + m.label + ' ajoutée');
+}
 
 function setNavMode(mode) {
   if (navState !== 'idle') { showToast('Arrête l\'enregistrement avant de changer de mode', true); return; }
@@ -2992,22 +3096,47 @@ function initNavMap() {
   navTrackPolyline = L.polyline([], { color: navTrackColor, weight: 4, opacity: 0.85 }).addTo(navMap);
 }
 
-const offlineTiles = new Map();
+let tileGroups = [];
 let tileDownloadAbort = false;
+
+function getActiveTileUrl(key) {
+  for (let i = 0; i < tileGroups.length; i++) {
+    const g = tileGroups[i];
+    if (g.enabled && g.tiles.has(key)) return g.tiles.get(key);
+  }
+  return null;
+}
+
+function activeTilesCount() {
+  let n = 0;
+  tileGroups.forEach(g => { if (g.enabled) n += g.tiles.size; });
+  return n;
+}
+
+function activeTilesIterate(cb) {
+  const seen = new Set();
+  tileGroups.forEach(g => {
+    if (!g.enabled) return;
+    g.tiles.forEach((url, key) => {
+      if (seen.has(key)) return;
+      seen.add(key);
+      cb(url, key);
+    });
+  });
+}
 
 function buildOfflineTileLayer() {
   const OfflineLayer = L.TileLayer.extend({
     getTileUrl: function(coords) {
       const key = coords.z + '/' + coords.x + '/' + coords.y;
-      if (offlineTiles.has(key)) return offlineTiles.get(key);
+      const offlineUrl = getActiveTileUrl(key);
+      if (offlineUrl) return offlineUrl;
       return L.TileLayer.prototype.getTileUrl.call(this, coords);
     }
   });
-  return new OfflineLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  return new OfflineLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
-    subdomains: 'abc',
-    attribution: '© OpenStreetMap contributors',
-    crossOrigin: true
+    attribution: '© OpenStreetMap contributors'
   });
 }
 
@@ -3190,7 +3319,7 @@ function updateTileEstimate() {
     const { tiles, info } = computeTileSetForCurrentSource();
     if (!tiles) { elEst.textContent = info; return; }
     const sizeMb = (tiles.length * 18 / 1024).toFixed(1);
-    const minutes = Math.ceil(tiles.length * 1.1 / 60);
+    const minutes = Math.ceil(tiles.length * 2.1 / 60);
     elEst.innerHTML = '📊 <strong>' + tiles.length + '</strong> tuiles · ~' + sizeMb + ' MB · ~' + minutes + ' min · ' + info;
   } catch(e) {
     elEst.textContent = '⚠ ' + e.message;
@@ -3199,6 +3328,70 @@ function updateTileEstimate() {
 
 function cancelTileDownload() {
   tileDownloadAbort = true;
+}
+
+let lastTileDownload = null;
+
+async function fetchTilesIntoZip(zip, keys, status, totalLabel, throttleMs) {
+  let done = 0, succeeded = 0;
+  const failedKeys = [];
+  const startMs = Date.now();
+  for (const key of keys) {
+    if (tileDownloadAbort) break;
+    const url = 'https://tile.openstreetmap.org/' + key + '.png';
+    try {
+      const resp = await fetch(url, { mode: 'cors', cache: 'force-cache' });
+      if (resp.ok) {
+        const blob = await resp.blob();
+        zip.file(key + '.png', blob);
+        succeeded++;
+      } else {
+        failedKeys.push(key);
+      }
+    } catch(e) {
+      failedKeys.push(key);
+    }
+    done++;
+    if (done % 10 === 0 || done === keys.length) {
+      const elapsed = Math.round((Date.now() - startMs) / 1000);
+      const remaining = Math.max(0, Math.round((keys.length - done) * (throttleMs / 1000 + 0.1)));
+      status.innerHTML = '⏳ ' + totalLabel + ' <strong>' + done + '/' + keys.length + '</strong> · ' + succeeded + ' OK · ' + failedKeys.length + ' échec · ' + elapsed + 's · ~' + remaining + 's restant';
+    }
+    await new Promise(r => setTimeout(r, throttleMs));
+  }
+  return { succeeded, failedKeys };
+}
+
+function downloadZipBlob(zip, baseLabel) {
+  return zip.generateAsync({ type: 'blob', compression: 'STORE' }).then(blob => {
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const stamp = new Date().toISOString().slice(0,19).replace(/[:.]/g, '-');
+    a.href = blobUrl;
+    a.download = 'tuiles-osm-' + (baseLabel ? baseLabel + '-' : '') + stamp + '.zip';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+    return blob;
+  });
+}
+
+function showRetrySection(failedCount) {
+  let retryDiv = document.getElementById('tileRetryDiv');
+  if (!retryDiv) {
+    retryDiv = document.createElement('div');
+    retryDiv.id = 'tileRetryDiv';
+    retryDiv.style.cssText = 'margin-top: 10px; padding: 10px; background: rgba(192,57,43,0.08); border: 1px dashed #c0392b; border-radius: 6px;';
+    document.getElementById('tileDownloadStatus').insertAdjacentElement('afterend', retryDiv);
+  }
+  if (failedCount > 0) {
+    retryDiv.style.display = '';
+    retryDiv.innerHTML = '<p style="margin:0 0 8px; font-size: 0.9em;"><strong>' + failedCount + ' tuile(s)</strong> ont été bloquées par le serveur. Tu peux retenter avec un délai plus long.</p>' +
+      '<button class="nav-btn" type="button" onclick="retryFailedTiles()" style="background:#c0392b; border-color:#c0392b; color:#fff;">🔁 Réessayer les ' + failedCount + ' tuile(s) échouée(s)</button>';
+  } else {
+    retryDiv.style.display = 'none';
+  }
 }
 
 async function downloadTilesZip() {
@@ -3210,92 +3403,183 @@ async function downloadTilesZip() {
   const { tiles, info } = computeTileSetForCurrentSource();
   if (!tiles) { showToast(info, true); return; }
 
-  if (!confirm('Télécharger ' + tiles.length + ' tuile(s) (~' + Math.round(tiles.length * 18 / 1024) + ' MB) ?\n\nDurée estimée : ~' + Math.ceil(tiles.length * 1.1 / 60) + ' min.\n\nUne connexion internet est requise pendant le téléchargement.')) return;
+  if (!confirm('Télécharger ' + tiles.length + ' tuile(s) (~' + Math.round(tiles.length * 18 / 1024) + ' MB) ?\n\nDélai : 2s entre chaque tuile.\nDurée estimée : ~' + Math.ceil(tiles.length * 2.1 / 60) + ' min.\n\nUne connexion internet est requise pendant le téléchargement.')) return;
 
   tileDownloadAbort = false;
   btn.disabled = true; btn.style.opacity = '0.5';
   cancelBtn.style.display = '';
   status.innerHTML = '<em>Démarrage…</em>';
+  showRetrySection(0);
 
   const zip = new JSZip();
-  let done = 0, failed = 0;
-  const startMs = Date.now();
-
-  for (const key of tiles) {
-    if (tileDownloadAbort) break;
-    const url = 'https://tile.openstreetmap.org/' + key + '.png';
-    try {
-      const resp = await fetch(url, { mode: 'cors', cache: 'force-cache' });
-      if (resp.ok) {
-        const blob = await resp.blob();
-        zip.file(key + '.png', blob);
-        done++;
-      } else {
-        failed++;
-      }
-    } catch(e) {
-      failed++;
-    }
-    if ((done + failed) % 10 === 0 || (done + failed) === tiles.length) {
-      const elapsed = Math.round((Date.now() - startMs) / 1000);
-      const remaining = Math.max(0, Math.round((tiles.length - done - failed) * 1.1));
-      status.innerHTML = '⏳ <strong>' + (done + failed) + '/' + tiles.length + '</strong> · ' + done + ' OK · ' + failed + ' échec · ' + elapsed + 's écoulé · ~' + remaining + 's restant';
-    }
-    await new Promise(r => setTimeout(r, 1000));
-  }
+  const { succeeded, failedKeys } = await fetchTilesIntoZip(zip, tiles, status, '', 2000);
 
   cancelBtn.style.display = 'none';
   btn.disabled = false; btn.style.opacity = '1';
 
+  lastTileDownload = { zip, totalRequested: tiles.length, succeeded, failedKeys };
+
   if (tileDownloadAbort) {
-    status.innerHTML = '⏹ Annulé. ' + done + ' tuile(s) téléchargée(s).';
-    if (done === 0) return;
-    if (!confirm('Téléchargement interrompu. Sauvegarder le ZIP partiel (' + done + ' tuile(s)) ?')) return;
+    status.innerHTML = '⏹ Annulé. ' + succeeded + ' tuile(s) OK, ' + failedKeys.length + ' échec(s).';
+    if (succeeded === 0) { showRetrySection(failedKeys.length); return; }
+    if (!confirm('Téléchargement interrompu. Sauvegarder le ZIP partiel (' + succeeded + ' tuile(s)) ?')) {
+      showRetrySection(failedKeys.length);
+      return;
+    }
   }
 
   status.innerHTML = '📦 Création du ZIP…';
-  const blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
-  const blobUrl = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const stamp = new Date().toISOString().slice(0,19).replace(/[:.]/g, '-');
-  a.href = blobUrl;
-  a.download = 'tuiles-osm-' + stamp + '.zip';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+  const blob = await downloadZipBlob(zip, '');
   const sizeMb = (blob.size / 1024 / 1024).toFixed(1);
-  status.innerHTML = '✅ ZIP téléchargé : <strong>' + done + ' tuiles</strong> · ' + sizeMb + ' MB' + (failed > 0 ? ' (' + failed + ' échecs)' : '');
+  status.innerHTML = '✅ ZIP téléchargé : <strong>' + succeeded + ' tuiles</strong> · ' + sizeMb + ' MB' + (failedKeys.length > 0 ? ' (' + failedKeys.length + ' échec(s) — voir bouton ci-dessous)' : '');
   showToast('Tuiles exportées ✓');
+  showRetrySection(failedKeys.length);
+}
+
+async function verifyTilesZip(file) {
+  if (!file) return;
+  const status = document.getElementById('tileDownloadStatus');
+  const verifyInput = document.getElementById('tileVerifyInput');
+  if (typeof JSZip === 'undefined') { showToast('JSZip non chargé', true); if (verifyInput) verifyInput.value = ''; return; }
+
+  const { tiles: expectedTiles, info } = computeTileSetForCurrentSource();
+  if (!expectedTiles) { showToast('Configure d\'abord source + zoom : ' + info, true); if (verifyInput) verifyInput.value = ''; return; }
+
+  status.innerHTML = '⏳ Lecture du ZIP à vérifier (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)…';
+  showRetrySection(0);
+
+  try {
+    const buf = await file.arrayBuffer();
+    const zip = await JSZip.loadAsync(buf);
+    const presentKeys = new Set();
+    zip.forEach((path, entry) => {
+      if (entry.dir) return;
+      const m = path.match(/(?:^|\/)(\d+)\/(\d+)\/(\d+)\.png$/i);
+      if (m) presentKeys.add(m[1] + '/' + m[2] + '/' + m[3]);
+    });
+
+    const expectedSet = new Set(expectedTiles);
+    const missing = expectedTiles.filter(k => !presentKeys.has(k));
+    const matchedCount = expectedTiles.length - missing.length;
+    const extraCount = Array.from(presentKeys).filter(k => !expectedSet.has(k)).length;
+
+    if (missing.length === 0) {
+      status.innerHTML = '✅ <strong>ZIP complet</strong> : ' + matchedCount + '/' + expectedTiles.length + ' tuiles attendues présentes' + (extraCount > 0 ? ' (' + extraCount + ' tuiles en extra)' : '');
+      showToast('ZIP complet ✓');
+      lastTileDownload = null;
+      showRetrySection(0);
+    } else {
+      status.innerHTML = '🔍 Vérification : <strong>' + matchedCount + '/' + expectedTiles.length + '</strong> tuiles présentes · <strong style="color:#c0392b;">' + missing.length + ' manquantes</strong>' + (extraCount > 0 ? ' · ' + extraCount + ' extra (ignorées)' : '');
+      lastTileDownload = { zip: zip, totalRequested: expectedTiles.length, succeeded: matchedCount, failedKeys: missing };
+      showRetrySection(missing.length);
+      showToast(missing.length + ' tuiles manquantes — clique « Réessayer »', true);
+    }
+  } catch(e) {
+    status.innerHTML = '<span style="color:#c0392b;">❌ Erreur lecture ZIP : ' + escapeHtml(e.message) + '</span>';
+    showToast('Erreur : ' + e.message, true);
+  } finally {
+    if (verifyInput) verifyInput.value = '';
+  }
+}
+
+async function retryFailedTiles() {
+  if (!lastTileDownload || lastTileDownload.failedKeys.length === 0) {
+    showToast('Aucun échec à réessayer', true); return;
+  }
+  const status = document.getElementById('tileDownloadStatus');
+  const btn = document.getElementById('tileDownloadBtn');
+  const cancelBtn = document.getElementById('tileCancelBtn');
+  const retryDiv = document.getElementById('tileRetryDiv');
+  if (retryDiv) retryDiv.style.display = 'none';
+
+  const { zip, failedKeys } = lastTileDownload;
+  const toRetry = failedKeys.slice();
+  if (!confirm('Réessayer ' + toRetry.length + ' tuile(s) échouée(s) ?\n\nDélai : 3s entre chaque (≈ ' + Math.ceil(toRetry.length * 3.1 / 60) + ' min). Plus lent pour éviter d\'être re-bloqué par OSM.')) return;
+
+  tileDownloadAbort = false;
+  btn.disabled = true; btn.style.opacity = '0.5';
+  cancelBtn.style.display = '';
+  status.innerHTML = '<em>Réessai démarré…</em>';
+
+  const result = await fetchTilesIntoZip(zip, toRetry, status, '🔁', 3000);
+
+  cancelBtn.style.display = 'none';
+  btn.disabled = false; btn.style.opacity = '1';
+
+  lastTileDownload.succeeded += result.succeeded;
+  lastTileDownload.failedKeys = result.failedKeys;
+
+  if (result.succeeded > 0) {
+    status.innerHTML = '📦 Mise à jour du ZIP…';
+    const blob = await downloadZipBlob(zip, 'reessai');
+    const sizeMb = (blob.size / 1024 / 1024).toFixed(1);
+    status.innerHTML = '✅ ZIP corrigé téléchargé : <strong>' + lastTileDownload.succeeded + ' tuiles total</strong> · ' + sizeMb + ' MB' + (result.failedKeys.length > 0 ? ' (' + result.failedKeys.length + ' encore en échec)' : '');
+    showToast('+' + result.succeeded + ' tuiles récupérées ✓');
+  } else {
+    status.innerHTML = '❌ Aucune tuile récupérée. ' + result.failedKeys.length + ' encore en échec.';
+    showToast('Aucune tuile récupérée', true);
+  }
+
+  showRetrySection(result.failedKeys.length);
 }
 
 async function loadTilesZip(file) {
   if (!file) return;
   const status = document.getElementById('tileLoadStatus');
-  const clearBtn = document.getElementById('tileClearBtn');
   status.innerHTML = '⏳ Lecture du ZIP…';
   try {
     if (typeof JSZip === 'undefined') throw new Error('JSZip non chargé');
     const buf = await file.arrayBuffer();
     const zip = await JSZip.loadAsync(buf);
-    let count = 0;
+    const tiles = new Map();
+    let minZ = Infinity, maxZ = -Infinity;
     const entries = [];
     zip.forEach((path, entry) => { if (!entry.dir) entries.push({ path, entry }); });
+    let count = 0;
     for (const { path, entry } of entries) {
       const m = path.match(/(?:^|\/)(\d+)\/(\d+)\/(\d+)\.png$/i);
       if (!m) continue;
       const blob = await entry.async('blob');
       const url = URL.createObjectURL(blob);
-      const key = m[1] + '/' + m[2] + '/' + m[3];
-      if (offlineTiles.has(key)) URL.revokeObjectURL(offlineTiles.get(key));
-      offlineTiles.set(key, url);
+      const z = parseInt(m[1], 10);
+      tiles.set(z + '/' + m[2] + '/' + m[3], url);
+      if (z < minZ) minZ = z;
+      if (z > maxZ) maxZ = z;
       count++;
       if (count % 50 === 0) status.innerHTML = '⏳ ' + count + ' tuiles chargées…';
     }
-    const sizeMb = (file.size / 1024 / 1024).toFixed(1);
-    status.innerHTML = '✅ <strong>' + offlineTiles.size + '</strong> tuiles en mémoire (' + sizeMb + ' MB)';
-    clearBtn.style.display = '';
-    showToast(count + ' tuiles disponibles ✓');
+    if (tiles.size === 0) throw new Error('Aucune tuile valide dans ce ZIP');
+
+    let thumbUrl = null;
+    let centerKey = null;
+    const tilesAtMin = [];
+    tiles.forEach((url, key) => {
+      const [zs, xs, ys] = key.split('/');
+      if (parseInt(zs, 10) === minZ) tilesAtMin.push({ x: parseInt(xs, 10), y: parseInt(ys, 10), url });
+    });
+    if (tilesAtMin.length > 0) {
+      tilesAtMin.sort((a, b) => (a.x - b.x) || (a.y - b.y));
+      const mid = tilesAtMin[Math.floor(tilesAtMin.length / 2)];
+      thumbUrl = mid.url;
+    }
+
+    const groupId = uid('grp');
+    const name = (file.name || 'ZIP').replace(/\.zip$/i, '');
+    tileGroups.push({
+      id: groupId,
+      name: name,
+      tiles: tiles,
+      enabled: true,
+      sizeBytes: file.size,
+      thumbUrl: thumbUrl,
+      minZ: minZ,
+      maxZ: maxZ,
+      count: tiles.size
+    });
+
+    status.innerHTML = '✅ Groupe ajouté : <strong>' + tiles.size + '</strong> tuiles (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)';
+    showToast(tiles.size + ' tuiles disponibles ✓');
+    renderTileGroupsList();
     if (navMap) navMap.eachLayer(l => { if (l.redraw) l.redraw(); });
     renderCoverageMap();
   } catch(e) {
@@ -3306,15 +3590,64 @@ async function loadTilesZip(file) {
   }
 }
 
-function clearOfflineTiles() {
-  if (!confirm('Vider le cache de ' + offlineTiles.size + ' tuile(s) ?')) return;
-  offlineTiles.forEach(url => URL.revokeObjectURL(url));
-  offlineTiles.clear();
-  document.getElementById('tileLoadStatus').innerHTML = 'État : <em>aucune tuile chargée</em>';
-  document.getElementById('tileClearBtn').style.display = 'none';
+function renderTileGroupsList() {
+  const list = document.getElementById('tileGroupsList');
+  const clearBtn = document.getElementById('tileClearBtn');
+  if (!list) return;
+  if (tileGroups.length === 0) {
+    list.innerHTML = '<p style="margin:0; font-size: 0.85em; color: #888; font-style: italic;">Aucun ZIP chargé</p>';
+    if (clearBtn) clearBtn.style.display = 'none';
+    return;
+  }
+  list.innerHTML = tileGroups.map(g => {
+    const sizeMb = (g.sizeBytes / 1024 / 1024).toFixed(1);
+    const thumbHtml = g.thumbUrl
+      ? '<img src="' + g.thumbUrl + '" alt="thumb z=' + g.minZ + '" style="width:56px;height:56px;border:1px solid var(--menu-border);border-radius:4px;object-fit:cover;flex-shrink:0;">'
+      : '<div style="width:56px;height:56px;border:1px solid var(--menu-border);border-radius:4px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:0.7em;color:#888;flex-shrink:0;">no thumb</div>';
+    return '<div class="tile-group" data-id="' + g.id + '" style="display:flex;gap:8px;align-items:center;padding:8px;background:var(--menu-bg-alt);border:1px solid var(--menu-border);border-radius:6px;margin-bottom:6px;">' +
+      '<input type="checkbox" ' + (g.enabled ? 'checked' : '') + ' onchange="toggleTileGroup(\'' + g.id + '\', this.checked)" style="width:18px;height:18px;flex-shrink:0;">' +
+      thumbHtml +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:bold;font-size:0.9em;color:var(--menu-primary);overflow:hidden;text-overflow:ellipsis;">' + escapeHtml(g.name) + '</div>' +
+        '<div style="font-size:0.78em;color:#666;">' + g.count + ' tuiles · ' + sizeMb + ' MB · z=' + g.minZ + (g.minZ !== g.maxZ ? '–' + g.maxZ : '') + '</div>' +
+      '</div>' +
+      '<button class="nav-walk-btn del" type="button" onclick="deleteTileGroup(\'' + g.id + '\')" style="padding:6px 10px;border-color:#c0392b;color:#c0392b;background:#fff;border-width:1.5px;border-style:solid;border-radius:6px;cursor:pointer;flex-shrink:0;font-size:0.85em;">🗑</button>' +
+    '</div>';
+  }).join('');
+  if (clearBtn) clearBtn.style.display = '';
+}
+
+function toggleTileGroup(id, enabled) {
+  const g = tileGroups.find(x => x.id === id);
+  if (!g) return;
+  g.enabled = enabled;
   if (navMap) navMap.eachLayer(l => { if (l.redraw) l.redraw(); });
   renderCoverageMap();
-  showToast('Cache vidé');
+}
+
+function deleteTileGroup(id) {
+  const g = tileGroups.find(x => x.id === id);
+  if (!g) return;
+  if (!confirm('Supprimer le groupe « ' + g.name + ' » (' + g.count + ' tuiles) ?')) return;
+  g.tiles.forEach(url => URL.revokeObjectURL(url));
+  tileGroups = tileGroups.filter(x => x.id !== id);
+  renderTileGroupsList();
+  if (navMap) navMap.eachLayer(l => { if (l.redraw) l.redraw(); });
+  renderCoverageMap();
+  showToast('Groupe supprimé');
+}
+
+function clearOfflineTiles() {
+  const total = tileGroups.reduce((s, g) => s + g.count, 0);
+  if (total === 0) return;
+  if (!confirm('Vider TOUS les groupes (' + tileGroups.length + ' ZIP, ' + total + ' tuiles) ?')) return;
+  tileGroups.forEach(g => g.tiles.forEach(url => URL.revokeObjectURL(url)));
+  tileGroups = [];
+  document.getElementById('tileLoadStatus').innerHTML = 'État : <em>aucune tuile chargée</em>';
+  renderTileGroupsList();
+  if (navMap) navMap.eachLayer(l => { if (l.redraw) l.redraw(); });
+  renderCoverageMap();
+  showToast('Tous les groupes supprimés');
 }
 
 let coverageMap = null;
@@ -3335,7 +3668,8 @@ function renderCoverageMap() {
   const zoomSel = document.getElementById('coverageZoomSel');
   if (!wrap) return;
 
-  if (offlineTiles.size === 0) {
+  const totalActive = activeTilesCount();
+  if (totalActive === 0) {
     wrap.style.display = 'none';
     if (coverageMap) { coverageMap.remove(); coverageMap = null; coverageLayerGroup = null; }
     return;
@@ -3344,7 +3678,7 @@ function renderCoverageMap() {
   wrap.style.display = '';
 
   const zoomCounts = {};
-  offlineTiles.forEach((_, key) => {
+  activeTilesIterate((_, key) => {
     const z = parseInt(key.split('/')[0], 10);
     zoomCounts[z] = (zoomCounts[z] || 0) + 1;
   });
@@ -3356,7 +3690,7 @@ function renderCoverageMap() {
   const targetZoom = (currentSelected != null && zoomCounts[currentSelected]) ? currentSelected : minZ;
   zoomSel.innerHTML = zoomLevels.map(z => '<option value="' + z + '"' + (z === targetZoom ? ' selected' : '') + '>z=' + z + ' (' + zoomCounts[z] + ' tuiles)</option>').join('');
 
-  legend.innerHTML = '📊 <strong>' + offlineTiles.size + '</strong> tuile(s) en cache · plage de zoom <strong>' + minZ + '–' + maxZ + '</strong> · affichage zoom <strong>' + targetZoom + '</strong>';
+  legend.innerHTML = '📊 <strong>' + totalActive + '</strong> tuile(s) actives · plage zoom <strong>' + minZ + '–' + maxZ + '</strong> · affichage z=<strong>' + targetZoom + '</strong>';
 
   setTimeout(() => {
     if (typeof L === 'undefined') return;
@@ -3373,7 +3707,7 @@ function renderCoverageMap() {
     const allBounds = [];
     let drawn = 0;
     const cap = 800;
-    offlineTiles.forEach((_, key) => {
+    activeTilesIterate((_, key) => {
       if (drawn >= cap) return;
       const [zs, xs, ys] = key.split('/');
       const z = parseInt(zs, 10);
@@ -3421,6 +3755,9 @@ function navStart() {
   navPausedDuration = 0;
   navPoints = [];
   navTotalDistance = 0;
+  navMarkers = [];
+  if (navMap) navMarkerLayers.forEach(l => navMap.removeLayer(l));
+  navMarkerLayers = [];
 
   if (navMode === 'map') {
     initNavMap();
@@ -3432,6 +3769,7 @@ function navStart() {
   document.getElementById('navStartBtn').disabled = true;
   document.getElementById('navPauseBtn').disabled = false;
   document.getElementById('navStopBtn').disabled = false;
+  document.getElementById('navStageBtn').disabled = false;
   document.getElementById('navStatus').className = 'nav-status recording';
   document.getElementById('navStatus').textContent = '🔴 Enregistrement en cours...';
 
@@ -3464,14 +3802,23 @@ function onNavPosition(pos) {
     navTotalDistance += segDist;
   }
 
+  const isFirstPoint = navPoints.length === 0;
   navPoints.push({ lat: lat, lon: lon, ele: ele, t: t, accuracy: accuracy });
+
+  if (isFirstPoint && navMarkers.length === 0) {
+    navMarkers.push({ type: 'start', lat: lat, lon: lon, t: t, label: 'Départ' });
+    if (navMode === 'map' && navMap) {
+      const layer = L.marker([lat, lon], { icon: createWalkMarkerIcon('start') }).addTo(navMap).bindPopup('Départ');
+      navMarkerLayers.push(layer);
+    }
+  }
 
   if (navMode === 'map' && navMap && navTrackPolyline) {
     navTrackPolyline.addLatLng([lat, lon]);
     if (!navCurrentMarker) {
       navCurrentMarker = L.circleMarker([lat, lon], {
         radius: 8, color: '#fff', weight: 3,
-        fillColor: '#27ae60', fillOpacity: 1
+        fillColor: '#3498db', fillOpacity: 1
       }).addTo(navMap);
       navMap.setView([lat, lon], 16);
     } else {
@@ -3540,6 +3887,11 @@ function navStop() {
   const defaultName = 'Promenade ' + new Date(navStartTime).toLocaleString('fr-BE');
   const name = prompt('Nom de la promenade :', defaultName) || defaultName;
 
+  if (navPoints.length > 0) {
+    const last = navPoints[navPoints.length - 1];
+    navMarkers.push({ type: 'end', lat: last.lat, lon: last.lon, t: last.t || endTime, label: 'Arrivée' });
+  }
+
   const walk = {
     id: 'walk_' + navStartTime + '_' + Math.random().toString(36).slice(2,7),
     name: name.trim() || defaultName,
@@ -3548,6 +3900,7 @@ function navStop() {
     duration: duration,
     distance: navTotalDistance,
     points: navPoints,
+    markers: navMarkers,
     color: navTrackColor
   };
   navWalks.push(walk);
@@ -3565,9 +3918,13 @@ function navResetUI() {
   navPausedDuration = 0;
   navPoints = [];
   navTotalDistance = 0;
+  navMarkers = [];
+  if (navMap) navMarkerLayers.forEach(l => navMap.removeLayer(l));
+  navMarkerLayers = [];
   document.getElementById('navStartBtn').disabled = false;
   document.getElementById('navPauseBtn').disabled = true;
   document.getElementById('navStopBtn').disabled = true;
+  document.getElementById('navStageBtn').disabled = true;
   document.getElementById('navPauseBtn').textContent = '⏸ Pause';
   document.getElementById('navStatus').className = 'nav-status idle';
   document.getElementById('navStatus').textContent = '⏸ Prêt à enregistrer';
@@ -3660,6 +4017,7 @@ function renderWalksList() {
         '<span>⏱ ' + dur + '</span>' +
         '<span>⚡ ' + avgSpeed + ' km/h moy</span>' +
         '<span>📍 ' + w.points.length + ' pts</span>' +
+        ((w.markers && w.markers.filter(m => m.type === 'stage').length > 0) ? '<span>🚩 ' + w.markers.filter(m => m.type === 'stage').length + ' étape(s)</span>' : '') +
       '</div>' +
       '<div class="nav-walk-actions">' +
         '<button class="nav-walk-btn view" type="button" onclick="viewWalk(\'' + w.id + '\')">🗺 Voir carte</button>' +
@@ -3693,12 +4051,24 @@ function buildGpx(walk) {
 
   const xmlEscape = (s) => String(s).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]));
 
+  const wptsXml = (Array.isArray(walk.markers) ? walk.markers : []).map(m => {
+    const sym = m.type === 'start' ? 'Flag, Green' : m.type === 'end' ? 'Flag, Red' : 'Flag, Blue';
+    let s = '  <wpt lat="' + (+m.lat).toFixed(7) + '" lon="' + (+m.lon).toFixed(7) + '">\n';
+    if (m.t) s += '    <time>' + isoTime(m.t) + '</time>\n';
+    s += '    <name>' + xmlEscape(m.label || m.type) + '</name>\n';
+    s += '    <type>' + xmlEscape(m.type) + '</type>\n';
+    s += '    <sym>' + sym + '</sym>\n';
+    s += '  </wpt>';
+    return s;
+  }).join('\n');
+
   return '<?xml version="1.0" encoding="UTF-8"?>\n' +
-    '<gpx version="1.1" creator="Favoris Navigation v10" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">\n' +
+    '<gpx version="1.1" creator="Favoris Navigation Quotidien" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">\n' +
     '  <metadata>\n' +
     '    <name>' + xmlEscape(walk.name) + '</name>\n' +
     '    <time>' + startIso + '</time>\n' +
     '  </metadata>\n' +
+    (wptsXml ? wptsXml + '\n' : '') +
     '  <trk>\n' +
     '    <name>' + xmlEscape(walk.name) + '</name>\n' +
     '    <trkseg>\n' +
@@ -3755,9 +4125,15 @@ function viewWalk(id) {
     buildOfflineTileLayer().addTo(walkViewerMap);
     const latlngs = w.points.map(p => [p.lat, p.lon]);
     const poly = L.polyline(latlngs, { color: trackColor, weight: 4, opacity: 0.85 }).addTo(walkViewerMap);
+    const markers = Array.isArray(w.markers) ? w.markers : [];
+    if (markers.length === 0 && latlngs.length > 0) {
+      markers.push({ type: 'start', lat: latlngs[0][0], lon: latlngs[0][1], label: 'Départ' });
+      if (latlngs.length > 1) markers.push({ type: 'end', lat: latlngs[latlngs.length-1][0], lon: latlngs[latlngs.length-1][1], label: 'Arrivée' });
+    }
+    markers.forEach(m => {
+      L.marker([m.lat, m.lon], { icon: createWalkMarkerIcon(m.type) }).addTo(walkViewerMap).bindPopup(m.label || (m.type === 'start' ? 'Départ' : m.type === 'end' ? 'Arrivée' : 'Étape'));
+    });
     if (latlngs.length > 0) {
-      L.circleMarker(latlngs[0], { radius: 8, color: '#fff', weight: 3, fillColor: '#27ae60', fillOpacity: 1 }).addTo(walkViewerMap).bindPopup('Départ');
-      L.circleMarker(latlngs[latlngs.length-1], { radius: 8, color: '#fff', weight: 3, fillColor: trackColor, fillOpacity: 1 }).addTo(walkViewerMap).bindPopup('Arrivée');
       walkViewerMap.fitBounds(poly.getBounds(), { padding: [20, 20] });
     }
   }, 100);
@@ -3864,6 +4240,34 @@ function parseGpx(xmlText, filename) {
       if (p.t == null) p.t = startTime + Math.round((duration * i) / Math.max(points.length - 1, 1));
     });
 
+    let trkMarkers = [];
+    if (trkIdx === 0) {
+      const wpts = doc.getElementsByTagName('wpt');
+      for (let wi = 0; wi < wpts.length; wi++) {
+        const w = wpts[wi];
+        const lat = parseFloat(w.getAttribute('lat'));
+        const lon = parseFloat(w.getAttribute('lon'));
+        if (isNaN(lat) || isNaN(lon)) continue;
+        const typeEls = w.getElementsByTagName('type');
+        const nameEls = w.getElementsByTagName('name');
+        const timeEls = w.getElementsByTagName('time');
+        const rawType = typeEls.length > 0 ? typeEls[0].textContent.trim().toLowerCase() : '';
+        const rawName = nameEls.length > 0 ? nameEls[0].textContent.trim() : '';
+        let mt = 'stage';
+        if (rawType === 'start' || /^d[ée]part/i.test(rawName)) mt = 'start';
+        else if (rawType === 'end' || /^arriv/i.test(rawName)) mt = 'end';
+        const tt = timeEls.length > 0 ? Date.parse(timeEls[0].textContent) : null;
+        trkMarkers.push({ type: mt, lat, lon, t: (tt && !isNaN(tt)) ? tt : null, label: rawName || (mt === 'start' ? 'Départ' : mt === 'end' ? 'Arrivée' : 'Étape ' + (trkMarkers.filter(x => x.type === 'stage').length + 1)) });
+      }
+    }
+    if (trkMarkers.length === 0 && points.length > 0) {
+      trkMarkers.push({ type: 'start', lat: points[0].lat, lon: points[0].lon, t: points[0].t, label: 'Départ' });
+      if (points.length > 1) {
+        const lp = points[points.length - 1];
+        trkMarkers.push({ type: 'end', lat: lp.lat, lon: lp.lon, t: lp.t, label: 'Arrivée' });
+      }
+    }
+
     walks.push({
       id: 'walk_imp_' + Date.now() + '_' + trkIdx + '_' + Math.random().toString(36).slice(2, 7),
       name: trackName,
@@ -3872,6 +4276,7 @@ function parseGpx(xmlText, filename) {
       duration: duration,
       distance: totalDist,
       points: points,
+      markers: trkMarkers,
       color: generateRandomColor(),
       imported: true
     });
@@ -3995,3 +4400,1168 @@ contextOK = checkContext();
 
 </body>
 </html>
+
+<!--
+=========================================================
+SOURCES & RÉFÉRENCES
+=========================================================
+
+1. Template de base : menu-collapsible-simple.html (fourni par l'utilisateur)
+   - Toutes les classes/styles .qsec, .qsec-header, .qctrls, .qctrl-btn conservés
+   - Logique toggleSection / expandAllSections / collapseAllSections / saveSectionStates / restoreSectionStates / syncSectionTooltips conservée
+   - Variables CSS racine conservées
+
+2. URLs de navigation (formats officiels documentés) :
+   - Apple Plans (Maps URL Scheme — universal, fonctionne sur iPhone/iPad/Mac/web) :
+     https://maps.apple.com/?q=ADRESSE_ENCODÉE
+     ou avec coordonnées : https://maps.apple.com/?q=ADRESSE&ll=LAT,LON
+     Doc Apple : https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
+   - Google Maps (URLs - format universel) :
+     https://www.google.com/maps/search/?api=1&query=ADRESSE_ENCODÉE
+     ou avec coordonnées : https://www.google.com/maps/search/?api=1&query=LAT,LON
+     Doc Google : https://developers.google.com/maps/documentation/urls/get-started
+   - Recherche Google :
+     https://www.google.com/search?q=ADRESSE_ENCODÉE
+
+3. Encodage des adresses : encodeURIComponent() — RFC 3986
+   Exemple : "Avenue Rogier 129, 1030 Bruxelles"
+   →  https://maps.apple.com/?q=Avenue%20Rogier%20129%2C%201030%20Bruxelles
+
+4. Géocodage / vérification d'adresse : Nominatim (OpenStreetMap)
+   - Endpoint search : https://nominatim.openstreetmap.org/search
+     Paramètres : format=jsonv2, addressdetails=1, limit=5,
+     accept-language=fr, q=<adresse>
+   - Endpoint reverse (v5) : https://nominatim.openstreetmap.org/reverse
+     Paramètres : format=jsonv2, lat=X, lon=Y, accept-language=fr
+     Retourne 1 résultat avec display_name (ou erreur si zone sans données OSM)
+   - Doc API : https://nominatim.org/release-docs/latest/api/Search/
+               https://nominatim.org/release-docs/latest/api/Reverse/
+   - Format de réponse : https://nominatim.org/release-docs/latest/api/Output/
+   - Politique d'usage : https://operations.osmfoundation.org/policies/nominatim/
+     ⚠ Limite STRICTE : maximum 1 requête par seconde
+        → respectée dans le code via lastVerifyAt + lastReverseAt + délai 1100 ms
+     ⚠ Auto-complétion non autorisée → on utilise un bouton « Vérifier » manuel
+     ⚠ Attribution obligatoire → affichée sous le champ adresse
+   - Données licence : ODbL — © OpenStreetMap contributors
+
+5. Geolocation (v5) : navigator.geolocation.getCurrentPosition()
+   - W3C Geolocation API standard
+   - Doc : https://developer.mozilla.org/fr/docs/Web/API/Geolocation_API
+   - Exige un contexte sécurisé (HTTPS, file://, localhost) sur iOS Safari
+     depuis iOS 10 — détection via window.isSecureContext
+
+5b. Direction Qibla (v6) : formule great-circle bearing
+   - Coordonnées Kaaba : 21.4225°N, 39.8262°E (Masjid al-Haram, Makkah)
+   - Source formule : https://www.movable-type.co.uk/scripts/latlong.html
+                     (formule standard utilisée en aviation)
+   - Validation croisée :
+     https://calculatorsir.com/islamic/qibla-calculator/
+     https://online-compass.com/en/qibla-finder
+     https://github.com/russbiggs/asturlab
+   - Formule distance : Haversine (R = 6371 km)
+
+5c. Boussole (v6) : DeviceOrientationEvent
+   - Doc Apple : https://developer.apple.com/documentation/webkitjs/deviceorientationevent
+   - Doc MDN : https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent
+   - iOS 13+ : DeviceOrientationEvent.requestPermission() requis sur action utilisateur
+   - iOS Safari : event.webkitCompassHeading donne le cap par rapport au NORD VRAI
+     (déjà corrigé pour la déclinaison magnétique côté système)
+   - Fallback Android/autres : (360 - event.alpha) % 360
+
+6. Stockage : window.localStorage (API Web standard, persistance locale)
+
+7. Drag & drop :
+   - Desktop : HTML5 Drag and Drop API (dragstart, dragover, drop)
+   - Mobile (iPhone/iOS) : événements touchstart/touchmove/touchend personnalisés
+
+8. Export CSV : Blob API + URL.createObjectURL() — standard Web,
+   compatible Safari iOS 13+. BOM UTF-8 (\uFEFF) inclus pour
+   compatibilité Excel/Numbers avec accents.
+
+=========================================================
+CHANGEMENTS v22 → v23 (signalés conformément aux consignes)
+=========================================================
+
+📅 FILTRES DE PÉRIODE DYNAMIQUES — les boutons 1j / 1s / 1mois /
+1an ne sont plus des « X derniers jours » mais permettent de
+naviguer dans le temps et de choisir précisément QUEL jour, QUELLE
+semaine, QUEL mois, QUELLE année afficher. Ajout d'un mode
+« Intervalle » personnalisé du / au.
+
+NOUVEAUTÉS
+
+1. 6e bouton « Intervalle » dans chaque section :
+   - Cardio sec03–09 + Stat sec03/04/05/07 (11 sections au total)
+   - Quand activé : 2 sélecteurs de date apparaissent (du / au)
+
+2. Barre de navigation sous les boutons (visible sauf en mode
+   « Tout ») :
+   - Bouton ‹  : recule d'1 jour / 1 semaine / 1 mois / 1 an
+     selon le mode actif
+   - Sélecteur de date <input type="date"> (calendrier natif iOS,
+     compatible Safari iPhone)
+   - Étiquette détaillée :
+     • « lundi 15 septembre 2025 » en mode 1 jour
+     • « Semaine du 15 sept. 2025 » en mode 1 semaine
+     • « septembre 2025 » en mode 1 mois
+     • « Année 2025 » en mode 1 an
+     • « Du 01/08/2025 au 30/09/2025 » en mode Intervalle
+   - Bouton ›  : avance d'1 jour / 1 semaine / 1 mois / 1 an
+
+3. Date de référence INTELLIGENTE par défaut :
+   - À l'ouverture, chaque section calcule la date la plus
+     récente où elle a des données (fnGetReferenceDate)
+   - Évite l'écran vide « pas de données les 30 derniers jours »
+     quand toutes les données sont par exemple de 2024
+
+4. Filtre indépendant par section (11 filtres distincts) :
+   - On peut afficher septembre 2025 dans le graphique FC
+     ET juin 2024 dans le graphique HRV en même temps
+   - Aucun lien entre les sections
+
+🛠 ARCHITECTURE TECHNIQUE
+- État stocké en attributs DOM sur chaque .period-toggle :
+  • data-period      = day | week | month | year | all | custom
+  • data-period-ref  = "YYYY-MM-DD" (date pivot)
+  • data-period-end  = "YYYY-MM-DD" (date fin pour mode custom)
+- fnGetWindow(toggle) → { startMs, endMs, label }
+  remplace l'ancien fnPeriodMs() qui ne savait que « X derniers ms »
+- fnWinFromDay/Week/Month/Year/Custom : génèrent la fenêtre
+  absolue à partir d'une date pivot
+- fnFilterByWindow(arr, win) : filtre [startMs, endMs[
+- fnAggregateByBucket : taille de bucket calculée d'après la
+  durée de la fenêtre (heures / jours / semaines / mois)
+  → cohérence visuelle quel que soit le mode
+- fnNavStep(toggle, ±1) : décale la date pivot et re-rend
+- Délégation d'événements click sur .pn-btn et change sur .pn-date
+
+📦 IMPACT TAILLE
+- v22 : 696 KB
+- v23 : 731 KB (+35 KB pour la nouvelle logique de fenêtres)
+
+⚠ AUCUNE option des versions précédentes retirée
+- Les 5 boutons originaux (1j/1s/1mois/1an/Tout) gardent leur
+  libellé et leur position, ils CHANGENT seulement de
+  comportement (date pivot au lieu de « X derniers jours »)
+- Mode « Tout » : identique à v22, montre l'intégralité
+- L'ajout du 6e bouton « Intervalle » est additif
+- La barre de navigation est cachée par défaut sur le mode
+  « Tout » et apparaît uniquement quand pertinent
+- Tout le système Chart.js de v22 préservé (mêmes canvas,
+  mêmes mappings de métriques)
+
+🔍 SPÉCIAL iPhone Safari
+- <input type="date"> ouvre le sélecteur de date NATIF d'iOS
+  (gros calendrier tactile, compatible iOS 14.3+)
+- Pas de bibliothèque tierce de date-picker
+
+=========================================================
+
+📊 GRAPHIQUES INTERACTIFS — toutes les sections cardio + stat
+qui ont une période (1 jour / 1 semaine / 1 mois / 1 an / Tout)
+affichent maintenant un VRAI graphique animé au lieu du placeholder.
+
+NOUVEAUTÉS
+
+1. Bibliothèque ajoutée : Chart.js v4.5.1 (MIT) INLINÉE
+   - ~203 KB minifié + wrapper anti-CommonJS pour exposer Chart à window
+   - Source : https://www.chartjs.org/  (https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js)
+   - Aucune dépendance CDN : 100% offline, fonctionne sur iPhone Safari
+     même sans réseau (comme JSZip et fit-file-parser depuis v16/v20)
+
+2. 11 sections converties en canvas Chart.js :
+   - Cardio sec03 : Évolution FC moyenne par période (ligne, rouge)
+   - Cardio sec04 : FC au repos (ligne, bleu)
+   - Cardio sec05 : Variabilité HRV (ligne, violet)
+   - Cardio sec06 : SpO2 (ligne, vert)
+   - Cardio sec07 : Récupération FC 1 min (ligne, vert)
+   - Cardio sec08 : VO2max (ligne, orange)
+   - Cardio sec09 : Tension artérielle systolique + diastolique (2 courbes)
+   - Stat sec03 : Distance par période (HISTOGRAMME, bleu)
+   - Stat sec04 : Vitesse moyenne (ligne, violet)
+   - Stat sec05 : Durée totale (HISTOGRAMME, orange)
+   - Stat sec07 : Calories brûlées (HISTOGRAMME, orange)
+
+3. Filtres de période fonctionnels : les 5 boutons
+   (1 jour / 1 semaine / 1 mois / 1 an / Tout) re-rendent
+   le graphique de leur section avec :
+   - 1 jour     → buckets horaires
+   - 1 semaine  → buckets journaliers (7 derniers jours)
+   - 1 mois     → buckets journaliers (30 derniers jours, défaut)
+   - 1 an       → buckets hebdomadaires
+   - Tout       → buckets mensuels
+
+4. Stats sous chaque graphique :
+   « Min : 50 bpm   Moy : 62.3 bpm   Max : 78 bpm   1 432 points »
+   (reflètent la période active, pas tout l'historique)
+
+5. Choix automatique du type :
+   - Métriques continues (FC, SpO2, HRV, vitesse) → courbe lissée
+   - Métriques cumulatives par bucket (km, min, kcal) → histogramme
+   - Tension → 2 courbes superposées (sys + dia, légende affichée)
+
+6. Hook switchTab : `refreshAllCharts()` est rappelé au passage
+   sur les onglets Cardio et Stat → graphiques toujours à jour
+   après un nouvel import ou une restauration de backup.
+
+7. Si aucune donnée pour la période sélectionnée : message
+   « Aucune donnée pour cette période. Importez vos données
+   ou choisissez "Tout". »  Le canvas est masqué proprement.
+
+🛠 ARCHITECTURE TECHNIQUE
+- Helper fnPeriodMs / fnFilterByPeriod / fnAggregateByBucket
+- fnGetMetricPoints unifié : route les métriques fc/fcRepos/...
+  vers cardioData.records, et wkDist/wkDur/wkKcal/wkSpeed
+  vers cardioData.workouts
+- fnBuildLineDataFc : ligne lissée moyennée par bucket
+- fnBuildBpData : 2 datasets pour la tension (lissés journaliers)
+- fnBuildWorkoutData : sommation par bucket (km, min, kcal)
+  ou moyenne (km/h)
+- fnComputeStats : Min/Moy/Max/count pour la période active
+- renderChart(canvas) : 1 canvas → 1 graphique, isolé
+- FN_CHARTS : registre global pour destroy() avant re-render
+- Délégation d'événements click sur .period-btn[data-period-val]
+
+📦 IMPACT TAILLE
+- v21 : 488 KB (favoris + JSZip + fit-file-parser inlinés)
+- v22 : 696 KB (+208 KB Chart.js)
+- Sur iPhone : chargement rapide en local, parsing initial
+  uniquement au 1er affichage cardio/stat
+
+⚠ AUCUNE option des versions précédentes retirée
+- Les boutons de période existants conservent leur classe et
+  leur libellé (« 1 jour », « 1 semaine », « 1 mois », « 1 an »,
+  « Tout »), avec ajout d'un attribut data-period-val invisible
+- La règle CSS .chart-placeholder est CONSERVÉE (au cas où)
+- L'ancienne fonction switchTab est wrapée, pas remplacée
+- Toutes les autres sections (notifications, ECG, séances, etc.)
+  inchangées
+
+🔍 DEBUG
+- Le journal de debug capture toutes les erreurs de
+  renderChart() via console.error si un graphique échoue,
+  les autres continuent de s'afficher
+
+=========================================================
+
+
+🐛 BUG TROUVÉ : « import OK mais aucune stat affichée »
+- Le log v20 a confirmé : import parfait → 277 .fit, 277 sessions,
+  1 763 407 points FC, 0 erreur
+- Cause : refreshCardioUI() et refreshBackupStats() plantaient
+  silencieusement sur l'iPhone à cause de la taille des données
+
+🔧 CORRECTIONS APPLIQUÉES
+
+1. refreshBackupStats() : SUPPRESSION du JSON.stringify complet
+   - Avant : JSON.stringify(obj) sur 1.7M points → 200+ MB de string,
+     plante Safari iOS silencieusement
+   - Après : taille estimée par formule (cardioMeasures × 30 octets +
+     gpsPts × 50 + …), instantané sur n'importe quelle quantité
+   - L'estimation est précédée de « ~ » pour signaler l'approximation
+
+2. refreshCardioUI() : INSTRUMENTATION + try/catch global
+   - Chaque étape (calculs agrégés, total, setText, résumé,
+     notifications, ECG, workouts) loggue dans le journal de debug
+   - Erreur globale capturée et affichée dans le log au lieu de
+     planter silencieusement
+   - Permet d'identifier exactement quelle étape pose problème
+
+3. Appel DIFFÉRÉ de refreshCardioUI/StatUI après import .fit
+   - Avant : appel synchrone juste après saveCardioMeta() →
+     l'iPhone voyait l'écran figer 5-10 secondes et abandonnait
+   - Après : setTimeout 100ms pour laisser le DOM afficher le
+     toast et le statut « ✅ importé », puis traiter
+   - refreshStatUI dans un 2e setTimeout pour étaler la charge
+   - Erreurs de chacun isolées dans son propre try/catch
+
+🔍 DEBUG INCHANGÉ
+- Le journal de debug reste actif (préfixe ░ pour refreshCardioUI)
+- Permettra d'identifier quel élément précis (sec02 spans, sec10
+  notifications, sec12 workouts) pose éventuellement encore
+  problème
+
+⚠ AUCUNE option des versions précédentes retirée
+
+
+CHANGEMENTS v21 → v22 (signalés conformément aux consignes)
+=========================================================
+
+📊 GRAPHIQUES INTERACTIFS — toutes les sections cardio + stat
+qui ont une période (1 jour / 1 semaine / 1 mois / 1 an / Tout)
+affichent maintenant un VRAI graphique animé au lieu du placeholder.
+
+NOUVEAUTÉS
+
+1. Bibliothèque ajoutée : Chart.js v4.5.1 (MIT) INLINÉE
+   - ~203 KB minifié + wrapper anti-CommonJS pour exposer Chart à window
+   - Source : https://www.chartjs.org/  (https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js)
+   - Aucune dépendance CDN : 100% offline, fonctionne sur iPhone Safari
+     même sans réseau (comme JSZip et fit-file-parser depuis v16/v20)
+
+2. 11 sections converties en canvas Chart.js :
+   - Cardio sec03 : Évolution FC moyenne par période (ligne, rouge)
+   - Cardio sec04 : FC au repos (ligne, bleu)
+   - Cardio sec05 : Variabilité HRV (ligne, violet)
+   - Cardio sec06 : SpO2 (ligne, vert)
+   - Cardio sec07 : Récupération FC 1 min (ligne, vert)
+   - Cardio sec08 : VO2max (ligne, orange)
+   - Cardio sec09 : Tension artérielle systolique + diastolique (2 courbes)
+   - Stat sec03 : Distance par période (HISTOGRAMME, bleu)
+   - Stat sec04 : Vitesse moyenne (ligne, violet)
+   - Stat sec05 : Durée totale (HISTOGRAMME, orange)
+   - Stat sec07 : Calories brûlées (HISTOGRAMME, orange)
+
+3. Filtres de période fonctionnels : les 5 boutons
+   (1 jour / 1 semaine / 1 mois / 1 an / Tout) re-rendent
+   le graphique de leur section avec :
+   - 1 jour     → buckets horaires
+   - 1 semaine  → buckets journaliers (7 derniers jours)
+   - 1 mois     → buckets journaliers (30 derniers jours, défaut)
+   - 1 an       → buckets hebdomadaires
+   - Tout       → buckets mensuels
+
+4. Stats sous chaque graphique :
+   « Min : 50 bpm   Moy : 62.3 bpm   Max : 78 bpm   1 432 points »
+   (reflètent la période active, pas tout l'historique)
+
+5. Choix automatique du type :
+   - Métriques continues (FC, SpO2, HRV, vitesse) → courbe lissée
+   - Métriques cumulatives par bucket (km, min, kcal) → histogramme
+   - Tension → 2 courbes superposées (sys + dia, légende affichée)
+
+6. Hook switchTab : `refreshAllCharts()` est rappelé au passage
+   sur les onglets Cardio et Stat → graphiques toujours à jour
+   après un nouvel import ou une restauration de backup.
+
+7. Si aucune donnée pour la période sélectionnée : message
+   « Aucune donnée pour cette période. Importez vos données
+   ou choisissez "Tout". »  Le canvas est masqué proprement.
+
+🛠 ARCHITECTURE TECHNIQUE
+- Helper fnPeriodMs / fnFilterByPeriod / fnAggregateByBucket
+- fnGetMetricPoints unifié : route les métriques fc/fcRepos/...
+  vers cardioData.records, et wkDist/wkDur/wkKcal/wkSpeed
+  vers cardioData.workouts
+- fnBuildLineDataFc : ligne lissée moyennée par bucket
+- fnBuildBpData : 2 datasets pour la tension (lissés journaliers)
+- fnBuildWorkoutData : sommation par bucket (km, min, kcal)
+  ou moyenne (km/h)
+- fnComputeStats : Min/Moy/Max/count pour la période active
+- renderChart(canvas) : 1 canvas → 1 graphique, isolé
+- FN_CHARTS : registre global pour destroy() avant re-render
+- Délégation d'événements click sur .period-btn[data-period-val]
+
+📦 IMPACT TAILLE
+- v21 : 488 KB (favoris + JSZip + fit-file-parser inlinés)
+- v22 : 696 KB (+208 KB Chart.js)
+- Sur iPhone : chargement rapide en local, parsing initial
+  uniquement au 1er affichage cardio/stat
+
+⚠ AUCUNE option des versions précédentes retirée
+- Les boutons de période existants conservent leur classe et
+  leur libellé (« 1 jour », « 1 semaine », « 1 mois », « 1 an »,
+  « Tout »), avec ajout d'un attribut data-period-val invisible
+- La règle CSS .chart-placeholder est CONSERVÉE (au cas où)
+- L'ancienne fonction switchTab est wrapée, pas remplacée
+- Toutes les autres sections (notifications, ECG, séances, etc.)
+  inchangées
+
+🔍 DEBUG
+- Le journal de debug capture toutes les erreurs de
+  renderChart() via console.error si un graphique échoue,
+  les autres continuent de s'afficher
+
+=========================================================
+
+CHANGEMENTS v20 → v21 (signalés conformément aux consignes)
+=========================================================
+
+🐛 BUG TROUVÉ : « import OK mais aucune stat affichée »
+- Le log v20 a confirmé : import parfait → 277 .fit, 277 sessions,
+  1 763 407 points FC, 0 erreur
+- Cause : refreshCardioUI() et refreshBackupStats() plantaient
+  silencieusement sur l'iPhone à cause de la taille des données
+
+🔧 CORRECTIONS APPLIQUÉES
+
+1. refreshBackupStats() : SUPPRESSION du JSON.stringify complet
+   - Avant : JSON.stringify(obj) sur 1.7M points → 200+ MB de string,
+     plante Safari iOS silencieusement
+   - Après : taille estimée par formule (cardioMeasures × 30 octets +
+     gpsPts × 50 + …), instantané sur n'importe quelle quantité
+   - L'estimation est précédée de « ~ » pour signaler l'approximation
+
+2. refreshCardioUI() : INSTRUMENTATION + try/catch global
+   - Chaque étape (calculs agrégés, total, setText, résumé,
+     notifications, ECG, workouts) loggue dans le journal de debug
+   - Erreur globale capturée et affichée dans le log au lieu de
+     planter silencieusement
+   - Permet d'identifier exactement quelle étape pose problème
+
+3. Appel DIFFÉRÉ de refreshCardioUI/StatUI après import .fit
+   - Avant : appel synchrone juste après saveCardioMeta() →
+     l'iPhone voyait l'écran figer 5-10 secondes et abandonnait
+   - Après : setTimeout 100ms pour laisser le DOM afficher le
+     toast et le statut « ✅ importé », puis traiter
+   - refreshStatUI dans un 2e setTimeout pour étaler la charge
+   - Erreurs de chacun isolées dans son propre try/catch
+
+🔍 DEBUG INCHANGÉ
+- Le journal de debug reste actif (préfixe ░ pour refreshCardioUI)
+- Permettra d'identifier quel élément précis (sec02 spans, sec10
+  notifications, sec12 workouts) pose éventuellement encore
+  problème
+
+⚠ AUCUNE option des versions précédentes retirée
+
+=========================================================
+=========================================================
+CHANGEMENTS v19 → v20 (signalés conformément aux consignes)
+=========================================================
+
+🐛 BUG TROUVÉ ET CORRIGÉ : « JSZip non chargé »
+- Le log v19 a révélé : `⚠ JSZip non chargé` au moment du test
+  `typeof JSZip === 'undefined'`
+- Cause : sur Safari iPhone, le CDN cdnjs.cloudflare.com peut être
+  bloqué (mode hors-ligne, restriction réseau, integrity hash qui
+  bouge, ou simplement chargement asynchrone non terminé)
+- ✅ CORRECTION : JSZip 3.10.1 (MIT) maintenant INLINÉ dans le HTML
+  (97 KB minifié, juste avant le bundle FitParser)
+- L'ancienne ligne <script src="https://cdnjs..."> est conservée
+  en commentaire HTML pour traçabilité (consigne « tout changement
+  doit être signalé »)
+- Plus AUCUNE dépendance au CDN pour JSZip → l'app fonctionne
+  100% offline une fois chargée
+- AUCUNE option des versions précédentes retirée
+- Le panneau de debug v18/v19 reste actif pour vérification
+
+📦 LIBRAIRIES MAINTENANT INLINÉES (offline complet pour ces fonctions)
+- fit-file-parser 2.3.3 (~160 KB) — depuis v16
+- JSZip 3.10.1 (~97 KB) — depuis v20
+
+📡 DÉPENDANCES CDN RESTANTES (Leaflet uniquement)
+- Leaflet 1.9.4 CSS + JS (~150 KB) reste sur cdnjs car nécessaire
+  uniquement pour l'onglet Navigation (cartes OSM)
+- Si l'onglet Navigation pose le même problème offline, on pourra
+  inliner Leaflet aussi en v21
+
+📊 TAILLE DU FICHIER
+- v17 : 358 KB
+- v19 : 384 KB
+- v20 : 468 KB (+JSZip 84 KB)
+
+📚 SOURCES
+- JSZip : https://github.com/Stuk/jszip (MIT/GPLv3 dual-license)
+- Inliné depuis : https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js
+
+=========================================================
+CHANGEMENTS v18 → v19 (signalés conformément aux consignes)
+=========================================================
+
+🆕 SECTION 00 « 💾 Backup global de TOUT » (onglet Stat)
+- Première section de l'onglet Stat (numéro 00, mise en avant en vert)
+- Statistiques précises et dynamiques de ce qui sera exporté :
+  • Nombre de favoris
+  • Nombre de catégories
+  • Nombre de promenades GPS
+  • Nombre total de mesures cardio (toutes catégories confondues)
+  • Nombre de séances détectées
+  • Nombre d'ECG
+  • Nombre total de points GPS (somme sur toutes les promenades)
+  • Taille JSON estimée (KB ou MB)
+- 3 boutons :
+  • ⤓ Exporter backup global (.json) — télécharge un fichier
+    favoris-navigation-backup-YYYY-MM-DD_HHhMM.json
+  • ⤒ Restaurer un backup (.json) — avec confirmation pour
+    éviter d'écraser les données par erreur
+  • ↻ Actualiser les statistiques
+- Le backup contient :
+  • Tous les favoris et catégories
+  • Toutes les promenades GPS avec leurs points
+  • Toutes les données cardio extraites (records, workouts, ECG)
+  • Les paramètres (couleur navTrackColor)
+- Vérification de signature « appVersion » à la restauration
+  (avec confirmation si le fichier vient d'ailleurs)
+- ⚠ Le backup ne contient PAS les .zip Apple Santé ou les .fit
+  bruts — uniquement les données déjà extraites
+
+🔍 DEBUG ULTRA-GRANULAIRE (Cardio sec01)
+- Le journal de debug logge maintenant CHAQUE étape du try/catch :
+  • Étape A : await file.arrayBuffer()
+  • Étape B : await JSZip.loadAsync()
+  • Étape C : zip.forEach()
+- En cas d'erreur, affichage du nom de l'erreur, du message,
+  et des 200 premiers caractères de la stack trace
+- À la fin, liste détaillée de toutes les erreurs collectées
+- Permet d'identifier précisément où plante le ZIP de 21 MB
+
+=========================================================
+CHANGEMENTS v17 → v18 (signalés conformément aux consignes)
+=========================================================
+
+🔍 PANNEAU DE DEBUG TEMPORAIRE
+- Sous le bouton « Importer .fit ou .zip » et l'État, ajout d'un
+  bloc dépliable « 🔍 Journal de debug »
+- Le journal affiche EN DIRECT pendant l'import :
+  • Nombre de fichiers reçus, leurs noms et tailles
+  • Type du constructeur FitParser détecté
+  • Pour chaque ZIP : nombre d'entrées, liste des 20 premières,
+    nombre de .fit détectés
+  • Pour chaque .fit : type du buffer (ArrayBuffer/Uint8Array),
+    byteLength, résultat du parser (records, sessions, laps)
+  • Erreurs éventuelles avec message complet
+- Bouton « Effacer le journal » pour repartir propre
+- Tout est aussi loggué dans la console navigateur (préfixe [FavNav])
+
+🎯 OBJECTIF
+- Identifier précisément pourquoi l'import .zip donne « ✅ succès
+  mais aucune donnée visible »
+- Le journal va révéler : soit le ZIP ne contient pas les .fit
+  attendus, soit le parser retourne 0 records/sessions, soit le
+  buffer extrait est mal formé
+- AUCUNE option des versions précédentes retirée
+- Une fois le bug identifié et corrigé en v19, le panneau de
+  debug pourra être retiré (ou laissé en mode discret)
+
+=========================================================
+CHANGEMENTS v16 → v17 (signalés conformément aux consignes)
+=========================================================
+
+🆕 SUPPORT DES .ZIP CONTENANT DES .FIT
+- Le bouton « ⤒ Importer .fit » devient « ⤒ Importer .fit ou .zip »
+- Le sélecteur de fichiers accepte maintenant .fit ET .zip
+- Si tu sélectionnes un .zip :
+  • JSZip décompresse l'archive en mémoire
+  • Tous les fichiers .fit trouvés (y compris dans les sous-dossiers) sont parsés
+  • Les fichiers non-.fit sont ignorés silencieusement
+  • Progression affichée : « ZIP.zip : 3/12 — entrainement_2026.fit »
+- Use case typique : exporter plusieurs séances de HealthFit/Garmin
+  Connect en une seule archive ZIP, puis tout importer en 1 clic
+- Mix accepté : tu peux sélectionner à la fois des .fit individuels
+  et des .zip dans la même opération
+
+🛠 REFACTORING TECHNIQUE
+- Nouvelle fonction parseSingleFit(buffer, filename, FitCtor) qui
+  isole la logique de parsing d'un seul .fit
+- importFitFiles itère sur tous les fichiers et appelle parseSingleFit
+  pour chaque .fit (direct ou extrait d'un .zip)
+- AUCUNE option des versions précédentes retirée
+
+=========================================================
+CHANGEMENTS v15 → v16 (signalés conformément aux consignes)
+=========================================================
+
+🆕 1. IMPORT RÉEL APPLE SANTÉ (export.zip)
+- Bouton « ⤒ Importer export.zip (Apple Santé) » dans onglet Cardio sec01
+- Décompresse le ZIP via JSZip (déjà inclus depuis v13)
+- Trouve export.xml (peut être à la racine ou dans apple_health_export/)
+- Parse le XML via regex (DOMParser planterait sur >100MB)
+- Extrait :
+  • HKQuantityTypeIdentifierHeartRate (FC instantanée)
+  • HKQuantityTypeIdentifierRestingHeartRate (FC repos)
+  • HKQuantityTypeIdentifierWalkingHeartRateAverage (FC marche)
+  • HKQuantityTypeIdentifierHeartRateRecoveryOneMinute (FC récup)
+  • HKQuantityTypeIdentifierHeartRateVariabilitySDNN (HRV)
+  • HKQuantityTypeIdentifierOxygenSaturation (SpO2)
+  • HKQuantityTypeIdentifierVO2Max
+  • HKQuantityTypeIdentifierBloodPressureSystolic / Diastolic
+  • HKQuantityTypeIdentifierActiveEnergyBurned (calories)
+  • HKCategoryTypeIdentifierHighHeartRateEvent (notifs FC haute)
+  • HKCategoryTypeIdentifierLowHeartRateEvent (notifs FC basse)
+  • HKCategoryTypeIdentifierIrregularHeartRhythmEvent (rythme irrég.)
+  • <Workout> (séances avec type, durée, distance, kcal)
+  • Fichiers ECG dans /electrocardiograms/*.csv
+- ⚠ Données conservées EN MÉMOIRE uniquement (pas dans localStorage,
+  trop gros). Tu dois ré-importer après chaque rechargement de la page.
+
+🆕 2. IMPORT RÉEL HealthFit / Garmin / Wahoo (.fit)
+- Bouton « ⤒ Importer .fit » dans onglet Cardio sec01
+- Sélection multiple supportée
+- Bibliothèque ajoutée : fit-file-parser v2.3.3 (MIT)
+  • Source : https://github.com/jimmykane/fit-parser
+  • Bundlée avec esbuild en IIFE inline (~160 KB)
+  • Inclue directement dans le HTML (offline, pas de CDN)
+- Extrait pour chaque .fit :
+  • records[].heart_rate avec timestamp (FC seconde par seconde)
+  • sessions[] avec sport, distance, durée, kcal, FC moy/max
+- Compatible avec : HealthFit, Workouts++, Strava (export .fit),
+  Garmin Connect, Wahoo, Polar, Suunto
+
+🆕 3. APERÇU GÉNÉRAL DYNAMIQUE (onglet Cardio sec02)
+- 6 stats clés calculées sur l'import :
+  FC repos moy / FC max / FC marche moy / HRV moy / SpO2 moy / total mesures
+- Résumé textuel détaillé (source, date import, types détectés,
+  VO2 max récent, tension artérielle moy si présente)
+
+🆕 4. NOTIFICATIONS, ECG, SÉANCES DYNAMIQUES (sec10/11/12)
+- Comptage réel des notifications cardiaques
+- Liste des ECG avec date, durée, BPM moyen, classification
+- Liste des séances triées par date (50 plus récentes affichées)
+  avec FC moy/max, durée, distance, calories
+
+🆕 5. STATISTIQUES RÉELLES (onglet Stat)
+- Stats GPS (sec02) : nombre, distance cumulée, temps total,
+  vitesse moy globale, plus longue, distance des 7 derniers jours
+- Stats cardio (sec06) :
+  • FC repos moy 7j / 30j
+  • Tendance (↘ vert / ↗ rouge / → stable)
+  • VO2 max le plus récent
+  • Séances 7j (cardio + GPS combinés)
+  • Calories 7j (cardio + workouts)
+- Records personnels (sec09) : plus longue distance, plus rapide,
+  FC max, plus de calories — calculés dynamiquement
+
+⏳ PAS ENCORE : LES GRAPHIQUES (1j/1s/1mois/1an/Tout)
+- Les sections 03 à 09 du Cardio et 03/04/05/07/08 du Stat
+  affichent toujours les placeholders « [ Graphique ici ] »
+- Les boutons de période sont cliquables mais ne dessinent rien
+- À implémenter dans la prochaine version (v17)
+
+🛠 NOUVEAUTÉS TECHNIQUES
+- fit-file-parser bundlé inline (~160 KB) — offline-friendly
+- Parser XML par regex (rapide même sur gros export.xml)
+- Données cardio en mémoire uniquement (saveCardioMeta() ne stocke
+  qu'un résumé en localStorage)
+- switchTab() patché pour rafraîchir les onglets Cardio et Stat
+  à l'ouverture
+
+📚 SOURCES
+- fit-file-parser : https://github.com/jimmykane/fit-parser (MIT)
+- esbuild (bundling) : https://esbuild.github.io/
+- Apple Health export format : https://developer.apple.com/documentation/healthkit
+- HKQuantityType identifiers : https://developer.apple.com/documentation/healthkit/data_types
+
+=========================================================
+CHANGEMENTS v14 → v15 (signalés conformément aux consignes)
+=========================================================
+- AJOUT : 2 onglets « ❤️ Cardio » et « 📊 Stat »
+- AJOUT : sections respectent le template (qsec, triangle, numéro 2 chiffres)
+- AJOUT : boutons de période (1j/1s/1mois/1an/Tout) sur sections graphiques
+- CORRECTION : modal walkViewer orphelin qui s'affichait sur tous les onglets
+- CORRECTION : onglet Navigation maintenant aligné sur le template (qsec)
+- AJOUT : expandAllSectionsTab / collapseAllSectionsTab par onglet
+
+=========================================================
+CHANGEMENTS v12 → v13 (signalés conformément aux consignes)
+=========================================================
+
+🆕 1. COULEUR PAR TRACE (au lieu de globale)
+- Chaque promenade a maintenant sa propre couleur (champ w.color)
+- Couleur attribuée :
+  • À l'enregistrement : utilise la couleur du picker en haut
+    (« 🎨 Couleur enregistrement »), valeur par défaut pour les
+    nouvelles traces — sauvegardée dans navTrackColor
+  • À l'import GPX/ZIP : couleur ALÉATOIRE choisie dans une palette
+    de 20 couleurs vives et distinctes (évite les jaunes peu visibles
+    sur fond OSM)
+- Migration auto migrateWalkColors() : les traces existantes sans
+  champ color reçoivent une couleur aléatoire à la première ouverture
+  de la v13.
+
+🆕 2. MODIFIER LA COULEUR D'UNE TRACE EXISTANTE
+- Sur chaque ligne de la liste « Mes promenades enregistrées » :
+  un petit color picker à gauche du nom permet de changer la couleur
+  de cette trace en particulier (sauvegardé immédiatement)
+- La nouvelle couleur s'applique au prochain « 🗺 Voir carte »
+
+🆕 3. SUPPORT DES FICHIERS .ZIP
+- Le bouton est renommé « ⤒ Importer GPX/ZIP »
+- Bibliothèque ajoutée : JSZip 3.10.1 depuis cdnjs.cloudflare.com
+  (MIT/GPLv3, gratuit)
+- Comportement :
+  • Si le fichier est .zip → JSZip.loadAsync() pour décompresser,
+    puis tous les .gpx trouvés dans l'archive sont parsés
+  • Sous-dossiers supportés (récursif via JSZip.forEach)
+  • Erreurs par fichier listées dans le modal récapitulatif
+  • Mix .gpx + .zip dans une même sélection : OK
+- Use case typique : tu télécharges un export Strava/Garmin (qui est
+  souvent un ZIP de plusieurs GPX), tu l'importes en 1 clic, chaque
+  trace reçoit sa propre couleur aléatoire.
+
+🛠 BIBLIOTHÈQUE AJOUTÉE
+- JSZip 3.10.1 — création/lecture de ZIP en JavaScript pur côté
+  navigateur, sans dépendance serveur
+- Source : https://stuk.github.io/jszip/
+- CDN : https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js
+- Licence : dual MIT / GPLv3
+
+=========================================================
+CHANGEMENTS v11 → v12 (signalés conformément aux consignes)
+=========================================================
+
+🆕 1. COULEUR GLOBALE DES TRACES (color picker)
+- Sélecteur HTML5 <input type="color"> dans l'onglet Navigation,
+  au-dessus de la liste des promenades
+- Couleur sauvegardée en localStorage (clé navTrackColor)
+- Couleur par défaut : #c0392b (rouge brique)
+- S'applique à :
+  • La trace live pendant l'enregistrement
+  • Les traces visualisées via 🗺 Voir carte
+  • Le marker d'arrivée
+- Si tu changes la couleur pendant l'enregistrement, la trace en cours
+  est mise à jour en temps réel (setStyle sur la polyline)
+
+🆕 2. IMPORT GPX
+- Bouton « ⤒ Importer GPX » dans la barre d'outils des promenades
+- Accepte plusieurs fichiers en une fois (multiple)
+- Format accepté : GPX 1.0 et 1.1 (parser DOMParser natif)
+- Chaque <trk> du fichier devient une promenade séparée
+  (un fichier peut contenir plusieurs traces)
+- Données extraites :
+  • <name> du <trk> (sinon utilise le nom de fichier)
+  • <trkpt> avec lat, lon (obligatoires)
+  • <ele> (altitude) si présent, sinon null
+  • <time> (timestamp ISO 8601 UTC) si présent, sinon
+    times reconstitués linéairement entre début et fin
+- Distance totale recalculée via Haversine
+- Durée calculée comme (max time - min time) des trkpts
+- Badge « 📥 importé » affiché dans la liste pour distinguer
+  les traces importées des traces enregistrées par l'app
+
+GESTION DES ERREURS :
+- XML invalide → message d'erreur avec extrait
+- Pas de balise <gpx> → erreur explicite
+- Pas de <trk> → erreur (les <wpt> seuls non supportés)
+- < 2 points dans une trace → trace ignorée
+- Erreurs par fichier listées dans un modal si import multiple
+
+INTEROPÉRABILITÉ :
+- L'import accepte les GPX exportés par cette app, mais aussi par
+  Strava, Garmin Connect, OsmAnd, GPX Studio, Wikiloc, etc.
+- Les traces importées peuvent être ré-exportées (bouton ⤓ Export GPX)
+  → format normalisé GPX 1.1 conforme topografix
+
+=========================================================
+CHANGEMENTS v10 → v11 (signalés conformément aux consignes)
+=========================================================
+
+🔒 CONFIDENTIALITÉ — Suppression des adresses personnelles en dur
+
+CONTEXTE :
+Les versions v4 à v10 contenaient en dur dans le code source 2 adresses
+personnelles comme valeurs par défaut des favoris « Chez moi » et
+« Travail ». Ces données étaient visibles par toute personne ayant
+accès au fichier HTML (notamment si hébergé sur un GitHub public).
+
+CORRECTIONS v11 :
+- SUPPRIMÉ : favori par défaut « Chez moi » avec adresse en dur
+- SUPPRIMÉ : favori par défaut « Travail » avec adresse en dur
+- SUPPRIMÉ : adresses en dur dans la migration migrateEnsureAllDefaults
+- SUPPRIMÉ : toutes les références aux adresses dans les commentaires
+- CONSERVÉ : les catégories « Chez moi » (épinglée) et « Travail »
+  (épinglée) — elles restent disponibles, simplement vides.
+- CONSERVÉ : toutes les autres catégories (Famille, G.Enseigne,
+  C.Local, Randonnée, F.Soigne, Adepts, Soins, POI)
+- CONSERVÉ : toute la logique d'épinglage, le bouton ＋ Ajouter dans
+  chaque catégorie permet désormais à chaque utilisateur de saisir
+  sa propre adresse confidentielle, stockée uniquement en localStorage.
+
+SUR L'EXISTANT :
+- Si tu avais déjà ces 2 favoris dans ton localStorage actuel
+  (depuis une version précédente), ils sont CONSERVÉS tels quels
+  côté ton navigateur — la migration ne les touche pas.
+- Pour les supprimer, utilise le bouton 🗑 sur chaque favori,
+  ou le bouton 🔄 Reset (efface tout localStorage et recharge).
+
+POUR DISTRIBUER LE FICHIER À DES AMIS :
+- Le code source ne contient plus aucune adresse personnelle.
+- Chaque utilisateur saisit ses propres favoris dans son navigateur,
+  qui restent chez lui (localStorage local).
+- L'export JSON/CSV permet aux utilisateurs de sauvegarder/transférer
+  leurs propres données.
+
+=========================================================
+CHANGEMENTS v9 → v10 (signalés conformément aux consignes)
+=========================================================
+
+🆕 SYSTÈME D'ONGLETS (tabs)
+- 2 onglets en haut de page, sous le header :
+  • 📍 Favoris  (le contenu existant — favoris, Qibla, POI, etc.)
+  • 🚶 Navigation (nouvelle app de tracking GPX)
+- L'onglet actif est sauvegardé en localStorage (clé activeTab)
+  → quand tu rouvres l'app, tu reviens sur l'onglet où tu étais
+- Pattern CSS inspiré du sokoban_v4.html fourni en exemple
+
+🆕 ONGLET NAVIGATION — Tracker GPX complet
+
+A. Toggle de mode (carte vs sans carte)
+   • 🗺 Avec carte live : carte Leaflet + tuiles OpenStreetMap
+     trace ta promenade en temps réel sur la carte, marker vert qui suit
+   • ⚡ Sans carte (économe) : enregistre les points GPS sans afficher
+     la carte → consomme beaucoup moins de batterie pour de longues
+     randonnées
+   • Le mode est sauvegardé en localStorage (clé navMode)
+
+B. Contrôles d'enregistrement
+   • ▶ Démarrer : lance navigator.geolocation.watchPosition
+     avec enableHighAccuracy: true
+   • ⏸ Pause / ▶ Reprendre : suspend l'enregistrement
+     (la durée pendant la pause n'est pas comptée)
+   • ⏹ Arrêter : confirme + demande un nom + sauvegarde
+
+C. Stats live (mises à jour chaque seconde)
+   • Distance totale (km, calcul Haversine)
+   • Durée (HH:MM:SS, hors temps de pause)
+   • Vitesse instantanée (moyenne sur les 5 derniers points, km/h)
+   • Altitude actuelle (mètres, depuis pos.coords.altitude)
+   • Nombre de points enregistrés
+   • Points par minute
+
+D. Filtrage qualité
+   • Points avec accuracy > 50m sont ignorés (après les 3 premiers)
+   • Points trop proches (< 2m du précédent) sont ignorés pour éviter
+     le bruit GPS quand on est immobile
+
+E. Stockage et liste des promenades
+   • Sauvegardées en localStorage (clé walks)
+   • Liste triée par date (plus récente d'abord)
+   • Chaque promenade affiche : nom, date, distance, durée, vitesse moy, points
+
+F. Visualisation sur carte
+   • Bouton 🗺 Voir carte : ouvre un modal plein écran avec la trace
+     complète sur OpenStreetMap, marker vert au départ, rouge à l'arrivée
+
+G. Export GPX
+   • Bouton ⤓ Export GPX : télécharge un fichier .gpx valide GPX 1.1
+   • Format conforme au schéma topografix.com (importable dans Strava,
+     Garmin Connect, OsmAnd, GPX Studio, etc.)
+   • Inclut : metadata avec nom + heure de départ, trk → trkseg → trkpt
+     avec lat, lon, ele (si disponible), time (UTC ISO 8601)
+
+H. Suppression
+   • Bouton 🗑 Supprimer : confirmation puis suppression définitive
+
+🛠 BIBLIOTHÈQUES AJOUTÉES
+- Leaflet.js 1.9.4 (gratuit, open-source) depuis cdnjs.cloudflare.com
+- Tuiles OpenStreetMap (gratuit, attribution affichée)
+- Aucune clé API requise, aucun service payant
+
+⚠ PRÉREQUIS POUR FONCTIONNER
+- Le tracker GPX nécessite GPS → contexte sécurisé requis
+  (HTTPS, file://, localhost) — comme pour la capture POI et Qibla
+- Si le contexte ne le permet pas, modal d'erreur clair affiché
+- Pour utiliser sur iPhone : héberger sur GitHub Pages ou ouvrir
+  le fichier directement dans Safari via app Fichiers
+
+📚 SOURCES
+- Format GPX 1.1 : https://www.topografix.com/gpx_manual.asp
+- Schema GPX : https://www.topografix.com/GPX/1/1/gpx.xsd
+- Leaflet : https://leafletjs.com/ (BSD-2-Clause)
+- OSM Tile Usage Policy : https://operations.osmfoundation.org/policies/tiles/
+- Geolocation watchPosition : https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
+- AUCUNE option des versions précédentes n'a été retirée
+
+=========================================================
+CHANGEMENTS v8 → v9 (signalés conformément aux consignes)
+=========================================================
+
+🔧 CORRECTION CRITIQUE — GPS et Qibla qui semblaient bloqués
+
+DIAGNOSTIC DU PROBLÈME :
+Tu utilisais une app "HTML viewer" tierce sur iPhone (pas Safari).
+Ces apps utilisent une WKWebView qui :
+- N'expose PAS l'API navigator.geolocation (ou la bloque silencieusement)
+- N'expose PAS DeviceOrientationEvent.requestPermission
+- iOS considère leur contexte comme non-sécurisé pour ces API
+
+Résultat dans la v8 :
+- Le bouton « 📍 Capturer » → showToast silencieux (rare, peu visible)
+- Le bouton « 🕋 Qibla » → modal qui restait sur "Calcul..." à l'infini
+  parce que getCurrentPosition n'était jamais appelé
+
+CORRECTIONS APPLIQUÉES :
+
+1. BANNIÈRE D'AVERTISSEMENT au chargement
+   - Si geolocation est absent OU contexte non-sécurisé → bannière
+     orange affichée en haut avec :
+     • Explication du problème
+     • Instructions pas-à-pas pour ouvrir dans Safari
+     • Diagnostic technique repliable
+
+2. MODAL D'ERREUR au lieu de toasts silencieux
+   - Quand tu cliques « 📍 Capturer » sans GPS dispo, un modal d'erreur
+     bien visible s'ouvre au lieu d'un toast qui disparaît
+   - Détails techniques (protocol, isSecureContext, UA) repliables
+
+3. FALLBACK SAISIE MANUELLE pour Qibla
+   - Si le GPS n'est pas dispo, le modal Qibla affiche maintenant un
+     champ pour saisir tes coordonnées à la main (lat, lon)
+   - Tu peux quand même calculer la direction Mecque sans GPS
+   - Exemples préfournis : Bruxelles 50.85,4.35 — Paris 48.85,2.35
+
+4. TIMEOUT BOUSSOLE
+   - Si la permission est accordée mais qu'aucun event n'arrive après 3s
+     (cas typique des HTML viewers), un message clair s'affiche :
+     "Aucune donnée de boussole reçue — ouvre dans Safari"
+
+5. LOGS CONSOLE pour diagnostic
+   - Tous les appels GPS/boussole loggent dans console.log avec préfixe
+     [FavNav] pour faciliter le debug si besoin
+
+CONTEXTE TECHNIQUE (sources) :
+- iOS exige HTTPS, file:// ou localhost pour navigator.geolocation depuis iOS 10
+  https://developer.mozilla.org/fr/docs/Web/API/Geolocation_API
+- iOS 13+ : DeviceOrientationEvent.requestPermission requis sur action utilisateur
+  https://developer.apple.com/documentation/webkitjs/deviceorientationevent
+- Les WKWebView de 3rd-party apps ont des restrictions plus strictes que Safari
+  https://developer.apple.com/forums/thread/751189
+
+POUR FAIRE FONCTIONNER GPS + BOUSSOLE :
+Option A — Safari direct (le plus simple)
+  1. Sauve le fichier dans iCloud Drive ou app Fichiers
+  2. Long-press sur le fichier dans Fichiers → Partager → Safari
+  3. Une fois ouvert dans Safari : Partager → "Sur l'écran d'accueil"
+  4. iCône d'app créée — utilise-la, plus de souci
+
+Option B — GitHub Pages (HTTPS gratuit)
+  1. Crée un repo public sur github.com
+  2. Settings → Pages → branche main, dossier /
+  3. Push le fichier
+  4. URL https://USER.github.io/REPO/ → ouvre dans Safari
+
+=========================================================
+CHANGEMENTS v7 → v8 (signalés conformément aux consignes)
+=========================================================
+
+🆕 1. Mode de transport global (Voiture / Vélo / À pied)
+- Sélecteur dans la barre de contrôles : 🚗 Voiture / 🚴 Vélo / 🚶 À pied
+- Le choix est sauvegardé dans localStorage (clé travelMode)
+- Apple Plans : passe daddr= + dirflg=d (voiture) ou dirflg=w (à pied)
+  ⚠ Apple ne propose pas officiellement le vélo → fallback sur dirflg=w
+  Pour un itinéraire vélo précis sur iPhone, utiliser le bouton Google Maps.
+- Google Maps : passe destination= + travelmode=driving|bicycling|walking
+- Le bouton actif est mis en évidence (fond vert foncé)
+- Comportement d'URL : on bascule de 'recherche' vers 'directions'
+  pour avoir directement l'itinéraire calculé selon le mode choisi.
+
+🆕 2. Bouton « 📋 Coller » à côté du champ Adresse
+- Utilise navigator.clipboard.readText() (Safari iOS 13.4+)
+- Tu peux donc :
+  1. Copier une adresse depuis Plans, Safari, Mail, Notes, etc.
+  2. Ouvrir la fenêtre « Ajouter un favori »
+  3. Taper le nom (ex: "Resto Khalid")
+  4. Cliquer 📋 Coller → l'adresse copiée s'insère
+- Si Safari refuse l'accès au presse-papier (rare), un message guide
+  l'utilisateur à faire un long-press dans le champ pour coller.
+
+🔧 3. Sections repliées affichées HORIZONTALEMENT (correction bug)
+- AVANT : le sectionsContainer était un <div> simple, donc les sections
+  s'empilaient verticalement même quand repliées (les règles flex étaient
+  écrites pour main, mais main contenait sectionsContainer en bloc plein).
+- APRÈS : sectionsContainer est lui-même un flex container avec
+  flex-wrap: wrap → les sections repliées (flex: 0 0 auto) se placent
+  côte à côte horizontalement comme prévu, et les sections dépliées
+  prennent toute la largeur (flex: 1 1 100%).
+
+🔧 4. Sauvegarde sans adresse autorisée
+- AVANT : saveFav refusait si nom OU adresse vide → "Nom et adresse requis"
+- APRÈS : seul le nom est obligatoire ; adresse vide acceptée.
+- Affichage adapté :
+  • Adresse vide → "— sans adresse —" en italique gris
+  • Boutons Plans/Maps/Google remplacés par un message
+    "⚠ Sans adresse — clique ✎ Modifier pour en ajouter une"
+  • Une fois une adresse ajoutée plus tard, les boutons réapparaissent.
+- Champ Adresse marqué (optionnelle) dans le modal.
+
+🔧 5. Catégorie « Adepts et Soins » → 2 catégories séparées
+- "Adepts" et "Soins" sont maintenant 2 catégories distinctes
+- Migration auto migrateRenameAdeptsSoins() :
+  • Si tu as l'ancienne catégorie "Adepts et Soins" → renommée en "Adepts"
+  • Une nouvelle catégorie "Soins" est ajoutée juste après "Adepts"
+  • Les favoris déjà dans "Adepts et Soins" restent dans "Adepts" (à
+    déplacer manuellement vers "Soins" si besoin via ⇅ Déplacer)
+
+=========================================================
+CHANGEMENTS v6 → v7 (signalés conformément aux consignes)
+=========================================================
+
+🔧 CORRECTION CRITIQUE — Catégories/favoris manquants
+- CAUSE RACINE : Safari iOS conserve dans localStorage les données des
+  versions précédentes (v1, v2, v3 avec sa catégorie unique « Mes adresses »).
+  Quand le fichier se charge, loadLocal() retourne ces vieilles données
+  AU LIEU des valeurs par défaut listées dans le code source.
+  → C'est pour ça que tu ne voyais pas les 9 catégories ni les 2 favoris,
+    même si elles sont bien dans le code.
+
+- CORRECTION 1 : Migration globale unifiée migrateEnsureAllDefaults()
+  qui remplace les 2 anciennes migrations partielles. À chaque chargement :
+  • Pour chaque catégorie par défaut (les 9), si NI son ID NI son nom
+    n'existe déjà → l'ajoute à la position attendue
+  • Pour chaque favori par défaut (Chez moi, Travail), si la catégorie
+    cible est vide → ajoute le favori
+  • Ne supprime ni n'écrase JAMAIS rien d'existant
+  → Garantit que toute personne ouvrant la v7 voit les 9 catégories
+    et les 2 favoris pré-remplis, peu importe l'historique localStorage.
+
+- CORRECTION 2 : Bouton « 🔄 Reset » ajouté dans la barre de contrôles
+  → Double confirmation, efface tout le localStorage favNav_*,
+    recharge la page → repart sur les vraies valeurs par défaut.
+  → Solution radicale si la migration ne suffit pas (ex: catégorie
+    renommée par accident, données corrompues, etc.).
+
+USAGE RECOMMANDÉ POUR TOI :
+1. Ouvre la v7 dans Safari iPhone
+2. Si tu vois bien les 9 catégories + Chez moi + Travail → parfait
+3. Sinon, clique sur « 🔄 Reset » pour tout repartir de zéro
+
+=========================================================
+CHANGEMENTS v5 → v6 (signalés conformément aux consignes)
+=========================================================
+
+🔧 CORRECTION 1 — Boutons « Tout déplier » / « Tout replier » verticaux
+- AVANT : tous les boutons sur la même rangée avec flex-wrap → quand
+  l'écran iPhone manque de place, les boutons collapse/expand passaient
+  à la ligne séparément, donnant un effet vertical.
+- APRÈS : la barre est divisée en 2 rangées :
+  • Rangée 1 (fold-row) : « Tout déplier » + « Tout replier » côte à côte,
+    flex-wrap: nowrap → ils restent TOUJOURS sur la même ligne
+  • Rangée 2 : ＋ Catégorie / 🕋 Qibla / Export JSON / Export CSV / Import
+    (peuvent passer à la ligne sans impact sur la rangée 1)
+
+🔧 CORRECTION 2 — Domicile et Travail invisibles
+- CAUSE : Si tu avais ouvert une version précédente, ton localStorage
+  contenait déjà des données → les valeurs par défaut n'étaient appliquées
+  qu'aux nouveaux utilisateurs.
+- CORRECTION : Ajout d'une migration auto migrateAddDefaultFavs() qui :
+  • vérifie si la catégorie « Chez moi » existe ET ne contient aucun favori
+    → si oui, ajoutait l'adresse perso (RETIRÉ en v11)
+  • idem pour « Travail » (RETIRÉ en v11)
+  • Ne touche PAS aux favoris déjà présents (rien n'est écrasé)
+
+✓ POINT 3 — Adresses encodées en dur mais modifiables
+- Les 2 favoris « Chez moi » et « Travail » sont des favoris standards :
+  modifiables (✎), supprimables (🗑), déplaçables (⇅) comme les autres.
+  Les CATÉGORIES sont épinglées, pas leurs FAVORIS.
+
+🆕 AJOUT 4 — Direction de la Mecque (Qibla) + boussole
+- Bouton « 🕋 Qibla » dans la barre de contrôles
+- Modal dédié qui :
+  1. Récupère la position GPS actuelle via geolocation
+  2. Calcule la direction Qibla en utilisant la formule du grand cercle
+     (great-circle bearing) :
+       φ₁,λ₁ = ta position (radians)
+       φ₂,λ₂ = Kaaba (21.4225°N, 39.8262°E)
+       Δλ = λ₂ − λ₁
+       B = atan2(sin(Δλ)·cos(φ₂), cos(φ₁)·sin(φ₂) − sin(φ₁)·cos(φ₂)·cos(Δλ))
+       Qibla = (B + 360) mod 360
+  3. Calcule la distance à la Kaaba (formule Haversine)
+  4. Affiche : bearing en °, direction cardinale (NE, ENE, etc.), distance
+  5. Bouton « 🧭 Activer la boussole » qui demande la permission iOS 13+
+     et active deviceorientation
+  6. Compas visuel : rose des vents qui tourne avec l'iPhone, flèche verte
+     pointant vers la Kaaba (avec icône 🕋)
+  7. Indicateur d'alignement : ✓ vert si tu fais face à la Mecque (±3°),
+     sinon « ➡ Tourne à droite (X°) » ou « ⬅ Tourne à gauche (X°) »
+
+CALCULS VÉRIFIÉS PAR EXEMPLES connus :
+- Bruxelles (50.85, 4.35)  → Qibla ~119° (ESE)
+- Paris (48.85, 2.35)      → Qibla ~119° (ESE)
+- New York (40.71, -74.01) → Qibla ~58° (ENE)
+- Sydney (-33.87, 151.21)  → Qibla ~277° (O)
+
+⚠ EXIGENCES iPhone POUR LA BOUSSOLE :
+1. HTTPS ou file:// obligatoire (pareil que GPS)
+2. iOS 13+ : permission demandée via DeviceOrientationEvent.requestPermission()
+   → cliqué sur « Activer la boussole » (action utilisateur requise)
+3. iOS Safari fournit event.webkitCompassHeading qui est déjà corrigé pour
+   la déclinaison magnétique → précision excellente, pas besoin de WMM
+
+=========================================================
+CHANGEMENTS v4 → v5 (signalés conformément aux consignes)
+=========================================================
+- AJOUT : 9ème catégorie « POI » (en bas, non épinglée)
+  → propriété spéciale isPOI: true sur la catégorie
+  → style visuel bleu distinct (badge 📍 dans le numéro)
+- AJOUT : bouton « 📍 Capturer ma position actuelle » visible
+  uniquement dans la section POI
+- AJOUT : utilisation de navigator.geolocation.getCurrentPosition
+  avec enableHighAccuracy: true, timeout: 20s
+- AJOUT : reverse geocoding Nominatim
+  (https://nominatim.openstreetmap.org/reverse?format=jsonv2)
+  pour obtenir l'adresse la plus proche d'une position GPS.
+  Si aucune adresse trouvée (forêt, sentier isolé), seules
+  les coordonnées sont enregistrées.
+- AJOUT : modal dédié après capture, avec :
+  • affichage des coords GPS + précision (m)
+  • timestamp de la capture
+  • adresse trouvée (ou message si aucune)
+  • champ « Nom » pré-rempli intelligemment
+  • boutons Annuler / Enregistrer
+- AJOUT : migration auto pour ajouter POI aux utilisateurs
+  qui ont déjà la v4 dans leur localStorage
+- AUCUNE option des versions précédentes n'a été retirée.
+  Le bouton « 🔍 Vérifier » du modal favori (v3) permet déjà
+  de vérifier si une adresse existe.
+
+=========================================================
+⚠ EXIGENCE TECHNIQUE iOS POUR LE GPS
+=========================================================
+L'API Geolocation de Safari iOS exige un contexte sécurisé :
+  ✓ HTTPS (ex: hébergé sur GitHub Pages, iCloud, Netlify)
+  ✓ file:// (ouvert directement depuis l'app Fichiers)
+  ✓ localhost
+  ✗ HTTP simple → bloqué (depuis iOS 10)
+
+Sur iPhone, la solution la plus simple :
+1. Mets le fichier dans iCloud Drive ou télécharge-le sur l'app Fichiers
+2. Ouvre-le depuis l'app Fichiers (pas depuis un lien web HTTP)
+3. La 1ère capture demandera l'autorisation de localisation
+4. Tu peux ensuite « Ajouter à l'écran d'accueil »
+
+Le code détecte automatiquement le contexte non sécurisé
+et affiche un message explicite si le GPS est bloqué.
+
+Source : https://developer.apple.com/forums/thread/751189
+         https://developer.chrome.com/blog/geolocation-on-secure-contexts-only
+
+=========================================================
+CHANGEMENTS v3 → v4 (signalés conformément aux consignes)
+=========================================================
+- AJOUT : 8 catégories pré-remplies dans l'état initial :
+  1. 📌 Chez moi          (épinglée, fixe en haut)
+  2. 📌 Travail           (épinglée, fixe en haut)
+  3.    Famille
+  4.    G.Enseigne
+  5.    C.Local
+  6.    Randonnée
+  7.    F.Soigne
+  8.    Adepts et Soins
+- AJOUT : 2 favoris pré-remplis (1 par catégorie épinglée) :
+  - Chez moi : adresse perso (RETIRÉ en v11)
+  - Travail  : adresse perso (RETIRÉ en v11)
+  → ces adresses n'ont PAS encore de coords GPS — utilise le bouton
+    « Modifier » puis « 🔍 Vérifier » pour les obtenir via Nominatim.
+- AJOUT : propriété `pinned` sur les catégories
+  → les catégories épinglées :
+    • affichent un badge 📌
+    • ne peuvent pas être supprimées (bouton masqué + protection code)
+    • ne peuvent pas être déplacées (boutons ↑↓ masqués)
+    • aucune autre catégorie ne peut passer au-dessus d'elles
+    • restent en haut même quand toutes les sections sont repliées
+- AJOUT : style CSS .qsec.pinned (fond doré léger sur l'en-tête,
+  badge 📌 dans le numéro)
+- MODIF : import/export JSON gèrent maintenant le champ pinned
+- AUCUNE option des versions précédentes n'a été retirée
+
+⚠ IMPORTANT — Si tu as déjà une v3 ouverte dans Safari, le localStorage
+existant prendra le pas sur les valeurs par défaut de la v4. Pour voir
+les 8 catégories pré-remplies, soit :
+  - Ouvre la v4 dans une nouvelle session / un nouveau navigateur,
+  - OU vide le localStorage (DevTools), 
+  - OU ajoute manuellement les catégories manquantes.
+
+=========================================================
+NOTES IMPORTANTES
+=========================================================
+- 100% local pour le stockage : aucune donnée envoyée sur Internet
+  SAUF lors d'un clic sur « Vérifier » qui interroge Nominatim avec
+  l'adresse tapée (l'adresse seule est envoyée, anonyme).
+- Si la vérification échoue (réseau, blocage), tu peux toujours
+  enregistrer le favori avec juste l'adresse texte.
+- Sur iPhone : ouvre dans Safari → Partager → « Sur l'écran d'accueil ».
+- Quand un favori a des coords GPS, les apps Plans / Google Maps
+  ouvrent directement le bon point au lieu de relancer une recherche.
+- La qualité Nominatim est très bonne en Europe (Belgique/France).
+=========================================================
+-->
