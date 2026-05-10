@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Favoris Navigation Quotidien v12</title>
+<title>Favoris Navigation Quotidien v14</title>
 <!-- Leaflet 1.9.4 (BSD-2-Clause) inliné depuis cdnjs pour fonctionnement 100% offline -->
 <style>
 .leaflet-image-layer,.leaflet-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane,.leaflet-pane>canvas,.leaflet-pane>svg,.leaflet-tile,.leaflet-tile-container,.leaflet-zoom-box{position:absolute;left:0;top:0}.leaflet-container{overflow:hidden}.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none}.leaflet-tile::selection{background:0 0}.leaflet-safari .leaflet-tile{image-rendering:-webkit-optimize-contrast}.leaflet-safari .leaflet-tile-container{width:1600px;height:1600px;-webkit-transform-origin:0 0}.leaflet-marker-icon,.leaflet-marker-shadow{display:block}.leaflet-container .leaflet-overlay-pane svg{max-width:none!important;max-height:none!important}.leaflet-container .leaflet-marker-pane img,.leaflet-container .leaflet-shadow-pane img,.leaflet-container .leaflet-tile,.leaflet-container .leaflet-tile-pane img,.leaflet-container img.leaflet-image-layer{max-width:none!important;max-height:none!important;width:auto;padding:0}.leaflet-container img.leaflet-tile{mix-blend-mode:plus-lighter}.leaflet-container.leaflet-touch-zoom{-ms-touch-action:pan-x pan-y;touch-action:pan-x pan-y}.leaflet-container.leaflet-touch-drag{-ms-touch-action:pinch-zoom;touch-action:none;touch-action:pinch-zoom}.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action:none;touch-action:none}.leaflet-container{-webkit-tap-highlight-color:transparent}.leaflet-container a{-webkit-tap-highlight-color:rgba(51,181,229,.4)}.leaflet-tile{filter:inherit;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}.leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800}.leaflet-overlay-pane svg{-moz-user-select:none}.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}.leaflet-popup-pane{z-index:700}.leaflet-map-pane canvas{z-index:100}.leaflet-map-pane svg{z-index:200}.leaflet-vml-shape{width:1px;height:1px}.lvml{behavior:url(#default#VML);display:inline-block;position:absolute}.leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto}.leaflet-bottom,.leaflet-top{position:absolute;z-index:1000;pointer-events:none}.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}.leaflet-control{float:left;clear:both}.leaflet-right .leaflet-control{float:right}.leaflet-top .leaflet-control{margin-top:10px}.leaflet-bottom .leaflet-control{margin-bottom:10px}.leaflet-left .leaflet-control{margin-left:10px}.leaflet-right .leaflet-control{margin-right:10px}.leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity .2s linear;-moz-transition:opacity .2s linear;transition:opacity .2s linear}.leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1}.leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}svg.leaflet-zoom-animated{will-change:transform}.leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform .25s cubic-bezier(0,0,.25,1);-moz-transition:-moz-transform .25s cubic-bezier(0,0,.25,1);transition:transform .25s cubic-bezier(0,0,.25,1)}.leaflet-pan-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-tile{-webkit-transition:none;-moz-transition:none;transition:none}.leaflet-zoom-anim .leaflet-zoom-hide{visibility:hidden}.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}.leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair}.leaflet-control,.leaflet-popup-pane{cursor:auto}.leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}.leaflet-image-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane>svg path,.leaflet-tile-container{pointer-events:none}.leaflet-image-layer.leaflet-interactive,.leaflet-marker-icon.leaflet-interactive,.leaflet-pane>svg path.leaflet-interactive,svg.leaflet-image-layer.leaflet-interactive path{pointer-events:visiblePainted;pointer-events:auto}.leaflet-container{background:#ddd;outline-offset:1px}.leaflet-container a{color:#0078a8}.leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,.5)}.leaflet-container{font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:12px;font-size:.75rem;line-height:1.5}.leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:4px}.leaflet-bar a{background-color:#fff;border-bottom:1px solid #ccc;width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:#000}.leaflet-bar a,.leaflet-control-layers-toggle{background-position:50% 50%;background-repeat:no-repeat;display:block}.leaflet-bar a:focus,.leaflet-bar a:hover{background-color:#f4f4f4}.leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none}.leaflet-bar a.leaflet-disabled{cursor:default;background-color:#f4f4f4;color:#bbb}.leaflet-touch .leaflet-bar a{width:30px;height:30px;line-height:30px}.leaflet-touch .leaflet-bar a:first-child{border-top-left-radius:2px;border-top-right-radius:2px}.leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px}.leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px 'Lucida Console',Monaco,monospace;text-indent:1px}.leaflet-touch .leaflet-control-zoom-in,.leaflet-touch .leaflet-control-zoom-out{font-size:22px}.leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,.4);background:#fff;border-radius:5px}.leaflet-control-layers-toggle{background-image:url(images/layers.png);width:36px;height:36px}.leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px}.leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px}.leaflet-control-layers .leaflet-control-layers-list,.leaflet-control-layers-expanded .leaflet-control-layers-toggle{display:none}.leaflet-control-layers-expanded .leaflet-control-layers-list{display:block;position:relative}.leaflet-control-layers-expanded{padding:6px 10px 6px 6px;color:#333;background:#fff}.leaflet-control-layers-scrollbar{overflow-y:scroll;overflow-x:hidden;padding-right:5px}.leaflet-control-layers-selector{margin-top:2px;position:relative;top:1px}.leaflet-control-layers label{display:block;font-size:13px;font-size:1.08333em}.leaflet-control-layers-separator{height:0;border-top:1px solid #ddd;margin:5px -10px 5px -6px}.leaflet-default-icon-path{background-image:url(images/marker-icon.png)}.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255,255,255,.8);margin:0}.leaflet-control-attribution,.leaflet-control-scale-line{padding:0 5px;color:#333;line-height:1.4}.leaflet-control-attribution a{text-decoration:none}.leaflet-control-attribution a:focus,.leaflet-control-attribution a:hover{text-decoration:underline}.leaflet-attribution-flag{display:inline!important;vertical-align:baseline!important;width:1em;height:.6669em}.leaflet-left .leaflet-control-scale{margin-left:5px}.leaflet-bottom .leaflet-control-scale{margin-bottom:5px}.leaflet-control-scale-line{border:2px solid #777;border-top:none;line-height:1.1;padding:2px 5px 1px;white-space:nowrap;-moz-box-sizing:border-box;box-sizing:border-box;background:rgba(255,255,255,.8);text-shadow:1px 1px #fff}.leaflet-control-scale-line:not(:first-child){border-top:2px solid #777;border-bottom:none;margin-top:-2px}.leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom:2px solid #777}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-attribution,.leaflet-touch .leaflet-control-layers{box-shadow:none}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-layers{border:2px solid rgba(0,0,0,.2);background-clip:padding-box}.leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}.leaflet-popup-content-wrapper{padding:1px;text-align:left;border-radius:12px}.leaflet-popup-content{margin:13px 24px 13px 20px;line-height:1.3;font-size:13px;font-size:1.08333em;min-height:1px}.leaflet-popup-content p{margin:17px 0;margin:1.3em 0}.leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-top:-1px;margin-left:-20px;overflow:hidden;pointer-events:none}.leaflet-popup-tip{width:17px;height:17px;padding:1px;margin:-10px auto 0;pointer-events:auto;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#fff;color:#333;box-shadow:0 3px 14px rgba(0,0,0,.4)}.leaflet-container a.leaflet-popup-close-button{position:absolute;top:0;right:0;border:none;text-align:center;width:24px;height:24px;font:16px/24px Tahoma,Verdana,sans-serif;color:#757575;text-decoration:none;background:0 0}.leaflet-container a.leaflet-popup-close-button:focus,.leaflet-container a.leaflet-popup-close-button:hover{color:#585858}.leaflet-popup-scrolled{overflow:auto}.leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom:1}.leaflet-oldie .leaflet-popup-tip{width:24px;margin:0 auto}.leaflet-oldie .leaflet-control-layers,.leaflet-oldie .leaflet-control-zoom,.leaflet-oldie .leaflet-popup-content-wrapper,.leaflet-oldie .leaflet-popup-tip{border:1px solid #999}.leaflet-div-icon{background:#fff;border:1px solid #666}.leaflet-tooltip{position:absolute;padding:6px;background-color:#fff;border:1px solid #fff;border-radius:3px;color:#222;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}.leaflet-tooltip.leaflet-interactive{cursor:pointer;pointer-events:auto}.leaflet-tooltip-bottom:before,.leaflet-tooltip-left:before,.leaflet-tooltip-right:before,.leaflet-tooltip-top:before{position:absolute;pointer-events:none;border:6px solid transparent;background:0 0;content:""}.leaflet-tooltip-bottom{margin-top:6px}.leaflet-tooltip-top{margin-top:-6px}.leaflet-tooltip-bottom:before,.leaflet-tooltip-top:before{left:50%;margin-left:-6px}.leaflet-tooltip-top:before{bottom:0;margin-bottom:-12px;border-top-color:#fff}.leaflet-tooltip-bottom:before{top:0;margin-top:-12px;margin-left:-6px;border-bottom-color:#fff}.leaflet-tooltip-left{margin-left:-6px}.leaflet-tooltip-right{margin-left:6px}.leaflet-tooltip-left:before,.leaflet-tooltip-right:before{top:50%;margin-top:-6px}.leaflet-tooltip-left:before{right:0;margin-right:-12px;border-left-color:#fff}.leaflet-tooltip-right:before{left:0;margin-left:-12px;border-right-color:#fff}@media print{.leaflet-control{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
@@ -911,6 +911,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <div class="tabs">
   <div class="tab active" data-tab="favoris" onclick="switchTab('favoris')">📍 Favoris</div>
   <div class="tab" data-tab="navigation" onclick="switchTab('navigation')">🚶 Navigation</div>
+  <div class="tab" data-tab="journal" onclick="switchTab('journal')">📓 Journal</div>
 </div>
 
 <div class="tab-page active" id="page-favoris">
@@ -1258,6 +1259,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 </section>
 
 </main>
+</div>
+
+<div class="tab-page" id="page-journal" style="padding:0;">
+  <iframe id="journalFrame" src="about:blank" data-src="journal_v18.html" style="display:block; width:100%; height:calc(100vh - 60px); border:0; background:#c9a87a;" title="Journal du Jour"></iframe>
 </div>
 
 
@@ -2628,7 +2633,7 @@ function enterAddPoiOnMapMode() {
       const reverseAddrRaw = await reverseGeocode(lat, lon);
       const reverseAddr = reverseAddrRaw ? nominatimToAddr(reverseAddrRaw) : null;
       pendingPOI = { lat: lat, lon: lon, accuracy: null, reverseAddr: reverseAddr, capturedAt: new Date() };
-      const stamp = pendingPOI.capturedAt.toLocaleString('fr-BE');
+      const stamp = formatFrDateTime(pendingPOI.capturedAt);
       const addrLine = reverseAddr
         ? '<div style="margin-top:8px; padding:8px; background:#e8f5e9; border-radius:6px;"><strong>Adresse trouvée :</strong><br>' + escapeHtml(reverseAddr) + '</div>'
         : '<div style="margin-top:8px; padding:8px; background:#fdecea; border-radius:6px; color:#a93226;">Aucune adresse trouvée — seules les coordonnées seront enregistrées.</div>';
@@ -2638,7 +2643,7 @@ function enterAddPoiOnMapMode() {
         '📍 GPS : ' + lat.toFixed(6) + ', ' + lon.toFixed(6) + addrLine;
       const defaultName = reverseAddr
         ? reverseAddr.split(';').slice(0, 2).join(';').replace(/;\s*/g, ', ').trim()
-        : 'POI ' + pendingPOI.capturedAt.toLocaleDateString('fr-BE') + ' ' + pendingPOI.capturedAt.toLocaleTimeString('fr-BE', {hour:'2-digit', minute:'2-digit'});
+        : 'POI ' + formatFrDate(pendingPOI.capturedAt) + ' ' + pendingPOI.capturedAt.toLocaleTimeString('fr-BE', {hour:'2-digit', minute:'2-digit'});
       document.getElementById('poiName').value = defaultName;
       document.getElementById('poiModal').classList.add('active');
     };
@@ -2700,7 +2705,7 @@ function capturePOI() {
         capturedAt: new Date()
       };
 
-      const stamp = pendingPOI.capturedAt.toLocaleString('fr-BE');
+      const stamp = formatFrDateTime(pendingPOI.capturedAt);
       const accuracyTxt = accuracy != null ? Math.round(accuracy) + ' m' : 'inconnue';
       const addrLine = reverseAddr
         ? '<div style="margin-top:8px; padding:8px; background:#e8f5e9; border-radius:6px;"><strong>Adresse trouvée :</strong><br>' + escapeHtml(reverseAddr) + '</div>'
@@ -2715,7 +2720,7 @@ function capturePOI() {
 
       const defaultName = reverseAddr
         ? reverseAddr.split(',').slice(0, 2).join(',').trim()
-        : 'POI ' + pendingPOI.capturedAt.toLocaleDateString('fr-BE') + ' ' + pendingPOI.capturedAt.toLocaleTimeString('fr-BE', {hour: '2-digit', minute: '2-digit'});
+        : 'POI ' + formatFrDate(pendingPOI.capturedAt) + ' ' + pendingPOI.capturedAt.toLocaleTimeString('fr-BE', {hour: '2-digit', minute: '2-digit'});
       document.getElementById('poiName').value = defaultName;
 
       document.getElementById('poiModal').classList.add('active');
@@ -2760,7 +2765,7 @@ function capturePOI() {
 function savePOI() {
   if (!pendingPOI) return;
   const name = document.getElementById('poiName').value.trim() ||
-               ('POI ' + pendingPOI.capturedAt.toLocaleDateString('fr-BE'));
+               ('POI ' + formatFrDate(pendingPOI.capturedAt));
   const address = pendingPOI.reverseAddr ||
                   ('GPS ' + pendingPOI.lat.toFixed(6) + ' / ' + pendingPOI.lon.toFixed(6));
 
@@ -3235,6 +3240,12 @@ function switchTab(tabName) {
     setTimeout(() => { if (typeof updateTileEstimate === 'function') updateTileEstimate(); }, 150);
     setTimeout(() => { if (typeof refreshNavBackupStats === 'function') refreshNavBackupStats(); }, 150);
     setTimeout(() => { if (typeof refreshCenterOnPoiList === 'function') refreshCenterOnPoiList(); }, 150);
+  }
+  if (tabName === 'journal') {
+    const ifr = document.getElementById('journalFrame');
+    if (ifr && ifr.dataset.src && ifr.src !== ifr.dataset.src && (ifr.src === '' || ifr.src.endsWith('about:blank'))) {
+      ifr.src = ifr.dataset.src;
+    }
   }
 }
 
@@ -4140,19 +4151,58 @@ function refreshNavBackupStats() {
 
 function cancelNavBackup() { navBackupAbort = true; }
 
+const BACKUP_ERROR_CODES = {
+  E001: 'JSZip non chargé',
+  E002: 'Lecture du fichier ZIP impossible',
+  E003: 'data.json absent du ZIP',
+  E004: 'data.json non parsable (JSON invalide)',
+  E005: 'Schéma de meta invalide (favorites/categories/navWalks doivent être des tableaux)',
+  E006: 'Catégorie ignorée (objet invalide)',
+  E007: 'Favori ignoré (objet invalide ou champ manquant)',
+  E008: 'Promenade ignorée (objet invalide ou sans startTime)',
+  E009: 'Tuile inattendue ou non lisible',
+  E010: 'Settings non écrits',
+  E011: 'Journal data corrompu',
+  E012: 'Erreur réseau lors de la lecture d\'une tuile',
+  E013: 'Erreur de génération du ZIP'
+};
+
+function describeError(code, detail) { return '[' + code + '] ' + (BACKUP_ERROR_CODES[code] || 'Erreur inconnue') + (detail ? ' — ' + detail : ''); }
+
 async function exportNavBackup() {
-  if (typeof JSZip === 'undefined') { showToast('JSZip non chargé', true); return; }
   const status = document.getElementById('bnvExportStatus');
   const cancelBtn = document.getElementById('bnvCancelBtn');
+  const errors = [];
+  const expected = {
+    categories: categories.length,
+    favorites: favorites.length,
+    navWalks: navWalks.length,
+    tileGroups: tileGroups.length,
+    tilesTotal: tileGroups.reduce((s,g) => s + g.count, 0),
+    settings: 11,
+    journalBytes: 0
+  };
+
+  if (typeof JSZip === 'undefined') { showToast(describeError('E001'), true); status.innerHTML = '<span style="color:#c0392b;">' + describeError('E001') + '</span>'; return; }
+
   navBackupAbort = false;
   cancelBtn.style.display = '';
-  status.innerHTML = '<em>Construction du backup…</em>';
+  status.innerHTML = '<em>Construction du backup…</em><br><small>📊 Compte attendu : ' + expected.categories + ' cat · ' + expected.favorites + ' fav · ' + expected.navWalks + ' walks · ' + expected.tileGroups + ' grp (' + expected.tilesTotal + ' tuiles)</small>';
 
   try {
     const zip = new JSZip();
+    let journalRaw = null;
+    try {
+      journalRaw = localStorage.getItem('journal_jour_data_v18');
+      if (journalRaw) {
+        expected.journalBytes = journalRaw.length;
+        try { JSON.parse(journalRaw); } catch(jerr) { errors.push(describeError('E011', 'mais inclus tel quel')); }
+      }
+    } catch(e) { errors.push(describeError('E011', e.message)); }
+
     const meta = {
-      version: 'favoris-navigation-quotidien-v09',
-      schemaVersion: 3,
+      version: 'favoris-navigation-quotidien-v13',
+      schemaVersion: 4,
       exportedAt: new Date().toISOString(),
       favorites: favorites,
       categories: categories,
@@ -4175,13 +4225,26 @@ async function exportNavBackup() {
       tileGroupsMeta: tileGroups.map(g => ({
         id: g.id, name: g.name, sizeBytes: g.sizeBytes, count: g.count,
         minZ: g.minZ, maxZ: g.maxZ
-      }))
+      })),
+      journalPresent: !!journalRaw,
+      journalBytes: expected.journalBytes,
+      verification: {
+        favoritesCount: expected.favorites,
+        categoriesCount: expected.categories,
+        navWalksCount: expected.navWalks,
+        tileGroupsCount: expected.tileGroups,
+        tilesTotal: expected.tilesTotal
+      }
     };
     zip.file('data.json', JSON.stringify(meta, null, 2));
 
-    let totalTilesToWrite = 0;
-    tileGroups.forEach(g => totalTilesToWrite += g.count);
+    if (journalRaw) {
+      zip.file('journal/journal_jour_data_v18.json', journalRaw);
+    }
+
+    let totalTilesToWrite = expected.tilesTotal;
     let written = 0;
+    let tileErrors = 0;
 
     for (const g of tileGroups) {
       if (navBackupAbort) break;
@@ -4191,14 +4254,16 @@ async function exportNavBackup() {
         if (navBackupAbort) break;
         try {
           const resp = await fetch(url);
+          if (!resp.ok) { tileErrors++; errors.push(describeError('E012', g.id + '/' + key + ' status ' + resp.status)); continue; }
           const blob = await resp.blob();
           folder.file(key + '.png', blob);
           written++;
           if (written % 50 === 0) {
-            status.innerHTML = '⏳ Empaquetage tuiles : ' + written + '/' + totalTilesToWrite;
+            status.innerHTML = '⏳ Empaquetage tuiles : ' + written + '/' + totalTilesToWrite + ' · ' + tileErrors + ' erreur(s)';
           }
         } catch(e) {
-          console.warn('skip tile', key, e);
+          tileErrors++;
+          errors.push(describeError('E012', g.id + '/' + key + ' ' + e.message));
         }
       }
     }
@@ -4210,7 +4275,13 @@ async function exportNavBackup() {
     }
 
     status.innerHTML = '📦 Génération du ZIP…';
-    const blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
+    let blob;
+    try {
+      blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
+    } catch(zerr) {
+      errors.push(describeError('E013', zerr.message));
+      throw zerr;
+    }
     const blobUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
     const stamp = new Date().toISOString().slice(0,19).replace(/[:.]/g, '-');
@@ -4222,8 +4293,19 @@ async function exportNavBackup() {
     setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
 
     const sizeMb = (blob.size / 1024 / 1024).toFixed(1);
-    status.innerHTML = '✅ Backup exporté : <strong>' + sizeMb + ' MB</strong> · ' + favorites.length + ' favoris · ' + (navWalks||[]).length + ' promenades · ' + written + ' tuiles';
-    showToast('Backup exporté ✓');
+    const journalLabel = journalRaw ? '<br>📓 Journal : ' + Math.round(expected.journalBytes / 1024) + ' KB inclus' : '<br>📓 Journal : <em>vide</em>';
+    let summary = '✅ Backup exporté : <strong>' + sizeMb + ' MB</strong><br>' +
+      '📍 ' + expected.favorites + ' favoris · 📂 ' + expected.categories + ' catégories<br>' +
+      '🚶 ' + expected.navWalks + ' promenades<br>' +
+      '🗺 ' + written + '/' + expected.tilesTotal + ' tuiles' + (tileErrors > 0 ? ' (' + tileErrors + ' échecs)' : '') +
+      journalLabel;
+    if (errors.length > 0) {
+      summary += '<br><br><strong style="color:#c0392b;">⚠ ' + errors.length + ' erreur(s) :</strong><br>' +
+        '<details><summary style="cursor:pointer; color:#c0392b;">Voir codes d\'erreur</summary>' +
+        '<pre style="font-size:0.78em; max-height:200px; overflow:auto; background:#fdecea; padding:6px; border-radius:4px;">' + errors.map(e => escapeHtml(e)).join('\n') + '</pre></details>';
+    }
+    status.innerHTML = summary;
+    showToast(errors.length > 0 ? 'Backup exporté avec ' + errors.length + ' erreur(s)' : 'Backup exporté ✓');
     cancelBtn.style.display = 'none';
   } catch(e) {
     console.error(e);
@@ -4265,7 +4347,7 @@ async function loadNavBackup(file) {
     });
 
     let html = '<div style="font-size:0.85em; color:#444; margin-bottom:10px;">';
-    html += '<strong>📅 ' + (meta.exportedAt ? new Date(meta.exportedAt).toLocaleString('fr-BE') : '?') + '</strong> · ';
+    html += '<strong>📅 ' + (meta.exportedAt ? formatFrDateTime(new Date(meta.exportedAt)) : '?') + '</strong> · ';
     html += '📍 ' + favs.length + ' favoris · 🚶 ' + walks.length + ' promenades · 🗺 ' + groupsMeta.length + ' groupes tuiles';
     html += '</div>';
 
@@ -4288,7 +4370,7 @@ async function loadNavBackup(file) {
       html += '<div style="padding-left:16px; margin-top:6px;">';
       walks.forEach((w, i) => {
         const km = ((w.distance || 0) / 1000).toFixed(2);
-        const date = w.startTime ? new Date(w.startTime).toLocaleDateString('fr-BE') : '?';
+        const date = w.startTime ? formatFrDate(new Date(w.startTime)) : '?';
         const npts = (w.points || []).length;
         html += '<label style="display:flex; gap:6px; align-items:center; padding:3px 0;"><input type="checkbox" class="bnv-walk" data-idx="' + i + '" checked><span>' + escapeHtml(w.name || 'sans nom') + ' <span style="color:#888; font-size:0.85em;">(' + date + ' · ' + km + ' km · ' + npts + ' pts)</span></span></label>';
       });
@@ -4331,12 +4413,45 @@ async function loadNavBackup(file) {
       html += '</div></details>';
     }
 
-    if (cats.length === 0 && favs.length === 0 && walks.length === 0 && groupsMeta.length === 0 && availableSettings.length === 0) {
+    let journalEntry = null;
+    let journalRaw = null;
+    let journalSize = 0;
+    let journalValid = false;
+    let journalCounts = null;
+    try {
+      journalEntry = zip.file('journal/journal_jour_data_v18.json');
+      if (journalEntry) {
+        journalRaw = await journalEntry.async('string');
+        journalSize = journalRaw.length;
+        try {
+          const jParsed = JSON.parse(journalRaw);
+          journalValid = true;
+          if (jParsed && typeof jParsed === 'object') {
+            const entries = jParsed.entries || jParsed.data || jParsed.items || null;
+            if (Array.isArray(entries)) journalCounts = entries.length + ' entrée(s)';
+            else journalCounts = Object.keys(jParsed).length + ' clé(s) racine';
+          }
+        } catch(e) { journalValid = false; }
+      }
+    } catch(e) { /* journal absent ou illisible */ }
+
+    if (journalEntry) {
+      html += '<details open style="margin-bottom:10px;"><summary style="cursor:pointer; font-weight:bold; color:var(--menu-primary);">📓 Journal du Jour <button class="nav-walk-btn" type="button" onclick="bnvCheckAll(\'journal\', true); return false;" style="margin-left:8px; padding:3px 8px; font-size:0.8em;">Tout</button> <button class="nav-walk-btn" type="button" onclick="bnvCheckAll(\'journal\', false); return false;" style="padding:3px 8px; font-size:0.8em;">Rien</button></summary>';
+      html += '<div style="padding-left:16px; margin-top:6px;">';
+      const journalLabel = journalValid
+        ? '<strong>journal_jour_data_v18</strong> <span style="color:#888; font-size:0.85em;">(' + Math.round(journalSize / 1024) + ' KB' + (journalCounts ? ' · ' + journalCounts : '') + ' · JSON valide)</span>'
+        : '<strong>journal_jour_data_v18</strong> <span style="color:#c0392b; font-size:0.85em;">(' + Math.round(journalSize / 1024) + ' KB · ⚠ JSON corrompu → restauration au format brut)</span>';
+      html += '<label style="display:flex; gap:6px; align-items:center; padding:3px 0;"><input type="checkbox" class="bnv-journal" data-key="journal" checked><span>' + journalLabel + '</span></label>';
+      html += '<p style="font-size:0.78em; color:#888; margin: 6px 0 0;">⚠ L\'import du journal remplace intégralement la clé <code>journal_jour_data_v18</code> du localStorage et recharge l\'onglet Journal.</p>';
+      html += '</div></details>';
+    }
+
+    if (cats.length === 0 && favs.length === 0 && walks.length === 0 && groupsMeta.length === 0 && availableSettings.length === 0 && !journalEntry) {
       html += '<p style="color:#888;"><em>Backup vide</em></p>';
     }
 
     content.innerHTML = html;
-    pendingBackupImport = { zip, meta, cats, favs, walks, groupsMeta, settings };
+    pendingBackupImport = { zip, meta, cats, favs, walks, groupsMeta, settings, journalRaw, journalValid };
     panel.style.display = '';
     status.innerHTML = '✅ Backup chargé. Coche ce que tu veux récupérer ci-dessous.';
   } catch(e) {
@@ -4484,10 +4599,46 @@ async function confirmNavBackupImport() {
     }
   });
 
+  const importErrors = [];
+  let nJournal = 0;
+  let journalRestored = false;
+  const journalCb = document.querySelector('.bnv-journal[data-key="journal"]');
+  const journalChecked = journalCb && journalCb.checked;
+  if (journalChecked && pendingBackupImport.journalRaw) {
+    try {
+      localStorage.setItem('journal_jour_data_v18', pendingBackupImport.journalRaw);
+      nJournal = pendingBackupImport.journalRaw.length;
+      journalRestored = true;
+      const ifr = document.getElementById('journalFrame');
+      if (ifr && ifr.dataset.src) {
+        try { ifr.src = ifr.dataset.src + '?t=' + Date.now(); } catch(e) {}
+      }
+    } catch(e) {
+      importErrors.push(describeError('E011', e.message));
+    }
+  }
+
+  const expFavs = (pendingBackupImport.meta && Array.isArray(pendingBackupImport.meta.favorites)) ? pendingBackupImport.meta.favorites.length : 0;
+  const expCats = (pendingBackupImport.meta && Array.isArray(pendingBackupImport.meta.categories)) ? pendingBackupImport.meta.categories.length : 0;
+  const expWalks = (pendingBackupImport.meta && Array.isArray(pendingBackupImport.meta.navWalks)) ? pendingBackupImport.meta.navWalks.length : 0;
+
   pendingBackupImport = null;
   document.getElementById('bnvImportPanel').style.display = 'none';
-  status.innerHTML = '✅ Importé : ' + nFavs + ' favoris · ' + nCats + ' catégories · ' + nWalks + ' promenades · ' + nGroups + ' groupes tuiles (' + nTiles + ' tuiles) · ' + nSettings + ' paramètre(s)';
-  showToast('Import terminé ✓');
+
+  let summary = '✅ Import terminé<br>' +
+    '📍 ' + nFavs + ' favoris ajoutés' + (expFavs > 0 ? ' (sur ' + expFavs + ' présents dans le backup)' : '') + '<br>' +
+    '📂 ' + nCats + ' catégories ajoutées' + (expCats > 0 ? ' (sur ' + expCats + ')' : '') + '<br>' +
+    '🚶 ' + nWalks + ' promenades ajoutées' + (expWalks > 0 ? ' (sur ' + expWalks + ')' : '') + '<br>' +
+    '🗺 ' + nGroups + ' groupes de tuiles (' + nTiles + ' tuiles)<br>' +
+    '⚙ ' + nSettings + ' paramètre(s) appliqué(s)<br>' +
+    '📓 Journal : ' + (journalRestored ? Math.round(nJournal / 1024) + ' KB restauré + iframe rechargé' : (journalChecked ? '<span style="color:#c0392b;">non restauré (voir erreurs)</span>' : 'ignoré'));
+  if (importErrors.length > 0) {
+    summary += '<br><br><strong style="color:#c0392b;">⚠ ' + importErrors.length + ' erreur(s) :</strong><br>' +
+      '<details open><summary style="cursor:pointer; color:#c0392b;">Codes d\'erreur</summary>' +
+      '<pre style="font-size:0.78em; max-height:200px; overflow:auto; background:#fdecea; padding:6px; border-radius:4px;">' + importErrors.map(e => escapeHtml(e)).join('\n') + '</pre></details>';
+  }
+  status.innerHTML = summary;
+  showToast(importErrors.length > 0 ? 'Import terminé avec ' + importErrors.length + ' erreur(s)' : 'Import terminé ✓');
 
   render();
   renderWalksList();
@@ -4789,7 +4940,7 @@ function navStop() {
 
   const endTime = Date.now();
   const duration = endTime - navStartTime - navPausedDuration;
-  const defaultName = 'Promenade ' + new Date(navStartTime).toLocaleString('fr-BE');
+  const defaultName = 'Promenade ' + formatFrDateTime(new Date(navStartTime));
   const name = prompt('Nom de la promenade :', defaultName) || defaultName;
 
   if (navPoints.length > 0) {
@@ -4907,6 +5058,24 @@ function updateNavStats() {
   document.getElementById('navPointsPerMin').textContent = ppm.toFixed(1);
 }
 
+const FR_DAYS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+const FR_MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+function formatFrDate(d) {
+  if (!(d instanceof Date)) d = new Date(d);
+  if (isNaN(d.getTime())) return '?';
+  return FR_DAYS[d.getDay()] + '-' + d.getDate() + '-' + FR_MONTHS[d.getMonth()] + '-' + d.getFullYear();
+}
+
+function formatFrDateTime(d) {
+  if (!(d instanceof Date)) d = new Date(d);
+  if (isNaN(d.getTime())) return '?';
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  const ss = String(d.getSeconds()).padStart(2,'0');
+  return formatFrDate(d) + ' ' + hh + ':' + mm + ':' + ss;
+}
+
 function formatDuration(ms) {
   if (ms < 0 || isNaN(ms)) ms = 0;
   const total = Math.floor(ms / 1000);
@@ -4939,7 +5108,7 @@ function renderWalksList() {
   list.innerHTML = sorted.map(w => {
     const distKm = (w.distance / 1000).toFixed(2);
     const dur = formatDuration(w.duration);
-    const date = new Date(w.startTime).toLocaleString('fr-BE');
+    const date = formatFrDateTime(new Date(w.startTime));
     const avgSpeed = w.duration > 0 ? ((w.distance / 1000) / (w.duration / 3600000)).toFixed(1) : '0';
     const trackColor = w.color || navTrackColor;
     return '<div class="nav-walk-item">' +
