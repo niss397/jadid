@@ -998,6 +998,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       <div class="nav-stat"><div class="nav-stat-label">Points GPS</div><div class="nav-stat-value" id="bnvCountGpsPts">—</div></div>
       <div class="nav-stat"><div class="nav-stat-label">Groupes tuiles</div><div class="nav-stat-value" id="bnvCountGroups">—</div></div>
       <div class="nav-stat"><div class="nav-stat-label">Tuiles total</div><div class="nav-stat-value" id="bnvCountTiles">—</div></div>
+      <div class="nav-stat"><div class="nav-stat-label">Journal entrées</div><div class="nav-stat-value" id="bnvJournalEntries">—</div></div>
+      <div class="nav-stat"><div class="nav-stat-label">Journal mensuels</div><div class="nav-stat-value" id="bnvJournalMonthly">—</div></div>
+      <div class="nav-stat"><div class="nav-stat-label">Journal taille</div><div class="nav-stat-value" id="bnvJournalSize">—</div></div>
       <div class="nav-stat"><div class="nav-stat-label">Taille ZIP estimée</div><div class="nav-stat-value" id="bnvEstSize">—</div></div>
     </div>
 
@@ -1021,6 +1024,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <button class="nav-btn" type="button" onclick="cancelNavBackupImport()" style="background:#c0392b; border-color:#c0392b; color:#fff;">❌ Annuler</button>
       </div>
     </div>
+
+    <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--menu-border);">
+
+    <h4 style="margin: 8px 0; color: #c0392b; font-size: 1em;">🗑 Reset global (tout effacer)</h4>
+    <p style="font-size: 0.86em; color: #666; margin-bottom: 8px;">Efface <strong>l'intégralité des données locales</strong> de cette app : favoris, catégories, promenades, tuiles, paramètres <em>et</em> journal complet (entrées + mensuels). À utiliser uniquement après un export ZIP complet.</p>
+    <button class="nav-btn" type="button" onclick="resetEverything()" style="background:#c0392b; border-color:#c0392b; color:#fff;">⚠ Effacer TOUTES les données locales</button>
   </div>
 </section>
 
@@ -4163,7 +4172,23 @@ function refreshNavBackupStats() {
   n('bnvCountGpsPts', totalGpsPts.toLocaleString('fr-BE'));
   n('bnvCountGroups', tileGroups.length);
   n('bnvCountTiles', totalTiles.toLocaleString('fr-BE'));
-  const estJsonBytes = favorites.length * 200 + categories.length * 100 + totalGpsPts * 50 + (navWalks || []).length * 200;
+  // Journal stats
+  let journalRaw = null, journalSize = 0, journalEntries = 0, journalMonthly = 0;
+  try { journalRaw = localStorage.getItem('journal_jour_data_v18'); } catch(e) {}
+  if (journalRaw) {
+    journalSize = journalRaw.length;
+    try {
+      const j = JSON.parse(journalRaw);
+      if (j && j.entries) {
+        Object.values(j.entries).forEach(arr => { if (Array.isArray(arr)) journalEntries += arr.length; });
+      }
+      if (j && j.monthly && Array.isArray(j.monthly.templates)) journalMonthly = j.monthly.templates.length;
+    } catch(e) {}
+  }
+  n('bnvJournalEntries', journalEntries.toLocaleString('fr-BE'));
+  n('bnvJournalMonthly', journalMonthly);
+  n('bnvJournalSize', journalRaw ? (journalSize < 1024 ? journalSize + ' B' : (journalSize / 1024).toFixed(1) + ' KB') : '—');
+  const estJsonBytes = favorites.length * 200 + categories.length * 100 + totalGpsPts * 50 + (navWalks || []).length * 200 + journalSize;
   const estTotal = estJsonBytes + totalTileBytes;
   const mb = estTotal / 1024 / 1024;
   n('bnvEstSize', mb < 1 ? (estTotal / 1024).toFixed(0) + ' KB' : mb.toFixed(1) + ' MB');
@@ -4462,7 +4487,7 @@ async function loadNavBackup(file) {
         ? '<strong>journal_jour_data_v18</strong> <span style="color:#888; font-size:0.85em;">(' + Math.round(journalSize / 1024) + ' KB' + (journalCounts ? ' · ' + journalCounts : '') + ' · JSON valide)</span>'
         : '<strong>journal_jour_data_v18</strong> <span style="color:#c0392b; font-size:0.85em;">(' + Math.round(journalSize / 1024) + ' KB · ⚠ JSON corrompu → restauration au format brut)</span>';
       html += '<label style="display:flex; gap:6px; align-items:center; padding:3px 0;"><input type="checkbox" class="bnv-journal" data-key="journal" checked><span>' + journalLabel + '</span></label>';
-      html += '<p style="font-size:0.78em; color:#888; margin: 6px 0 0;">⚠ L\'import du journal remplace intégralement la clé <code>journal_jour_data_v18</code> du localStorage et recharge l\'onglet Journal.</p>';
+      html += '<p style="font-size:0.78em; color:#888; margin: 6px 0 0;">✓ L\'import fusionne (anti-doublons par ID) les entrées et mensuels avec ceux déjà présents. Aucune donnée locale n\'est effacée. En cas de conflit sur une date de paiement, la version locale est conservée.</p>';
       html += '</div></details>';
     }
 
@@ -4622,14 +4647,26 @@ async function confirmNavBackupImport() {
   const importErrors = [];
   let nJournal = 0;
   let journalRestored = false;
+  let journalMergeStats = null;
   const journalCb = document.querySelector('.bnv-journal[data-key="journal"]');
   const journalChecked = journalCb && journalCb.checked;
   if (journalChecked && pendingBackupImport.journalRaw) {
     try {
-      localStorage.setItem('journal_jour_data_v18', pendingBackupImport.journalRaw);
-      nJournal = pendingBackupImport.journalRaw.length;
-      journalRestored = true;
-      try { reloadJournalFrame(); } catch(e) {}
+      const currentRaw = localStorage.getItem('journal_jour_data_v18');
+      const result = mergeJournalData(currentRaw, pendingBackupImport.journalRaw);
+      if (result.merged) {
+        const merged = result.merged;
+        merged.meta = merged.meta || {};
+        merged.meta.updated = new Date().toISOString();
+        const mergedRaw = JSON.stringify(merged);
+        localStorage.setItem('journal_jour_data_v18', mergedRaw);
+        nJournal = mergedRaw.length;
+        journalRestored = true;
+        journalMergeStats = result.stats;
+        try { reloadJournalFrame(); } catch(e) {}
+      } else {
+        // rien à fusionner
+      }
     } catch(e) {
       importErrors.push(describeError('E011', e.message));
     }
@@ -4648,7 +4685,9 @@ async function confirmNavBackupImport() {
     '🚶 ' + nWalks + ' promenades ajoutées' + (expWalks > 0 ? ' (sur ' + expWalks + ')' : '') + '<br>' +
     '🗺 ' + nGroups + ' groupes de tuiles (' + nTiles + ' tuiles)<br>' +
     '⚙ ' + nSettings + ' paramètre(s) appliqué(s)<br>' +
-    '📓 Journal : ' + (journalRestored ? Math.round(nJournal / 1024) + ' KB restauré + iframe rechargé' : (journalChecked ? '<span style="color:#c0392b;">non restauré (voir erreurs)</span>' : 'ignoré'));
+    '📓 Journal : ' + (journalRestored
+      ? Math.round(nJournal / 1024) + ' KB après fusion · +' + (journalMergeStats ? journalMergeStats.addedEntries : 0) + ' entrée(s), +' + (journalMergeStats ? journalMergeStats.addedMonthly : 0) + ' mensuel(s), +' + (journalMergeStats ? journalMergeStats.addedPaidMonths : 0) + ' paiement(s)' + ((journalMergeStats && journalMergeStats.conflicts > 0) ? ' · ⚠ ' + journalMergeStats.conflicts + ' conflit(s) de date (date locale conservée)' : '')
+      : (journalChecked ? '<span style="color:#c0392b;">non fusionné (voir erreurs)</span>' : 'ignoré'));
   if (importErrors.length > 0) {
     summary += '<br><br><strong style="color:#c0392b;">⚠ ' + importErrors.length + ' erreur(s) :</strong><br>' +
       '<details open><summary style="cursor:pointer; color:#c0392b;">Codes d\'erreur</summary>' +
@@ -4666,6 +4705,108 @@ async function confirmNavBackupImport() {
     navMap.eachLayer(l => { if (l.redraw) l.redraw(); });
     if (selectedSettingKeys.has('displayedFavIds') && typeof restoreDisplayedFavMarkers === 'function') restoreDisplayedFavMarkers();
   }
+}
+
+function mergeJournalData(currentRaw, backupRaw) {
+  let cur = null, bak = null;
+  try { cur = currentRaw ? JSON.parse(currentRaw) : null; } catch(e) { cur = null; }
+  try { bak = backupRaw  ? JSON.parse(backupRaw)  : null; } catch(e) { bak = null; }
+  if (!cur && !bak) return { merged: null, stats: { addedEntries: 0, addedMonthly: 0, addedPaidMonths: 0, conflicts: 0 } };
+  if (!cur) return { merged: bak, stats: { addedEntries: countJournalEntries(bak), addedMonthly: countJournalMonthly(bak), addedPaidMonths: 0, conflicts: 0 } };
+  if (!bak) return { merged: cur, stats: { addedEntries: 0, addedMonthly: 0, addedPaidMonths: 0, conflicts: 0 } };
+
+  const merged = {
+    meta: cur.meta || bak.meta || {},
+    categories: Array.isArray(cur.categories) ? cur.categories.slice() : [],
+    entries: {},
+    monthly: { templates: [] }
+  };
+  const seenCatIds = new Set(merged.categories.map(c => c && c.id).filter(Boolean));
+  (bak.categories || []).forEach(c => {
+    if (c && c.id && !seenCatIds.has(c.id)) { merged.categories.push(c); seenCatIds.add(c.id); }
+  });
+
+  const allCatIds = new Set([
+    ...Object.keys((cur && cur.entries) || {}),
+    ...Object.keys((bak && bak.entries) || {})
+  ]);
+  let addedEntries = 0;
+  allCatIds.forEach(cid => {
+    const curList = (cur.entries && Array.isArray(cur.entries[cid])) ? cur.entries[cid] : [];
+    const bakList = (bak.entries && Array.isArray(bak.entries[cid])) ? bak.entries[cid] : [];
+    const seenIds = new Set();
+    const out = [];
+    curList.forEach(e => { if (e && e.id) seenIds.add(e.id); out.push(e); });
+    bakList.forEach(e => {
+      if (!e) return;
+      if (e.id && seenIds.has(e.id)) return;
+      out.push(e);
+      if (e.id) seenIds.add(e.id);
+      addedEntries++;
+    });
+    merged.entries[cid] = out;
+  });
+
+  const curTpls = (cur.monthly && Array.isArray(cur.monthly.templates)) ? cur.monthly.templates : [];
+  const bakTpls = (bak.monthly && Array.isArray(bak.monthly.templates)) ? bak.monthly.templates : [];
+  const seenTplIds = new Set();
+  curTpls.forEach(t => { if (t && t.id) seenTplIds.add(t.id); merged.monthly.templates.push(t); });
+  let addedMonthly = 0, addedPaidMonths = 0, conflicts = 0;
+  bakTpls.forEach(t => {
+    if (!t) return;
+    if (t.id && seenTplIds.has(t.id)) {
+      const exist = merged.monthly.templates.find(x => x && x.id === t.id);
+      if (exist) {
+        if (!exist.paid || typeof exist.paid !== 'object') exist.paid = {};
+        if (t.paid && typeof t.paid === 'object') {
+          Object.keys(t.paid).forEach(mk => {
+            if (!exist.paid[mk]) { exist.paid[mk] = t.paid[mk]; addedPaidMonths++; }
+            else if (exist.paid[mk] !== t.paid[mk]) { conflicts++; }
+          });
+        }
+      }
+    } else {
+      merged.monthly.templates.push(t);
+      if (t.id) seenTplIds.add(t.id);
+      addedMonthly++;
+    }
+  });
+
+  return { merged, stats: { addedEntries, addedMonthly, addedPaidMonths, conflicts } };
+}
+
+function countJournalEntries(j) {
+  if (!j || !j.entries) return 0;
+  let n = 0;
+  Object.values(j.entries).forEach(arr => { if (Array.isArray(arr)) n += arr.length; });
+  return n;
+}
+
+function countJournalMonthly(j) {
+  if (!j || !j.monthly || !Array.isArray(j.monthly.templates)) return 0;
+  return j.monthly.templates.length;
+}
+
+function resetEverything() {
+  const msg1 = '⚠ RESET GLOBAL\n\nCela va EFFACER:\n' +
+    '• Tous les favoris et catégories\n' +
+    '• Toutes les promenades GPS\n' +
+    '• Toutes les tuiles offline\n' +
+    '• Tous les paramètres\n' +
+    '• TOUT le journal (entrées + mensuels)\n\n' +
+    'Action IRRÉVERSIBLE. As-tu fait un export ZIP avant ?\n\nContinuer ?';
+  if (!confirm(msg1)) return;
+  if (!confirm('Confirmer le RESET GLOBAL ? Aucune donnée locale ne sera conservée.')) return;
+  try {
+    const keysToRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k) continue;
+      if (k.startsWith(STORAGE_PREFIX) || k === 'journal_jour_data_v18') keysToRemove.push(k);
+    }
+    keysToRemove.forEach(k => localStorage.removeItem(k));
+  } catch(e) {}
+  location.reload();
 }
 
 function clearOfflineTiles() {
